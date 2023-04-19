@@ -112,7 +112,29 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    int n, a, b;
+    cin >> n >> a >> b;
+    vector<bool> vis(n + 1, false);
+    vector<int> v(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> v[i];
+    }
+    queue<pair<int, int>> q;
+    q.push({a, 0});
+    while (!q.empty()) {
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        if(x==b){
+            cout<<y;
+            return;
+        }
+        if (vis[x])continue;
+        vis[x] = true;
+        if (x + v[x] <= n) q.push({x + v[x], y + 1});
+        if (x - v[x] > 0) q.push({x - v[x], y + 1});
+    }
+    cout<<-1;
 }
 
 signed main() {
