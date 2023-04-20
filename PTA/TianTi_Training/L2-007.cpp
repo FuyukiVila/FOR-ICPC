@@ -117,8 +117,6 @@ struct family {
     double square;
 };
 
-map<string,set<string> >g;
-
 struct node {
     string min_id;
     int cnt;
@@ -133,30 +131,21 @@ struct node {
     }
 };
 
-vector<node> ans;
-map<string, bool> vis;
-map<string, bool> is;
-map<string, family> f;
-int cnt = -1;
+unordered_map<string,string>grp;
 
-void dfs(const string& n){
-    if(n=="-1"||vis[n]) return;
-    vis[n] = true;
-    cout<<n<<' ';
-    ans[cnt].min_id = min(n,ans[cnt].min_id);
-    ans[cnt].cnt++;
-    if(!is[n])return;
-    ans[cnt].square += f[n].square;
-    ans[cnt].cnt_house = f[n].cnt_house;
-    dfs(f[n].mother_id);
-    dfs(f[n].father_id);
-    for(const auto& x:g[n]){
-        if(!vis[x])dfs(x);
-    }
+string find(string a){
+    if(grp[a]==a) return a;
+    return grp[a] = find(grp[a]);
 }
 
 auto solve() {
-    
+    int n;
+    cin >> n;
+    cout << fixed << setprecision(3);
+    while (n--) {
+        string id;
+        cin>>id;
+    }
 }
 
 signed main() {
