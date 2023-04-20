@@ -112,7 +112,14 @@ void get_primes(int n) {
 }
 
 auto solve() {
-    
+    int n;
+    int ans = 0;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+    }
+    cout<<ans;
 }
 
 signed main() {
