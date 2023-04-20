@@ -156,41 +156,7 @@ void dfs(const string& n){
 }
 
 auto solve() {
-    int n;
-    cin >> n;
-    cout << fixed << setprecision(3);
-    while (n--) {
-        string id;
-        int k;
-        cin >> id;
-        is[id] = true;
-        cin >> f[id].father_id >> f[id].mother_id >> k;
-        g[f[id].father_id].insert(id);
-        g[f[id].mother_id].insert(id);
-        g[id].insert(f[id].mother_id);
-        g[id].insert(f[id].father_id);
-        for (int i = 1; i <= k; i++) {
-            string s;
-            cin >> s;
-            g[id].insert(s);
-            g[s].insert(id);
-        }
-        cin>>f[id].cnt_house>>f[id].square;
-    }
-    for(const auto &[i,j]:f){
-        if(!vis[i]){
-            cnt++;
-            ans.push_back({"9999",0,0,0});
-            dfs(i);
-            ans[cnt].square /= ans[cnt].cnt;
-            ans[cnt].cnt_house /= ans[cnt].cnt;
-            cout<<'\n';
-        }
-    }
-    sort(ans.begin(),ans.end());
-    for(const auto& x:ans){
-        cout<<x.min_id<<' '<<x.cnt<<' '<<x.cnt_house<<' '<<x.square<<'\n';
-    }
+    
 }
 
 signed main() {
