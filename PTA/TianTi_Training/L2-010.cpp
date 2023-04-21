@@ -111,8 +111,34 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+int f[105][105];
+int g[105];
 
+int find(int x) {
+    return x == g[x] ? x : g[x] = find(g[x]);
+}
+
+auto solve() {
+    int n, m, k;
+    cin >> n >> m >> k;
+    for (int i = 1; i <= 100; i++)g[i] = i;
+    for (int i = 1; i <= m; i++) {
+        int x, y, z;
+        cin >> x >> y >> z;
+        f[x][y] = z;
+        f[y][x] = z;
+        if (z == 1) {
+            g[find(x)] = find(y);
+        }
+    }
+    for (int i = 1; i <= k; i++) {
+        int x, y;
+        cin >> x >> y;
+        if (f[x][y] != -1 && find(x) == find(y))cout << "No problem\n";
+        else if (f[x][y] == 0)cout << "OK\n";
+        else if (f[x][y] == -1 && find(x) == find(y))cout << "OK but...\n";
+        else if (f[x][y] == -1 && find(x) != find(y))cout << "No way\n";
+    }
 }
 
 signed main() {

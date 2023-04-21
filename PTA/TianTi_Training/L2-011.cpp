@@ -111,11 +111,55 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+struct node {
+    int l{0}, r{0};
+} tree[35];
 
+int dfs(vector<int> z, vector<int> q) {
+    if (z.empty() || q.empty())return 0;
+    int root = q.front();
+    vector<int> lz, lq, rz, rq;
+    int i = 0, j = 1;
+    for (; i < z.size() && j < q.size();) {
+        if (z[i] == root) {
+            i++;
+            break;
+        }
+        lq.emplace_back(q[j++]);
+        lz.emplace_back(z[i++]);
+    }
+    for (; i < z.size() && j < q.size();) {
+        rq.emplace_back(q[j++]);
+        rz.emplace_back(z[i++]);
+    }
+    tree[root].r = dfs(lz, lq);
+    tree[root].l = dfs(rz, rq);
+    return root;
 }
 
-signed main() {
+auto solve() {
+    int n;
+    cin >> n;
+    vector<int> z(n);
+    vector<int> q(n);
+    for (int i = 0; i < n; i++)cin >> z[i];
+    for (int i = 0; i < n; i++)cin >> q[i];
+    dfs(z, q);
+    queue<int> que;
+    que.push(q.front());
+    vector<int> ans;
+    while (!que.empty()) {
+        int x = que.front();
+        que.pop();
+        if (x == 0)continue;
+        ans.push_back(x);
+        if (tree[x].l != 0)que.push(tree[x].l);
+        if (tree[x].r != 0)que.push(tree[x].r);
+    }
+    for (int i = 0; i < ans.size(); i++)cout << ans[i] << " \n"[i == ans.size() - 1];
+}
+
+auto main() -> int {
     GKD
     auto T = 1;
 //    cin >> T;
