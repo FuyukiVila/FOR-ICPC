@@ -63,7 +63,6 @@ void Trie::deleteTrie(TrieNode *root) {
     delete root;
 }
 
-//字典树
 inline int lowbit(int n) { return n & -n; }
 
 template<typename T>
