@@ -111,41 +111,51 @@ void get_primes(int n) {
     }
 }
 
-struct node{
-    int data;
-    int next;
-}a[1005];
+int n, T;
+int t[105];
+vector<int> w[105];
+int dp[1005][1005];
 
 auto solve() {
-    int ans = 0;
-    int n;
-    cin>>n;
-    for(int i = 1;i<=n;i++){
-        int x;
-        cin>>x;
-        a[i].data = x;
-        a[i].next = i+1;
-        if(i==n)a[i].next = 0;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        w[i].push_back(0);
+        w[i].push_back(0);
+        cin >> w[i][1];
     }
-    int start = 1;
-    while(n>1){
-        n--;
-        int pos = start;
-        int minn = INF;
-        for(int i = start;i!=0;i = a[i].next){
-            if(a[i].next==0)continue;
-            int j = a[i].next;
-            if(a[i].data + a[j].data < minn){
-                pos = i;
-                minn = a[i].data + a[j].data;
-            }
+    for (int i = 1; i <= n; i++) {
+        int low;
+        cin >> low;
+        int tmp = w[i][1];
+        while (true) {
+            tmp -= low;
+            if (tmp <= 0)break;
+            w[i].push_back(tmp);
         }
-        int k = a[pos].next;
-        a[pos].data += a[k].data;
-        a[pos].next = a[k].next;
-        ans += a[pos].data;
+//        for (int j = 1; j < w[i].size(); j++) {
+//            w[i][j] += w[i][j - 1];
+//        }
     }
-    cout<<ans<<'\n';
+    for (int i = 2; i <= n; i++)cin >> t[i];
+    cin >> T;
+    int ans = 0;
+    priority_queue<int> q;
+    for (int i = 1; i <= n; i++) {
+        while (!q.empty())q.pop();
+        int time = T;
+        for (int j = 1; j <= i; j++) {
+            time -= t[j];
+            for (auto x: w[j])q.push(x);
+        }
+        int tmp = 0;
+        while (time > 0&&!q.empty()) {
+            time--;
+            tmp += q.top();
+            q.pop();
+        }
+        ans = max(ans, tmp);
+    }
+    cout << ans;
 }
 
 signed main() {
