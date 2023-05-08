@@ -75,7 +75,7 @@ auto solve() {
         }
     }
     for (int i = 4; i <= n; i++) {
-        if (a[i] > max3.first) {
+        if (a[i] >= max3.first) {
             auto tmp1 = max1, tmp2 = max2, tmp3 = max3;
             if (a[i] >= tmp1.first) {
                 tmp3 = tmp2;
@@ -97,6 +97,7 @@ auto solve() {
             }
         }
     }
+    cout<<l<<' '<<r<<'\n';
     set<pair<ll, int>, greater<> > s;
     for (int i = l; i <= r; i++) {
         s.insert({a[i], i});
@@ -106,7 +107,7 @@ auto solve() {
         ll tmp = 0;
         auto pos = s.begin();
         for (int j = 1; j <= 3; j++) {
-            for (auto k = pos; k != s.begin(); k++) {
+            for (auto k = pos; k != s.end(); k++) {
                 if (k->second < i)continue;
                 else {
                     tmp += k->first;
@@ -116,6 +117,21 @@ auto solve() {
             }
         }
         ans = max(ans, tmp - (r - i));
+    }
+    for (int i = r - 1; i >= l + 2; i--) {
+        ll tmp = 0;
+        auto pos = s.begin();
+        for (int j = 1; j <= 3; j++) {
+            for (auto k = pos; k != s.end(); k++) {
+                if (k->second > i)continue;
+                else {
+                    tmp += k->first;
+                    pos = ++k;
+                    break;
+                }
+            }
+        }
+        ans = max(ans, tmp - (i - l));
     }
     cout << ans << '\n';
 }
