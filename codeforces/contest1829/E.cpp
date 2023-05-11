@@ -54,14 +54,45 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+int mp[1005][1005];
+bool vis[1005][1005];
+int n, m;
+int ans;
+int tmp;
+int dx[] = {0, 0, 1, -1}, dy[] = {1, -1, 0, 0};
 
+void dfs(int i, int j) {
+    ans = max(ans, tmp);
+    if (vis[i][j] || i < 1 || j < 1 || i > n || j > m || mp[i][j] == 0) return;
+    tmp += mp[i][j];
+    vis[i][j] = true;
+    for (int k = 0; k < 4; k++) {
+        dfs(i + dx[k], j + dy[k]);
+    }
+}
+
+auto solve() {
+    cin >> n >> m;
+    ans = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> mp[i][j];
+            vis[i][j] = false;
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            tmp = 0;
+            if (!vis[i][j])dfs(i, j);
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) solve();
     return 0;
 }

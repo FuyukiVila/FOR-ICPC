@@ -1,3 +1,4 @@
+
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 
@@ -55,13 +56,32 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    int n, m;
+    cin >> n >> m;
+    vector<bool> vis(n + 1);
+    queue<int> q;
+    q.push(n);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        if (vis[x] || x < m)continue;
+        if (x == m) {
+            cout << "YES\n";
+            return;
+        }
+        vis[x] = true;
+        if (x % 3 == 0) {
+            q.push(x / 3);
+            q.push(x / 3 * 2);
+        }
+    }
+    cout << "NO\n";
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) solve();
     return 0;
 }
