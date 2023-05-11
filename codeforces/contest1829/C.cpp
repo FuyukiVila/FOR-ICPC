@@ -1,4 +1,4 @@
-#define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
+#define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false);
 #define clr(a, b) memset(a, b, sizeof(a))
 
 #include <bits/stdc++.h>
@@ -55,13 +55,26 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    int n;
+    cin >> n;
+    int mina = INF, minb = INF, minc = INF;
+    for (int i = 1; i <= n; i++) {
+        int t;
+        string s;
+        cin >> t >> s;
+        if (s[0] == '1')mina = min(mina, t);
+        if (s[1] == '1')minb = min(minb, t);
+        if (s == "11")minc = min(minc, t);
+    }
+    int ans = min(mina + minb, minc);
+    if (ans == INF)cout << -1 << '\n';
+    else cout << ans << '\n';
 }
 
 signed main() {
-    GKD;
+    GKD
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) solve();
     return 0;
 }

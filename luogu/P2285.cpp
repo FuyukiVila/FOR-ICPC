@@ -54,8 +54,27 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+int t[10005], x[10005], y[10005];
+int dp[10005];
 
+auto solve() {
+    int n, m;
+    cin >> n >> m;
+    dp[0] = 1;
+    for (int i = 1; i <= m; i++) {
+        cin >> t[i] >> x[i] >> y[i];
+    }
+    int ans = 0;
+    for (int i = 1; i <= m; i++) {
+        dp[i] = 1;
+        for (int j = 1; j < i; j++) {
+            if (abs(x[i] - x[j]) + abs(y[i] - y[j]) <= abs(t[i] - t[j])) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+        ans = max(ans, dp[i]);
+    }
+    cout << ans;
 }
 
 signed main() {
