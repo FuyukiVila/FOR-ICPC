@@ -55,50 +55,37 @@ void get_primes(int n) {
 }
 
 auto solve() {
-    ll a, b;
-    cin >> a >> b;
-    ll sum = 0;
-    ll t;
-    for (t = 1; sum < a + b; t++) {
-        sum += t;
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
     }
-    if (sum != a + b)cout << "NO\n";
-    else {
-        t--;
-        cout << "YES\n";
-        pair<ll, char> A = {a, 'A'};
-        pair<ll, char> B = {b, 'B'};
-        vector<char> ans;
-        for (ll i = t; i >= 1; i--) {
-            if (A.first > B.first)swap(A, B);
-            if (!A.first) {
-                B.first -= i;
-                ans.push_back(B.second);
-                continue;
-            } else if (!B.first) {
-                A.first -= i;
-                ans.push_back(A.second);
-                continue;
-            }
-            if (A.first - i >= 0) {
-                A.first -= i;
-                ans.push_back(A.second);
-            } else {
-                B.first -= i;
-                ans.push_back(B.second);
-            }
-        }
-        std::reverse(ans.begin(), ans.end());
-        for (auto x: ans) {
-            cout << x;
-        }
+    int size = n;
+    vector<bool> e(n + 1, false);
+    if (n == 1) {
+        cout << 1 << '\n';
+        return;
     }
+    int q = a[1];
+    for (int i = 2; i <= n - 1; i++) {
+        if (a[i] >= q && a[i] <= a[i + 1] || a[i] <= q && a[i] >= a[i + 1]) {
+            size--;
+            e[i] = true;
+        } else q = a[i];
+    }
+    vector<int> b(1, 0);
+    for (int i = 1; i <= n; i++) {
+        if (!e[i])b.emplace_back(a[i]);
+    }
+    if (size == 2 && b[1] == b[2])size--;
+    cout << size << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) solve();
     return 0;
 }

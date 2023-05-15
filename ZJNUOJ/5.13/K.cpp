@@ -54,32 +54,10 @@ void get_primes(int n) {
     }
 }
 
-ll f(ll n) {
-    ll tot = 0;
-    ll cnt = 0;
-    ll x = n;
-    while (x) {
-        if (x & 1)
-            tot += (cnt * (1ll << (cnt - 1))) + (1ll << cnt) * __builtin_popcountll(x >> 1);
-        x >>= 1;
-        cnt++;
-    }
-    tot += __builtin_popcountll(n);
-    return tot;
-}
-
-ll g(ll x) {
-    return x / 2;
-}
-
-ll h(ll x) {
-    return x / 2 * 2 + (x - x / 2 - 1);
-}
-
 auto solve() {
-    ll x;
-    cin >> x;
-    cout << f(x) << ' ' << g(x) << ' ' << h(x) << '\n';
+    ll n, m, d, p;
+    cin >> n >> m >> d >> p;
+
 }
 
 signed main() {
