@@ -54,10 +54,35 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
-    ll n, m, d, p;
-    cin >> n >> m >> d >> p;
+ll n, m, d, p;
 
+bool check(ll x) {
+    ll Lnum = p - 1, Rnum = n - p;
+    ll k = x / d;
+    ll num = x;
+    if (Lnum <= k) {
+        num += x * Lnum - d * (Lnum + 1) * (Lnum) / 2;
+    } else {
+        num += x * k - d * (k + 1) * k / 2;
+    }
+    if (Rnum <= k) {
+        num += x * Rnum - d * (Rnum + 1) * (Rnum) / 2;
+    } else {
+        num += x * k - d * (k + 1) * k / 2;
+    }
+    return num <= m;
+}
+
+auto solve() {
+    cin >> n >> m >> d >> p;
+    m -= n;
+    int l = 0, r = m, mid;
+    while (l <= r) {
+        mid = (l + r) >> 1;
+        if (check(mid)) l = mid + 1;
+        else r = mid - 1;
+    }
+    cout << r + 1 << '\n';
 }
 
 signed main() {

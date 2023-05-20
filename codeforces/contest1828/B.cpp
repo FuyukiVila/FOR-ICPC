@@ -10,14 +10,14 @@ const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 
 template<typename T>
-inline T qpow(T a, T n, T mod) {
+inline T qpow(T a, T n) {
     if (n == 0)
         return 1;
     else if (n % 2 == 1)
-        return (qpow(a, n - 1, mod) * a) % mod;
+        return (qpow(a, n - 1) * a);
     else {
-        T temp = qpow(a, n / 2, mod) % mod;
-        return temp * temp % mod;
+        T temp = qpow(a, n / 2);
+        return temp * temp;
     }
 }
 
@@ -54,50 +54,28 @@ void get_primes(int n) {
     }
 }
 
-int a[100005];
-const ll mod = 100000007;
-
-ll binPow(ll a, ll b, ll m) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = (ans * a) % m;
-        a = (a * a) % m;
-        b >>= 1;
-    }
-    return ans;
-}
+array<int, 100005> a;
 
 auto solve() {
-    ll n;
+    int n;
     cin >> n;
-    ll sum = 0;
+    vector<int> v;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
-        sum += a[i];
+        if (a[i] == i)continue;
+        else v.push_back(abs(a[i] - i));
     }
-    if (n == 1) {
-        cout << a[1] << '\n';
-        return;
-    } else if (n == 2) {
-        cout << sum << '\n';
-        return;
+    auto ans = v.back();
+    for (auto x: v) {
+        ans = __gcd(ans, x);
     }
-    ll ans = 0;
-    ll k = 1;
-    for (ll i = n - 1; i >= 1; i--) {
-        k = k * i % mod;
-    }
-    for (int i = 0; i <= n - 1; i++) {
-        ans = (ans + (sum * max(i, 1) % mod) * k) % mod;
-    }
-    k = k * n;
-    cout << (ans * qpow(k, mod - 2, mod)) % mod;
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) solve();
     return 0;
 }
