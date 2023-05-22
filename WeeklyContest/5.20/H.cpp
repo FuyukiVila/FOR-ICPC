@@ -54,16 +54,57 @@ void get_primes(int n) {
     }
 }
 
+struct node {
+    int id;
+    int next;
+
+    bool operator<(const node &b) const {
+        return next < b.next;
+    }
+};
+
+priority_queue<node> q;
+bool is[300005];
+int a[300005];
+queue<int> v[300005];
+
 auto solve() {
-    int n;
-    cin>>n;
-    cout<<max(n-1,1)<<'\n';
+    int n, k;
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        v[a[i]].push(i);
+    }
+    int ans = 0;
+    int cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        v[a[i]].pop();
+        int next;
+        if (v[a[i]].empty())next = INF;
+        else next = v[a[i]].front();
+        if (is[a[i]]) {
+            q.push({a[i], next});
+            continue;
+        }
+        is[a[i]] = true;
+        if (cnt < k) {
+            q.push({a[i], next});
+            cnt++;
+        } else {
+            while (!is[q.top().id])q.pop();
+            is[q.top().id] = false;
+            q.pop();
+            ans++;
+            q.push({a[i], next});
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-    cin >> T;
+//    cin >> T;
     while (T--) solve();
     return 0;
 }
