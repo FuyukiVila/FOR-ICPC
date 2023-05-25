@@ -56,91 +56,68 @@ void get_primes(int n) {
 
 ll n, m, s;
 bool flag;
-bool fuxuan, guanxin;
+bool f;//true 失败序列在符玄，false 失败序列在观星
+bool fuxuan;
+bool guanxin;
 
 void play(ll n, ll m) {
+    if (n == 0 || m == 0)return;
     if (n + m < s)return;
     if (n >= m && n == s) {
         flag = true;
-        cout << "lovely\n";
+        f = true;
         return;
     } else if (n < m && m == s) {
         flag = true;
-        cout << "type-c\n";
+        f = false;
         return;
     }
     if (n >= m) {
-        ll a = n % m;
-        ll t = s - a;
-        if (a == 0) {
-            if (s % m != 0) {
-                return;
-            } else {
-                if (s <= n && s >= a) {
-                    flag = true;
-                    if (!guanxin)cout << "type-c\n";
-                    else cout << "lovely\n";
-                } else return;
-            }
-        } else if (t % m == 0) {
-            ll b = t / m;
-            if (b * m + a <= n && b * m + a >= m) {
-                flag = true;
-                if (!guanxin)cout << "type-c\n";
-                else cout << "lovely\n";
-            } else {
-                fuxuan = 1;
-                guanxin = 0;
-                play(a, m);
-            }
+        fuxuan = true;
+        ll mod = n % m;
+        if ((s - mod) % m != 0 || s < mod + m || s > n) {
+            play(mod, m);
         } else {
-            fuxuan = 1;
-            guanxin = 0;
-            play(a, m);
+            flag = true;
+            f = true;
         }
     } else if (n < m) {
-        ll a = m % n;
-        ll t = s - a;
-        if (a == 0) {
-            if (s % n != 0) {
-                return;
+        guanxin = true;
+        ll mod = m % n;
+        if (mod == 0) {
+            if ((s - mod) % n != 0 || s < 2 * n || s > m) {
+                play(n, n);
             } else {
-                ll b = s / n;
-                if (b * a <= n && s > a) {
-                    flag = true;
-                    if (!fuxuan)cout << "lovely\n";
-                    else cout << "type-c\n";
-                } else {
-                    guanxin = 1;
-                    play(n, n);
-                }
-            }
-        } else if (t % n == 0) {
-            ll b = t / n;
-            if (b * n + a <= m && b * n + a > n) {
                 flag = true;
-                if (!fuxuan)cout << "lovely\n";
-                else cout << "type-c\n";
-            } else {
-                guanxin = 1;
-                fuxuan = 0;
-                play(n, a);
+                f = false;
             }
         } else {
-            guanxin = 1;
-            fuxuan = 0;
-            play(n, a);
+            if ((s - mod) % n != 0 || s < n + mod || s > m) {
+                play(n, mod);
+            } else {
+                flag = true;
+                f = false;
+            }
         }
     }
 }
 
 auto solve() {
+    guanxin = false;
+    fuxuan = false;
     cin >> n >> m >> s;
     flag = false;
-    fuxuan = 0;
-    guanxin = 0;
     play(n, m);
     if (!flag) cout << "draw\n";
+    else {
+        if (f) {
+            if (fuxuan)cout << "type-c\n";
+            else cout << "lovely\n";
+        } else if (!f) {
+            if (guanxin)cout << "lovely\n";
+            else cout << "type-c\n";
+        }
+    }
 }
 
 signed main() {
