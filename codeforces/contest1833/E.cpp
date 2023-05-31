@@ -54,29 +54,49 @@ void get_primes(int n) {
     }
 }
 
+int g[200005];
 int a[200005];
 
+int find(int x) {
+    if (g[x] == x)return x;
+    return g[x] = find(g[x]);
+}
+
+bool is[200005];
+
 auto solve() {
-    int min_odd = INF;
-    int min_even = INF;
+    clr(is, false);
     int n;
     cin >> n;
+    map<int, vector<int> > m;
+    for (int i = 1; i <= n; i++)g[i] = i;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
-        if (a[i] % 2 == 1) {
-            min_odd = min(min_odd, a[i]);
-        } else {
-            min_even = min(min_even, a[i]);
+    }
+    for (int i = 1; i <= n; i++) {
+        g[find(i)] = find(a[i]);
+    }
+    for (int i = 1; i <= n; i++) {
+        m[find(i)].emplace_back(i);
+    }
+    for (int i = 1; i <= n; i++) {
+        if (i != a[a[i]]) {
+            is[a[i]] = true;
         }
     }
-    if (min_odd == INF || min_even == INF) {
-        cout << "YES\n";
-        return;
-    } else if (min_even > min_odd) {
-        cout << "YES\n";
-        return;
+    int cnt = m.size();
+    int q = 0;
+    for (auto const &[i, j]: m) {
+        bool flag = true;
+        for (auto x: j) {
+            if (!is[x]) {
+                flag = false;
+                break;
+            }
+        }
+        if (!flag)q++;
     }
-    cout << "NO\n";
+    cout << cnt - max(q, 1) + 1 << ' ' << cnt << '\n';
 }
 
 signed main() {

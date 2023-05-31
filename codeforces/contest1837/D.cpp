@@ -54,29 +54,43 @@ void get_primes(int n) {
     }
 }
 
-int a[200005];
+char a[200005];
+int sum[200005];
 
 auto solve() {
-    int min_odd = INF;
-    int min_even = INF;
     int n;
     cin >> n;
+    clr(sum, 0);
+    map<char, int> cnt;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
-        if (a[i] % 2 == 1) {
-            min_odd = min(min_odd, a[i]);
-        } else {
-            min_even = min(min_even, a[i]);
+        cnt[a[i]]++;
+    }
+    if (cnt['('] != cnt[')']) {
+        cout << "-1\n";
+        return;
+    }
+    bool flag1 = true;
+    bool flag2 = true;
+    for (int i = 1; i <= n; i++) {
+        if (a[i] == '(')sum[i] = sum[i - 1] + 1;
+        else sum[i] = sum[i - 1] - 1;
+        if (sum[i] < 0)flag1 = false;
+        else if (sum[i] > 0)flag2 = false;
+    }
+    if (flag1 || flag2) {
+        cout << 1 << '\n';
+        for (int i = 1; i <= n; i++) {
+            cout << 1 << " \n"[i == n];
         }
+    } else {
+        cout << 2 << '\n';
+        for (int i = 1; i <= n; i++) {
+            if (sum[i] < 0 || sum[i - 1] < 0) cout << 1 << ' ';
+            else cout << 2 << ' ';
+        }
+        cout << '\n';
     }
-    if (min_odd == INF || min_even == INF) {
-        cout << "YES\n";
-        return;
-    } else if (min_even > min_odd) {
-        cout << "YES\n";
-        return;
-    }
-    cout << "NO\n";
 }
 
 signed main() {

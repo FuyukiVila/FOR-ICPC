@@ -54,29 +54,14 @@ void get_primes(int n) {
     }
 }
 
-int a[200005];
-
 auto solve() {
-    int min_odd = INF;
-    int min_even = INF;
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-        if (a[i] % 2 == 1) {
-            min_odd = min(min_odd, a[i]);
-        } else {
-            min_even = min(min_even, a[i]);
-        }
+    int n, k;
+    cin >> n >> k;
+    if (n % k != 0) {
+        cout << "1\n" << n << '\n';
+    } else {
+        cout << "2\n" << n - 1 << " 1" << '\n';
     }
-    if (min_odd == INF || min_even == INF) {
-        cout << "YES\n";
-        return;
-    } else if (min_even > min_odd) {
-        cout << "YES\n";
-        return;
-    }
-    cout << "NO\n";
 }
 
 signed main() {
