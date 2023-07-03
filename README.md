@@ -8,7 +8,7 @@
 #### 2023.4.15<br>The 20th Zhejiang Provincial Collegiate Programming Contest
 铁 128th
 #### 2023.4.22<br>团队程序设计天梯赛
-银 177分
+高校一等奖 团队二等奖 个人三等奖177分
 ### 2023年6月
 #### 2023.6.10<br>蓝桥杯
 **国B 二等奖**
