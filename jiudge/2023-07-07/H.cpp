@@ -55,7 +55,26 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    static int x[100005];
+    int n, r;
+    cin >> n >> r;
+    for (int i = 1; i <= n; i++) {
+        cin >> x[i];
+    }
+    sort(x + 1, x + n + 1);
+    int first = 1;
+    int cnt = 0;
+    for (int i = n; i >= first; i--) {
+        while (x[first] - cnt * r <= 0) {
+            first++;
+        }
+        if (i < first)break;
+        cnt++;
+        while (x[i - 1] == x[i]) {
+            i--;
+        }
+    }
+    cout << cnt << '\n';
 }
 
 signed main() {

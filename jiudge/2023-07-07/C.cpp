@@ -54,8 +54,51 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+ll c[300005];
+ll _c[300005];
 
+auto solve() {
+    ll n, k;
+    ll sum = 0;
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) {
+        cin >> c[i];
+        _c[i] = c[i];
+        sum += c[i];
+    }
+    c[0] = 0;
+    c[n + 1] = 0;
+    ll ans = 0;
+    ll l = 1, r = sum / k;
+    while (l <= r) {
+        for (int i = 1; i <= n; i++) {
+            c[i] = _c[i];
+        }
+        ll mid = (l + r) / 2;
+        ll cnt = 0;
+        for (int i = 1; i <= n; i++) {
+            ll tmp = c[i - 1] + c[i];
+            cnt += tmp / mid;
+            tmp = tmp / mid * mid;
+            tmp -= c[i - 1];
+            if (tmp > 0) {
+                if (c[i] >= tmp) {
+                    c[i] -= tmp;
+                } else {
+                    tmp -= c[i];
+                    c[i] = 0;
+                    c[i + 1] -= tmp;
+                }
+            }
+        }
+        if (cnt >= k) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+//    cout << l << ' ' << r << '\n';
+    cout << r * k << '\n';
 }
 
 signed main() {

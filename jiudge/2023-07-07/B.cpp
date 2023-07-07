@@ -55,7 +55,34 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    string s;
+    cin >> s;
+    string q, o;
+    for (auto const &x: s) {
+        if ((x - '0') % 2 == 0) {
+            o.push_back(x);
+        } else {
+            q.push_back(x);
+        }
+    }
+    string ans;
+    int i = 0, j = 0;
+    while (i < q.size() || j < o.size()) {
+        if (i == q.size()) {
+            ans.push_back(o[j]);
+            j++;
+        } else if (j == o.size()) {
+            ans.push_back(q[i]);
+            i++;
+        } else if (q[i] < o[j]) {
+            ans.push_back(q[i]);
+            i++;
+        } else {
+            ans.push_back(o[j]);
+            j++;
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

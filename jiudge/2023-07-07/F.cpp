@@ -54,14 +54,41 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+int a[505][505];
 
+auto solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> s;
+    srand((unsigned)time(NULL));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    for (int i = 1; i <= 50000; i++) {
+        int ans = 0;
+        s.clear();
+        for (int j = 1; j <= n; j++) {
+            int f = 1 + (rand() % m);
+            s.emplace_back(f);
+            ans ^= a[j][f];
+        }
+        if (ans > 0) {
+            cout<<"TAK\n";
+            for (auto x: s) {
+                cout << x << ' ';
+            }
+            return;
+        }
+    }
+    cout << "NIE\n";
 }
 
 signed main() {
     GKD;
     auto T = 1;
-    cin >> T;
+//    cin >> T;
     while (T--) solve();
     return 0;
 }

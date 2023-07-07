@@ -54,8 +54,55 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
+int a[2000005];
+bool is[2000005];
 
+auto solve() {
+    ll n, k;
+    cin >> n >> k;
+    ll cnt = 0;
+    bool flag = false;
+    ll zero = 0;
+    ll has = 0;
+    for (int i = 1; i <= n; i++) {
+        is[i] = false;
+        char c;
+        cin >> c;
+        if (c == '0')a[i] = 0;
+        else a[i] = 1;
+    }
+    int next = 1;
+    for (int i = 1; i <= n && cnt < k; i++) {
+        if (a[i] == 0 && i == next) {
+            next++;
+            zero++;
+            is[i] = true;
+        } else if (a[i] == 0 && i - next <= k - cnt) {
+            is[i] = true;
+            cnt += i - next;
+            next++;
+            zero++;
+        } else if (a[i] == 0) {
+            next = i - (k - cnt);
+            is[i] = true;
+            flag = true;
+            cnt = k;
+        }
+    }
+    for (int i = 1; i <= zero; i++) {
+        cout << 0;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (has + zero == next - 1 && flag) {
+            cout << 0;
+            flag = false;
+        }
+        if (!is[i]) {
+            cout << a[i];
+            has++;
+        }
+    }
+    cout << '\n';
 }
 
 signed main() {

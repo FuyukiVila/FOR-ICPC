@@ -55,7 +55,7 @@ void get_primes(int n) {
 }
 
 auto solve() {
-
+    
 }
 
 signed main() {
