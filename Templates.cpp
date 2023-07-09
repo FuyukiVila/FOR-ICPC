@@ -3,6 +3,22 @@
 
 #include <bits/stdc++.h>
 
+#define dbg(x...) \
+    do { \
+        std::cout << #x << " -> "; \
+        err(x); \
+    } while (0)
+
+void err() {
+    std::cout << std::endl;
+}
+
+template<class T, class... Ts>
+void err(T arg, Ts &... args) {
+    std::cout << arg << ' ';
+    err(args...);
+}
+
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
