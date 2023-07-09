@@ -38,14 +38,17 @@ void get_primes(int n) {
     }
 }
 
+int a[20000005];
+int sum[20000005];
+int maxn = 0;
+
 auto genshin_start() {
 
 }
 
 signed main() {
-    GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

@@ -21,6 +21,22 @@ constexpr T qpow(T a, T n) {
     }
 }
 
+template<typename T>
+constexpr bool isPrime(T num) {
+    if (num == 1 || num == 4)
+        return false;
+    if (num == 2 || num == 3)
+        return true;
+    if (num % 6 != 1 && num % 6 != 5)
+        return false;
+    T tmp = sqrt(num);
+    for (T i = 5; i <= tmp; i += 6) {
+        if (num % i == 0 || num % (i + 2) == 0)
+            return false;
+    }
+    return true;
+}
+
 constexpr int N = 1e7 + 100;
 int minp[N];
 vector<int> primes;

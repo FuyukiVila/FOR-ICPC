@@ -55,7 +55,25 @@ void get_primes(int n) {
 }
 
 auto solve() {
-    
+    string s, l, r;
+    cin >> s;
+    int m;
+    cin >> m >> l >> r;
+    int pos = 0;
+    bitset<12> vis;
+    for (auto x: s) {
+        if (x >= l[pos] && x <= r[pos]) {
+            vis[x - '0'] = true;
+        }
+        if (vis.count() == r[pos] - l[pos] + 1) {
+            pos++;
+        }
+        if (pos == m) {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 
 signed main() {

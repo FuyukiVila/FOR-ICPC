@@ -10,14 +10,14 @@ const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 
 template<typename T>
-inline T qpow(T a, T n) {
+inline T qpow(T const &a, T n, T const &mod) {
     if (n == 0)
         return 1;
     else if (n % 2 == 1)
-        return (qpow(a, n - 1) * a);
+        return ((qpow(a, n - 1, mod) % mod) * (a % mod)) % mod;
     else {
-        T temp = qpow(a, n / 2);
-        return temp * temp;
+        T temp = qpow(a, n / 2, mod) % mod;
+        return (temp * temp) % mod;
     }
 }
 
@@ -54,33 +54,29 @@ void get_primes(int n) {
     }
 }
 
-auto solve() {
-    string s, l, r;
-    cin >> s;
-    int m;
-    cin >> m >> l >> r;
-    int pos = 0;
-    bitset<12> vis;
-    for (auto x: s) {
-        if (x >= l[pos] && x <= r[pos]) {
-            vis[x - '0'] = true;
+const ll mod = 1e9 + 7;
+
+auto genshin_start() {
+    ll n, m;
+    cin >> n >> m;
+    ll ans = 0;
+    ll choose = 1;
+    for (ll i = 0; i <= m; i++) {
+        if (i > 0) {
+            choose = (choose * (m - i + 1)) % mod;
+            choose = (choose * qpow(i, mod - 2, mod)) % mod;
         }
-        if (vis.count() == r[pos] - l[pos] + 1) {
-            pos++;
-            vis.reset();
-        }
-        if (pos == m) {
-            cout << "NO\n";
-            return;
-        }
+        ans = (ans + ((i & 1ll) == 0 ? 1 : -1) * (choose % mod) * (qpow(qpow(2ll, m - i, mod) - 1ll, n, mod) % mod)) %
+              mod;
+        if (ans < 0)ans += mod;
     }
-    cout << "YES\n";
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
     cin >> T;
-    while (T--) solve();
+    while (T--) genshin_start();
     return 0;
 }

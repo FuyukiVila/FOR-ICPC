@@ -10,7 +10,7 @@ const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 
 template<typename T>
-inline T qpow(T a, T n) {
+constexpr T qpow(T a, T n) {
     if (n == 0)
         return 1;
     else if (n % 2 == 1)
@@ -22,7 +22,7 @@ inline T qpow(T a, T n) {
 }
 
 template<typename T>
-bool isPrime(T num) {
+constexpr bool isPrime(T num) {
     if (num == 1 || num == 4)
         return false;
     if (num == 2 || num == 3)
@@ -42,7 +42,7 @@ int minp[N];
 vector<int> primes;
 bool st[N];
 
-void get_primes(int n) {
+constexpr void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
         if (!st[i]) minp[i] = i, primes.emplace_back(i);
         for (int j = 0; primes[j] * i <= n; j++) {
@@ -54,27 +54,58 @@ void get_primes(int n) {
     }
 }
 
+struct node {
+    int l, r;
+
+    bool operator<(const node &b) const {
+        if (l == b.l) {
+            return r < b.r;
+        }
+        return l < b.l;
+    }
+} a[200005];
+
 auto solve() {
-    string s, l, r;
-    cin >> s;
-    int m;
-    cin >> m >> l >> r;
-    int pos = 0;
-    bitset<12> vis;
-    for (auto x: s) {
-        if (x >= l[pos] && x <= r[pos]) {
-            vis[x - '0'] = true;
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].l >> a[i].r;
+    }
+    int fl = a[1].l, fr = a[1].r;
+    bool flag = false;
+    for (int i = 2; i <= m + 1; i++) {
+        if (fr < a[i].l || fl > a[i].r) {
+            flag = true;
+            break;
         }
-        if (vis.count() == r[pos] - l[pos] + 1) {
-            pos++;
-            vis.reset();
-        }
-        if (pos == m) {
-            cout << "NO\n";
-            return;
+        fl = max(fl, a[i].l);
+        fr = min(fr, a[i].r);
+    }
+    if (m == n - 1) {
+        cout << (flag ? 0 : fr - fl + 1) << '\n';
+        return;
+    }
+    ll ans = 0;
+    if (!flag) {
+        a[n + 1].l = fl, a[n + 1].r = fr;
+        n++;
+        sort(a + m + 2, a + n + 1);
+    } else {
+        sort(a + m + 2, a + n + 1);
+    }
+    fl = a[m + 2].l, fr = a[m + 2].r;
+    for (int i = m + 2; i <= n; i++) {
+        if (a[i].l > fr) {
+            ans += fr - fl + 1;
+            fl = a[i].l;
+            fr = a[i].r;
+        } else {
+            fr = max(fr, a[i].r);
+            fl = min(fl, a[i].l);
         }
     }
-    cout << "YES\n";
+    ans += fr - fl + 1;
+    cout << ans << '\n';
 }
 
 signed main() {
