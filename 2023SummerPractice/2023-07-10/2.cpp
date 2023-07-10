@@ -54,9 +54,12 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
+constexpr ll mod = 998244353;
 
+auto genshin_start() {
+    ll n, k, t;
+    cin >> n >> k >> t;
+    cout << k % mod << '\n';
 }
 
 signed main() {

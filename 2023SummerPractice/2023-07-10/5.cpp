@@ -54,9 +54,47 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
+bitset<32> a[1000005];
+int ans[1000005];
 
+inline int reverse(bitset<32> b, int maxn) {
+    for (int i = 0; i <= maxn; i++) {
+        b[i] = !b[i];
+    }
+    return b.to_ulong();
+}
+
+void resolve(int s, int t) {
+    int r = 0;
+    if (s == t)return;
+    int maxn = 0;
+    for (int i = 31; i >= 0; i--) {
+        if (a[t][i] == 1) {
+            maxn = i;
+            break;
+        }
+    }
+    for (int i = s; i <= t; i++) {
+        auto j = reverse(a[i], maxn);
+        if (j > t) {
+            r = i;
+        } else {
+            ans[i] = j;
+        }
+    }
+    resolve(s, r);
+}
+
+auto genshin_start() {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        a[i] = i;
+    }
+    resolve(0, n - 1);
+    for (int i = 0; i < n; i++) {
+        cout << ans[i] << ' ';
+    }
 }
 
 signed main() {
