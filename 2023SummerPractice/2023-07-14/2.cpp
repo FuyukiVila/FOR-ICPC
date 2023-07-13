@@ -55,14 +55,22 @@ void get_primes(int n) {
 }
 
 //玩原神导致的
-void genshin_start() {
+const int MAXN = 5e3 + 5;
+ll a[MAXN];
 
+void genshin_start() {
+    int n, k;
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

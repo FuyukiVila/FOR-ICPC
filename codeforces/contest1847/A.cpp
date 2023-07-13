@@ -24,17 +24,17 @@ using ll = long long;
 using ull = unsigned long long;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-const ll mod = 1e9 + 7;
 
 template<typename T>
-inline constexpr T qpow(T a, T n) {
-    T ans = 1;
-    while (n) {
-        if (n & 1) ans = (ans * a) % mod;
-        n >>= 1;
-        a = (a * a) % mod;
+constexpr T qpow(T a, T n) {
+    if (n == 0)
+        return 1;
+    else if (n % 2 == 1)
+        return (qpow(a, n - 1) * a);
+    else {
+        T temp = qpow(a, n / 2);
+        return temp * temp;
     }
-    return ans;
 }
 
 constexpr int N = 1e7 + 100;
@@ -56,13 +56,29 @@ void get_primes(int n) {
 
 //玩原神导致的
 void genshin_start() {
-
+    int n, k;
+    int sum = 0;
+    cin >> n >> k;
+    vector<int> a(n);
+    vector<int> b(n-1);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (i > 0) {
+            b[i - 1] = abs(a[i] - a[i - 1]);
+            sum += abs(a[i] - a[i - 1]);
+        }
+    }
+    sort(b.begin(), b.end(), greater<>());
+    for (int i = 0; i < k - 1; i++) {
+        sum -= b[i];
+    }
+    cout << sum << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

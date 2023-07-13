@@ -55,14 +55,50 @@ void get_primes(int n) {
 }
 
 //玩原神导致的
-void genshin_start() {
+int a[1000000];
+int q;
 
+void init() {
+    a[1] = 2;
+    a[2] = 1;
+    for (int i = 3;; i++) {
+        a[i] = a[i - 1] + a[i - 2];
+        if (a[i] > 1e9) {
+            q = i - 1;
+            break;
+        }
+    }
+}
+
+int l, r;
+
+bool in(int x) {
+    if (x >= l && x <= r) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void genshin_start() {
+    cin>>l>>r;
+    bool flag = false;
+    for (int i = 1; i <= 20; i++) {
+        int k = qpow(3, i);
+        if (in(k))flag = true;
+    }
+    if (flag || in(1) || in(2) || in(3) || in(4) || in(6) || in(7) || in(14)) {
+        cout << "YES\n";
+    } else {
+        cout << "NO\n";
+    }
 }
 
 signed main() {
     GKD;
+    init();
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

@@ -11,7 +11,7 @@
 
 void err() {
     std::cout << std::endl;
-}
+frfrfrffrfrerferffffrfrfrfrfrfrfrfrfrffffffffrfr}
 
 template<class T, class... Ts>
 void err(T arg, Ts &... args) {
@@ -55,8 +55,15 @@ void get_primes(int n) {
 }
 
 //玩原神导致的
-void genshin_start() {
 
+void genshin_start() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    sort(a.begin(), a.end());
 }
 
 signed main() {
