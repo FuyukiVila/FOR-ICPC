@@ -25,101 +25,79 @@ using ull = unsigned long long;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 const int MAXN = 1e6 + 5;
-struct node {
-    int l, r;
-    int maxn, minn;
-} t[MAXN * 4];
-
 //玩原神导致的
 int n;
-ll ans = 0;
-int a[MAXN];
+int f[MAXN], g[MAXN];
 
-void build(int l = 1, int r = n, int p = 1) {
-    t[p].l = l, t[p].r = r;
-    if (l == r) {
-        t[p].minn = a[l];
-        t[p].maxn = a[l];
-        return;
-    }
-    int mid = (l + r) / 2;
-    build(l, mid, p * 2), build(mid + 1, r, p * 2 + 1);
-    t[p].maxn = max(t[p * 2].maxn, t[p * 2 + 1].maxn);
-    t[p].minn = min(t[p * 2].minn, t[p * 2 + 1].minn);
-}
-
-pair<int, int> query(int l, int r, int p = 1) {
-    if (l <= t[p].l && r >= t[p].r) {
-        return {t[p].maxn, t[p].minn};
-    }
-    int mid = (t[p].l + t[p].r) / 2;
-    int maxn = 0;
-    int minn = INF;
-    if (l <= mid) {
-        maxn = max(query(l, r, p * 2).first, maxn);
-        minn = min(query(l, r, p * 2).second, minn);
-    }
-    if (r > mid) {
-        maxn = max(query(l, r, p * 2 + 1).first, maxn);
-        minn = min(query(l, r, p * 2 + 1).second, minn);
-    }
-    return {maxn, minn};
-}
-
-int l[MAXN], r[MAXN];
-int pos[MAXN];
-bool vis[MAXN];
+//void solve(int l, int r) {
+//    if (l > r)return;
+//    else if (l == r) {
+//        if (a[l] == l)ans++;
+//        return;
+//    }
+//    int mid = (l + r) / 2;
+//    int i = mid, j = mid;
+//    int mx = a[mid], mn = a[mid];
+//    while (i >= l) {
+//        if (mn < l) {
+//            i--;
+//            mx = max(a[i], mx);
+//            mn = min(a[i], mn);
+//        } else if (mn == i) {
+//            while (j <= r) {
+//                if (g[j] > i)break;
+//                if (g[j] > i && j > mx && f[j] == j) {
+//                    ans++;
+//                    bool flag = true;
+//                }
+//                j++;
+//            }
+//        } else if (mn > i) {
+//            while (j <= r) {
+//                if (g[j] > i)break;
+//                if (g[j] == i && j > mx && f[j] == j) {
+//                    ans++;
+//                    bool flag = true;
+//                }
+//                j++;
+//            }
+//        }
+//    }
+//    solve(l, mid), solve(mid + 1, r);
+//}
+ull a[MAXN];
+ull b[MAXN];
+ull r[MAXN];
+ull ans = 0;
 
 void genshin_start() {
     cin >> n;
+    random_device rd;
+    mt19937 eng(rd());
+    uniform_int_distribution<int> dis(1, INT32_MAX);
     for (int i = 1; i <= n; i++) {
-//        a[i] = n - i + 1;
-        pos[a[i]] = i;
-        l[i + 1] = l[i];
-        if (a[i] == i) {
-            l[i + 1]++;
-        } else {
-            l[i + 1] = 0;
-        }
+        r[i] = dis(eng);
+//        cout << r[i] << ' ';l
     }
-
-    for (int i = n; i >= 1; i--) {
-        r[i - 1] = r[i];
-        if (a[i] == i) {
-            r[i - 1]++;
-        } else {
-            r[i - 1] = 0;
-        }
-    }
-    build();
+//    cout << '\n';
     for (int i = 1; i <= n; i++) {
-        if (a[i] == i) {
-            ans += 1 + r[i];
-        } else {
-            int p = i;
-            int q = a[i];
-            label:
-            if (p > q)swap(p, q);
-            if (vis[q]) {
-                continue;
-            } else {
-                vis[q] = true;
-            }
-            auto que = query(p, q);
-            int maxn = que.first, minn = que.second;
-            if (minn != p || maxn != q) {
-                if (p > minn) {
-                    vis[q] = false;
-                    p = minn;
-                }
-                if (q < maxn) {
-                    q = maxn;
-                }
-                goto label;
-            } else {
-                ans += 1 + l[p] + r[q];
-            }
-        }
+        cin >> a[i];
+        b[i] = r[i] ^ r[a[i]];
+//        if (i == 1) {
+//            f[i] = g[i] = a[i];
+//        } else {
+//            f[i] = max(f[i - 1], a[i]);
+//            g[i] = min(g[i - 1], a[i]);
+//        }
+    }
+//    solve(1, n);
+    unordered_map<ull, ull> m;
+    ull cur = 0;
+    m[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        cur ^= b[i];
+        ans += m[cur];
+        m[cur]++;
     }
     cout << ans << '\n';
 }
