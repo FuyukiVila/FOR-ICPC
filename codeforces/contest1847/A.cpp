@@ -56,6 +56,7 @@ void get_primes(int n) {
 
 //玩原神导致的
 void genshin_start() {
+<<<<<<< HEAD
     int n, k;
     int sum = 0;
     cin >> n >> k;
@@ -73,12 +74,19 @@ void genshin_start() {
         sum -= b[i];
     }
     cout << sum << '\n';
+=======
+
+>>>>>>> 7d2f77c1139025a18ce7280cd3653cd41faa1591
 }
 
 signed main() {
     GKD;
     auto T = 1;
+<<<<<<< HEAD
     cin >> T;
+=======
+//    cin >> T;
+>>>>>>> 7d2f77c1139025a18ce7280cd3653cd41faa1591
     while (T--) genshin_start();
     return 0;
 }
