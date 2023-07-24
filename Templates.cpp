@@ -22,6 +22,10 @@ void err(T arg, Ts &... args) {
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
+template<typename T>
+using umap = unordered_map<T, T>;
+template<class T>
+using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 const ll mod = 1e9 + 7;
