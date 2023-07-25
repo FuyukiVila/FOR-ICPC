@@ -24,8 +24,8 @@ using ll = long long;
 using ull = unsigned long long;
 template<typename T>
 using umap = unordered_map<T, T>;
-template<class T>
-using uset = unordered_set<T, T>;
+template<typename T>
+using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 
@@ -61,14 +61,13 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
+auto genshin_start() {
 
 }
 
 signed main() {
     GKD;
-    auto T = 1;
+    auto T{1};
 //    cin >> T;
     while (T--) genshin_start();
     return 0;

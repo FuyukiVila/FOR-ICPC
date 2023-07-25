@@ -61,14 +61,13 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
+auto genshin_start(){
 
 }
 
 signed main() {
     GKD;
-    auto T = 1;
+    auto T{1};
 //    cin >> T;
     while (T--) genshin_start();
     return 0;

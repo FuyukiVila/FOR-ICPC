@@ -20,6 +20,7 @@ void err(T arg, Ts &... args) {
 }
 
 using namespace std;
+
 using ll = long long;
 using ull = unsigned long long;
 template<typename T>
@@ -61,15 +62,55 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
+#define int long long
+const int MAXN = 3e4 + 6;
+int a[MAXN], c[MAXN], _a[MAXN];
+int dp[4000][4000];
+const int mod = 1e9 + 7;
 
+auto genshin_start() {
+    memset(dp, 0, sizeof(dp));
+    memset(c, 0, sizeof(c));
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> _a[i];
+    }
+    sort(_a + 1, _a + 1 + n);
+    int cnt = 1;
+    for (int i = 1; i <= n; i++) {
+        if (_a[i] != _a[i - 1]) {
+            a[i] = cnt++;
+            c[i] = c[i - 1] + 1;
+        } else {
+            a[i] = cnt;
+            c[i] = c[i - 1];
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            if (c[i] == c[i - 1]) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                if (j == 1) {
+                    dp[i][j] = c[i];
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                    dp[i][j] %= mod;
+                }
+            }
+        }
+        dp[i][i] = dp[i][i - 1];
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << dp[n][i] % mod << '\n';
+    }
 }
 
 signed main() {
     GKD;
-    auto T = 1;
-//    cin >> T;
+    auto T{1};
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

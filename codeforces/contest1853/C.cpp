@@ -61,15 +61,28 @@ void get_primes(int n) {
     }
 }
 
-//玩原神导致的
-void genshin_start() {
-
+auto genshin_start() {
+    int n, k;
+    cin >> n >> k;
+    vector<ll> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    ll ans = 1;
+    int cur = 0;
+    while (k--) {
+        while (cur < n && a[cur + 1] - (cur + 1) < ans) {
+            cur++;
+        }
+        ans += cur;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
-    auto T = 1;
-//    cin >> T;
+    auto T{1};
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }
