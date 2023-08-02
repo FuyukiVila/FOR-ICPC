@@ -28,17 +28,18 @@ template<class T>
 using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
+const int mod = 0;
 
 template<typename T>
-inline constexpr T qpow(T a, T n, T mod) {
+inline constexpr T qpow(T _a, T _n, T _mod = mod) {
     T ans = 1;
-    while (n) {
-        if (n & 1) ans *= a;
-        n >>= 1;
-        a *= a;
-        if (mod > 0) {
-            ans %= mod;
-            a %= mod;
+    while (_n) {
+        if (_n & 1) ans *= _a;
+        _n >>= 1;
+        _a *= _a;
+        if (_mod > 0) {
+            ans %= _mod;
+            _a %= _mod;
         }
     }
     return ans;
