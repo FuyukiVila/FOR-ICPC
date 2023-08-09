@@ -24,7 +24,7 @@ using ll = long long;
 using ull = unsigned long long;
 template<typename T>
 using umap = unordered_map<T, T>;
-template<class T>
+template<typename T>
 using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
@@ -62,12 +62,19 @@ void get_primes(int n) {
     }
 }
 
-std::random_device rd;
-std::default_random_engine eng(rd());
-std::uniform_int_distribution<ll> ranint(1, 1e18);
-
 //玩原神导致的
+ll p1 = 12 * 13, p2 = 12 * 12;
+
 void genshin_start() {
+    for (int i = 0; i <= 200; i += 2) {
+        int n = i;
+        int sum = 0;
+        while (n) {
+            n /= 5;
+            sum += n;
+        }
+        cout << i << " ! = " << sum << '\n';
+    }
 }
 
 signed main() {

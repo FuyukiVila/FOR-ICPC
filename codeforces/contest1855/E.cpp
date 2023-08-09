@@ -24,7 +24,7 @@ using ll = long long;
 using ull = unsigned long long;
 template<typename T>
 using umap = unordered_map<T, T>;
-template<class T>
+template<typename T>
 using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
@@ -62,12 +62,34 @@ void get_primes(int n) {
     }
 }
 
-std::random_device rd;
-std::default_random_engine eng(rd());
-std::uniform_int_distribution<ll> ranint(1, 1e18);
-
 //玩原神导致的
+
 void genshin_start() {
+    int n;
+    cin >> n;
+    ll ans = 0;
+    vector<ll> a(n + 1);
+    vector<ll> s(n + 1);
+    bitset<200005> dp;
+    bitset<200005> is;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        s[i] = s[i - 1] + a[i];
+    }
+    dp[1] = true;
+    for (int i = 1; i <= n; i++) {
+        dp = dp | (dp << a[i]);
+        is[i] = dp[i];
+        dp[i] = false;
+    }
+    for (int i = 1; i <= 2 * n; i++) {
+        if (is[i] && i <= n) {
+            ans = max(s[i] - i + 1, ans);
+        } else if (i > n && dp[i]) {
+            ans = max(ans, s[n] - i + 1);
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

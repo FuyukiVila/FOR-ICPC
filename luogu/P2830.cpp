@@ -93,26 +93,35 @@ public:
 
     pair<string, int> decode(const string &s) {
         pair<string, int> res{};
-        string ss;
-        for (int i = 0; i <= s.size(); i++) {
-            if (s[i] == '[') {
-                ss = s.substr(i + 1);
-                break;
+        stack<string> stk;
+        string tmp{};
+        int value{};
+        bool flag = false;
+        for (auto const &x: s) {
+            if (x == '[') {
+                stk.push(tmp);
+                tmp.clear();
+            } else if (x == ']') {
+                if (!flag) {
+                    value = stoi(tmp);
+                    flag = true;
+                }
+                if (stk.size() == 1) {
+                    res = {stk.top(), value};
+                    break;
+                }
+                value = getVal(stk.top(), value);
+                stk.pop();
+            } else {
+                tmp.push_back(x);
             }
-            res.first.push_back(s[i]);
-        }
-        ss.pop_back();
-        try {
-            res.second = stoi(ss);
-        }
-        catch (...) {
-            auto r = decode(ss);
-            res.second = getVal(r.first, r.second);
         }
         return res;
     }
 };
+
 Program p;
+
 //玩原神导致的
 void genshin_start() {
     string s;
