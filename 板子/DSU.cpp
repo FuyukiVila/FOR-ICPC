@@ -3,7 +3,7 @@
 struct DSU {
     std::vector<int> f, siz;
 
-    explicit DSU(int n) : f(n + 1), siz(n + 1, 1) { std::iota(f.begin(), f.end(), 0); }
+    explicit DSU(int n) : f(n), siz(n, 1) { std::iota(f.begin(), f.end(), 0); }
 
     int find(int x) {
         while (x != f[x]) x = f[x] = f[f[x]];
