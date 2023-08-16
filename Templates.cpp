@@ -68,6 +68,7 @@ std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 //玩原神导致的
 void genshin_start() {
+
 }
 
 signed main() {
