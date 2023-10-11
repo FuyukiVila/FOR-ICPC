@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 
-using namespace std;
 //字典树
 const int Num = 26;             //每个节点需要保存26个字母
 
@@ -18,7 +17,7 @@ public:
 
     Trie() { root = new TrieNode(); }
 
-    void insert(const string &word) {
+    void insert(const std::string &word) {
         TrieNode *location = root;
         for (char i: word) {
             if (location->next[i - 'a'] == nullptr) {
@@ -30,7 +29,7 @@ public:
         location->Isword = true;
     }
 
-    bool search(string word) {
+    bool search(std::string word) {
         TrieNode *location = root;
         //while (word&&location)//注意location不能为空
         for (int i = 0; i < word.length() && location; i++)

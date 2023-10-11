@@ -3,28 +3,33 @@
 
 #include <bits/stdc++.h>
 
-#define dbg(x...)                                                              \
-    do {                                                                       \
-        std::cout << #x << " -> ";                                             \
-        err(x);                                                                \
+#define dbg(x...) \
+    do { \
+        std::cout << #x << " -> "; \
+        err(x); \
     } while (0)
 
-void err() { std::cout << std::endl; }
+void err() {
+    std::cout << std::endl;
+}
 
 template<class T, class... Ts>
-void err(T arg, Ts &...args) {
+void err(T arg, Ts &... args) {
     std::cout << arg << ' ';
     err(args...);
 }
 
 using namespace std;
 using ll = long long;
+using i64 = long long;
 using ull = unsigned long long;
-template<typename T> using umap = unordered_map<T, T>;
-template<class T> using uset = unordered_set<T, T>;
+template<typename T>
+using umap = unordered_map<T, T>;
+template<class T>
+using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-const int mod = 0;
+const ll mod = 998244353;
 
 inline constexpr ll qpow(ll a, ll n, ll _mod = mod) {
     ll ans = 1;
@@ -47,30 +52,24 @@ bool st[N];
 
 void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
-        if (!st[i])
-            minp[i] = i, primes.emplace_back(i);
+        if (!st[i]) minp[i] = i, primes.emplace_back(i);
         for (int j = 0; primes[j] * i <= n; j++) {
             int t = primes[j] * i;
             st[t] = true;
             minp[t] = primes[j];
-            if (i % primes[j] == 0)
-                break;
+            if (i % primes[j] == 0) break;
         }
     }
 }
 
-std::random_device rd;
-std::default_random_engine eng(rd());
-std::uniform_int_distribution<ll> ranint(1, 1e18);
+auto genshin_start() {
 
-// 玩原神导致的
-void genshin_start() {}
+}
 
 signed main() {
     GKD;
-    auto T = 1;
+    auto T{1};
     cin >> T;
-    while (T--)
-        genshin_start();
+    while (T--) genshin_start();
     return 0;
 }

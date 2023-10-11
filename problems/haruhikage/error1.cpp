@@ -26,15 +26,17 @@ const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 const int mod = 0;
 
-inline constexpr ll qpow(ll a, ll n, ll _mod = mod) {
-    ll ans = 1;
-    while (n) {
-        if (n & 1) ans *= a;
-        n >>= 1;
-        a *= a;
+template<typename T>
+inline constexpr T qpow(T _a, T _n, T _mod = mod) {
+    T ans = 1;
+    while (_n) {
+        if (_n & 1)
+            ans *= _a;
+        _n >>= 1;
+        _a *= _a;
         if (_mod > 0) {
             ans %= _mod;
-            a %= _mod;
+            _a %= _mod;
         }
     }
     return ans;
@@ -64,12 +66,50 @@ std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 // 玩原神导致的
-void genshin_start() {}
 
+struct node {
+    int note{};
+    int score{};
+
+    bool operator<(const node &a) const { return score > a.score; }
+} a[200005];
+
+void genshin_start() {
+    int n, k, m, x;
+    int sum = 0;
+    cin >> n >> k >> m >> x;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].note;
+        a[i].score = 0;
+        for (int j = 1; j <= a[i].note; j++) {
+            sum++;
+            a[i].score += (sum + (k - 1)) / k;
+        }
+        a[i].score += a[i - 1].score;
+    }
+    int ans = a[n].score;
+    for (int i = 1; i <= n; i++) {
+        a[i].score = a[min(i + x, n)].score - a[i].score;
+    }
+    sort(a + 1, a + n + 1);
+    for (int i = 1; i <= n && m; i++) {
+        if (a[i].note == 0)
+            continue;
+        if (m >= a[i].note) {
+            m -= a[i].note;
+            ans += a[i].score * a[i].note;
+        } else {
+            ans += a[i].score * m;
+            break;
+        }
+    }
+    cout << ans << '\n';
+}
+//没开long long
 signed main() {
     GKD;
     auto T = 1;
-    cin >> T;
+    // cin >> T;
     while (T--)
         genshin_start();
     return 0;

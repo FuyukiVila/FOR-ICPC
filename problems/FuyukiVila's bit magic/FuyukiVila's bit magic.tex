@@ -1,0 +1,38 @@
+\begin{problem}{FuyukiVila's bit magic}{standard input}{standard output}{1 second}{256 megabytes}
+
+    FuyukiVila is the master of bit magic. He can use some magic to change the binary digit.  However, when he uses magic, he will spend some MP.
+    
+    These are the magic he's learned, if $s$ is a binary integer:
+    
+    1. add $s$ by $1$ , that is $s := s + 1$ , then FuyukiVila will spend $1$ MP.
+    
+    2. invert the $i$ th  bit of $s$ ,  that is turn bit $1$ into $0$ , or turn bit $0$ into $1$, then FuyukiVila will spend $2^i$ MP.
+    
+    the ordinal number of bit is counted from low to high digits, starting at $0$ . For example, the binary integer $1110$ , its ordinal numbers of bit is $1_31_21_10_0$ .
+    
+    Now, FuyukiVila has got a binary integer $s$, but he do not like it, so he decide to use magics to turn $s$ into another binary integer $t$ . MP is very valuable to magicians , so can you help him calculate the \textbf{minimum} MP he need to spend in turning $s$ into $t$ ?
+    
+    \InputFile
+    The first line contains a single integer $t$ ($1 \le t \le 10^3$) --- the number of test cases.
+    
+    The first line of each test case contains a single binary integer $s$($1\leq |s| \leq 50$), FuyukiVila has got.
+    
+    The second line of each test case contains a single binary integer $t$($1\leq |t| \leq 50$, $|s| = |t|$), which FuyukiVila decide to turn $s$ into.
+    
+    (|$s$| means the length of the binary string converted from a binary number $s$)
+    
+    \OutputFile
+    For each test case print a single decimal integer, the the \textbf{minimum} MP he need to spend in turning $s$ into $t$.
+    
+    \Example
+    
+    \begin{example}
+    \exmpfile{example.01}{example.01.a}%
+    \end{example}
+    
+    \Note
+    In the first case: $s = 0111$ , $t = 1111$, invert the $3$ th bit of s, spend 8 MP, then $s$ become $1111$ is equal to $t$.
+    
+    In the second case: $s = 1101$ , $t = 1110$ , add $s$ by $1$ , spend 1 MP, then $s$ become $1110$ is equal to t.
+    
+    \end{problem}
