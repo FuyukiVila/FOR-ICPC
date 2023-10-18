@@ -6,10 +6,10 @@ const int Num = 26;             //每个节点需要保存26个字母
 class Trie {
 public:
     struct TrieNode {
-        bool Isword;                //判断是否是单词
+        int wordCount;                //判断是否是单词
         TrieNode *next[Num]{};
 
-        TrieNode() : Isword(false)   //初始化
+        TrieNode() : wordCount(0)   //初始化
         {
             memset(next, 0, sizeof(next));
         }
@@ -17,7 +17,7 @@ public:
 
     Trie() { root = new TrieNode(); }
 
-    void insert(const std::string &word) {
+    auto insert(const std::string &word) {
         TrieNode *location = root;
         for (char i: word) {
             if (location->next[i - 'a'] == nullptr) {
@@ -26,15 +26,15 @@ public:
             }
             location = location->next[i - 'a'];
         }
-        location->Isword = true;
+        location->wordCount++;
+        return location;
     }
 
-    bool search(std::string word) {
+    auto search(std::string word) {
         TrieNode *location = root;
-        //while (word&&location)//注意location不能为空
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i] - 'a'];
-        return (location != nullptr && location->Isword);
+        return location;
     }
 
     void deleteTrie(TrieNode *root) {
