@@ -91,13 +91,13 @@ void err(T arg, Ts &... args) {
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
-template<typename T, typename K>
-using umap = unordered_map<T, K>;
 template<typename T>
-using uset = unordered_set<T>;
+using umap = unordered_map<T, T>;
+template<typename T>
+using uset = unordered_set<T, T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-const int mod = 0;
+const ll mod = 998244353;
 
 inline constexpr ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
@@ -110,7 +110,7 @@ inline constexpr ll qpow(ll _a, ll _n, ll _mod = mod) {
             _a %= _mod;
         }
     }
-    return ans;
+    return ans % mod;
 }
 
 constexpr int N = 1e7 + 100;
@@ -135,14 +135,44 @@ std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 //玩原神导致的
-void genshin_start() {
+#define int ll
 
+void genshin_start(ll test) {
+    ll n;
+    ll ans = 0;
+    cin >> n;
+    ll k = 1;
+//    for (ll i = 1; i <= n; i++) {
+//        if (i * i > n) {
+//            k = i;
+//            break;
+//        }
+//    }
+    k = sqrt(n) + 1;
+    for (ll a = 2; a <= k; a++) {
+        for (ll b = a * a, j = 1;; b *= a, j++) {
+            if (b > n) {
+                ans += (a % mod) * j % mod * ((n - b / a + 1 + mod) % mod);
+                ans %= mod;
+                break;
+            } else {
+                ans += (a % mod) * j % mod * ((b - b / a + mod) % mod);
+                ans %= mod;
+            }
+        }
+    }
+    n %= mod;
+    ll res1 = (n + 1) % mod * (k + 1 + n) % mod * (n - k + mod) % mod * qpow(2, mod - 2) % mod;
+    ll res2 = (n % mod * (n + 1) % mod * (2 * n + 1) % mod - (k * (k + 1) % mod * (2 * k + 1) % mod) + mod) % mod *
+              qpow(6, mod - 2) % mod;
+//    res2 = (res2 - (k % mod) * ((k + 1) % mod) * ((2 * k + 1) % mod) % mod * qpow(6, mod - 2) % mod + mod) % mod;
+    cout << ((ans + res1) % mod - res2 + mod) % mod << '\n';
 }
 
 signed main() {
     GKD;
     auto T = 1;
-    cin >> T;
-    while (T--) genshin_start();
+//    cin >> T;
+    while (T--) genshin_start(T);
     return 0;
 }
