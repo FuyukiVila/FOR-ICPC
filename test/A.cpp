@@ -91,10 +91,10 @@ void err(T arg, Ts &... args) {
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
+template<typename T, typename K>
+using umap = unordered_map<T, K>;
 template<typename T>
-using umap = unordered_map<T, T>;
-template<typename T>
-using uset = unordered_set<T, T>;
+using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 const int mod = 0;
@@ -134,64 +134,61 @@ std::random_device rd;
 std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
-//玩原神导致的
-void genshin_start() {
-    int n;
-    cin >> n;
-    int x0, y0;
-    vector<vector<int>> a(n + 1, vector<int>(n + 1));
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            cin >> a[i][j];
-            if (a[i][j] == -1) {
-                x0 = i, y0 = j;
-                a[i][j] = 0;
+class game {
+public:
+    static int n, m;
+    static int power1, power2;
+
+    class monster {
+        int id{};
+        int hp{};
+        int energy{};
+        int speed{};
+        int atk1{}, atk2{}, atk3{};
+    public:
+        monster(int id, int hp, int speed, int atk1, int atk2, int atk3) : id(id), hp(hp), energy(0), speed(speed),
+                                                                           atk1(atk1), atk2(atk2), atk3(atk3) {}
+
+        constexpr bool alive() {
+            return hp > 0;
+        }
+
+        void attack(bool isEnergy = false);
+
+        void check_energy() {
+            if (energy >= 3) {
+                attack(true);
             }
         }
-    }
-    for (int i = 1; i <= n; ++i) {
-        int sub = INF;
-        if (i == x0)continue;
-        for (int j = 1; j <= n; ++j) {
-            sub = min(sub, a[i][j]);
+
+        void hp_down(int num) {
+            hp -= num;
         }
-        for (int j = 1; j <= n; ++j) {
-            a[i][j] -= sub;
-        }
-    }
-    for (int i = 1; i <= n; ++i) {
-        int sub = INF;
-        if (i == y0)continue;
-        for (int j = 1; j <= n; ++j) {
-            sub = min(sub, a[j][i]);
-        }
-        for (int j = 1; j <= n; ++j) {
-            a[j][i] -= sub;
+    };
+
+    static vector<monster> monsters;
+
+    game(int n, int m) {
+        this->n = n;
+        this->m = m;
+        this->power1 = this->power2 = 3;
+        monsters.emplace_back(0, 0, 0, 0, 0, 0);
+        for (int i = 1; i <= n; i++) {
+            int hp, speed, atk1, atk2, atk3;
+            cin >> hp >> speed >> atk1 >> atk2 >> atk3;
+            monsters.emplace_back(i, hp, speed, atk1, atk2, atk3);
         }
     }
-    int sub = INF;
-    for (int j = 1; j <= n; j++) {
-        if (j == y0)continue;
-        sub = min(sub, a[x0][j]);
-    }
-    for (int j = 1; j <= n; ++j) {
-        a[x0][j] -= sub;
-    }
-    sub = INF;
-    for (int j = 1; j <= n; j++) {
-        if (j == x0)continue;
-        sub = min(sub, a[j][y0]);
-    }
-    for (int j = 1; j <= n; ++j) {
-        a[j][y0] -= sub;
-    }
-    cout << -a[x0][y0] << '\n';
+};
+//玩原神导致的
+void genshin_start() {
+
 }
 
 signed main() {
     GKD;
     auto T = 1;
-//    cin >> T;
+    cin >> T;
     while (T--) genshin_start();
     return 0;
 }

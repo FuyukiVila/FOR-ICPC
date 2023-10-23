@@ -3,18 +3,71 @@
 using namespace std;
 
 template<typename T>
-class SegTreeLazyRangeAdd {
-public:
+class SegTree {
+private:
     struct node {
-        T value{};
-        int add{};
-        int change{};
-        size_t l{}, r{};
-    };
-    vector<node> tree;
-    static size_t n, n4;
+        T value{0};
+        T add{0};
+        T change{0};
+        bool isChange{false};
+        int l{0}, r{0};
 
-    void push_up(size_t x) {
+        constexpr bool inRange(int l, int r) {
+            return this->l >= l && this->r <= r;
+        }
+
+        constexpr bool outOfRange(int l, int r) {
+            return this->l > r || this->r < l;
+        }
+
+        constexpr int length() {
+            return this->r - this->l + 1;
+        }
+
+        constexpr int size() {
+            return length();
+        }
+
+    };
+
+    vector<node> tree;
+    int n, n4;
+
+
+    void push_down(int x) {
+        //push down操作
+        //区间求和
+        if (tree[x].isChange) {
+            tree[x * 2].value = tree[x].change * tree[x * 2].size();
+            tree[x * 2 + 1].value = tree[x].change * tree[x * 2 + 1].size();
+            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
+            tree[x * 2].isChange = tree[x * 2 + 1].isChange = true;
+        }
+        if (tree[x].add) {
+            tree[x * 2].value += tree[x].add * tree[x * 2].size();
+            tree[x * 2 + 1].value += tree[x].add * tree[x * 2 + 1].size();
+            tree[x * 2].add += tree[x].add;
+            tree[x * 2 + 1].add += tree[x].add;
+        }
+        //区间求max
+//        if (tree[x].change) {
+//            tree[x * 2].value = tree[x].change;
+//            tree[x * 2 + 1].value = tree[x].change;
+//            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
+//            tree[x * 2].isChange = tree[x * 2 + 1].isChange = true;
+//        }
+//        if (tree[x].add) {
+//            tree[x * 2].value += tree[x].add;
+//            tree[x * 2 + 1].value += tree[x].add;
+//            tree[x * 2].add += tree[x].add;
+//            tree[x * 2 + 1].add += tree[x].add;
+//        }
+
+        tree[x].isChange = tree[x].change = tree[x].add = 0;
+
+    }
+
+    void push_up(int x) {
         //push up操作
         //区间求和
         tree[x].value = tree[2 * x].value + tree[2 * x + 1].value;
@@ -22,49 +75,67 @@ public:
 //        tree[x].value = max(tree[2 * x].value, tree[2 * x + 1].value);
     }
 
-    void push_down(size_t x) {
-        //push down操作
-        //区间求和
-        if (tree[x].change) {
-            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
-            tree[x].value += tree[x].change * (tree[x].r - tree[x].l + 1);
-        }
-        if (tree[x].add) {
-            tree[x * 2].add = tree[x * 2 + 1].add = tree[x].add;
-            tree[x].value += tree[x].add * (tree[x].r - tree[x].l + 1);
-        }
-        //区间求max
-//        if (tree[x].change) {
-//            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
-//            tree[x].value = tree[x].change;
-//        }
-//        if (tree[x].add) {
-//            tree[x * 2].add = tree[x * 2 + 1].add = tree[x].add;
-//            tree[x].value += tree[x].add;
-//        }
-
-        tree[x].change = tree[x].add = 0;
-
-    }
-
-    void build(vector<T> &v, int x = 1, int l = 1, int r = n) {
+    void build(const vector<T> &arr, int x, int l, int r) {
+        tree[x].l = l, tree[x].r = r;
         if (l == r) {
-            tree[x].value = v[l];
-            tree[x].l = tree[x].r = l;
+            tree[x].value = arr[l];
             return;
         }
-        int m = (l + r) / 2;
-        build(v, x * 2, l, m);
-        build(v, x * 2 + 1, m + 1, r);
+        int m = (l + r) >> 1;
+        build(arr, x * 2, l, m);
+        build(arr, x * 2 + 1, m + 1, r);
         push_up(x);
     }
 
-    SegTreeLazyRangeAdd(vector<T> v) {
-        n = v.size();
+public:
+    explicit SegTree(const vector<T> &arr) {
+        n = arr.size() - 1;
         n4 = n * 4;
-        tree(n4);
-        build(v);
+        tree.resize(n4 + 5);
+        build(arr, 1, 1, n);
     }
 
+    void add(int l, int r, T val, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return;
+        }
+        if (tree[x].inRange(l, r)) {
+            tree[x].add += val;
+            tree[x].value += val * tree[x].size();
+            return;
+        }
+        push_down(x);
+        add(l, r, val, x * 2);
+        add(l, r, val, x * 2 + 1);
+        push_up(x);
+    }
 
+    void change(int l, int r, T val, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return;
+        }
+        if (tree[x].inRange(l, r)) {
+            tree[x].isChange = true;
+            tree[x].add = 0;
+            tree[x].change = val;
+            tree[x].value = val * tree[x].size();
+            return;
+        }
+        push_down(x);
+        change(l, r, val, x * 2);
+        change(l, r, val, x * 2 + 1);
+        push_up(x);
+    }
+
+    T query(int l, int r, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return 0;
+        }
+        if (tree[x].inRange(l, r)) {
+            return tree[x].value;
+        }
+        push_down(x);
+        return query(l, r, x * 2) + query(l, r, x * 2 + 1);
+//        return max(query(l, r, x * 2), query(l, r, x * 2 + 1));
+    }
 };

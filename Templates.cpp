@@ -144,3 +144,4 @@ signed main() {
     while (T--) genshin_start();
     return 0;
 }
+
