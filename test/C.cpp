@@ -97,7 +97,7 @@ template<typename T>
 using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-ll mod = 0;
+const int mod = 0;
 
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
@@ -134,16 +134,15 @@ std::random_device rd;
 std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
-//玩原神导致的
-void genshin_start(int testCase) {}
+void genshin_start() {
+
+}
 
 signed main() {
-    GKD;
-    int T = 1;
-    cin >> T;
-    for (int i = 1; i <= T; i++) {
-        genshin_start(i);
-    }
+//    GKD;
+    auto T = 1;
+//    cin >> T;
+    while (T--) genshin_start();
     return 0;
 }
 
