@@ -135,7 +135,31 @@ std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 //玩原神导致的
-void genshin_start(int testCase) {}
+struct node {
+    int id;
+    int num;
+    int div;
+};
+
+void genshin_start(int testCase) {
+    int n;
+    cin >> n;
+    vector<node> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].num;
+        a[i].id = i;
+        for (int j = 30; j >= 0; j--) {
+            if (a[i].num % qpow(2, j) == 0) {
+                a[i].div = j;
+                break;
+            }
+        }
+    }
+    sort(a.begin() + 1, a.end(), [&](node a, node b) {
+        return a.div > b.div;
+    });
+
+}
 
 signed main() {
     GKD;
