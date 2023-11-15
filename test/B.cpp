@@ -75,7 +75,6 @@ void solve() {
 // 		cout << "1A\n";
         cout << 1LL * m * rec << '\n';
     } else {
-        for ()
 //		cout << "2B\n";
             cout << 1LL * (r - 1) * rec + 1LL * (m - l) * (rec + 1) << '\n';
     }

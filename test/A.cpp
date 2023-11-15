@@ -1,94 +1,86 @@
-#include<bits/stdc++.h>
+#define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
+#define clr(a, b) memset(a, b, sizeof(a))
+
+#include <bits/stdc++.h>
+
+#define dbg(x...)                                                              \
+    do {                                                                       \
+        std::cout << #x << " -> ";                                             \
+        err(x);                                                                \
+    } while (0)
+
+void err() { std::cout << std::endl; }
+
+template <class T, class... Ts> void err(T arg, Ts &...args) {
+    std::cout << arg << ' ';
+    err(args...);
+}
 
 using namespace std;
-const int maxn = 6e3 + 9;
-//int g[6002][6002];
-#define ll long long
-unordered_map<int, int> Sqrt;
+using ll = long long;
+using ull = unsigned long long;
+template <typename T, typename K> using umap = unordered_map<T, K>;
+template <class T> using uset = unordered_set<T>;
+const double pi = acos(-1);
+const int INF = 0x3f3f3f3f;
+ll mod = 0;
 
-void solve(int C) {
-    unordered_map<int, unordered_map<int, int>> g;
-    cout << "Case #" << C << ":\n";
-    int n, m;
-    int x, y, w, k;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) {
-        cin >> x >> y >> w;
-        g[x][y] = w;
+ll qpow(ll _a, ll _n, ll _mod = mod) {
+    ll ans = 1;
+    while (_n) {
+        if (_n & 1)
+            ans *= _a;
+        _n >>= 1;
+        _a *= _a;
+        if (_mod > 0) {
+            ans %= _mod;
+            _a %= _mod;
+        }
     }
-    int op;
-    long long lastans = 0;
-    while (m--) {
-        cin >> op;
-        cin >> x >> y;
-        x = (x + lastans) % 6000 + 1;
-        y = (y + lastans) % 6000 + 1;
-        if (op == 1) {
-            cin >> w;
-            g[x][y] = w;
-        }
-        if (op == 2) {
-            g[x].erase(y);
-        }
-        if (op == 3) {
-            cin >> k >> w;
-            for (int i = 1; i <= 6000; i++) {
-                if (k < (x - i) * (x - i)) {
-                    if (i < x) {
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-                if (Sqrt.find(k - (x - i) * (x - i)) == Sqrt.end()) continue;
-                int dis = Sqrt[k - (x - i) * (x - i)];
-                if (dis == 0) {
-                    if (g[i].find(y) != g[i].end()) g[i][y] += w;
-                    continue;
-                }
-                if (g[i].find(y + dis) != g[i].end()) g[i][y + dis] += w;
-                if (g[i].find(y - dis) != g[i].end()) g[i][y - dis] += w;
-            }
-        }
-        if (op == 4) {
-            cin >> k;
-            long long ans = 0;
-            for (int i = 1; i <= 6000; i++) {
-                if (k < (x - i) * (x - i)) {
-                    if (i < x) {
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-                if (Sqrt.find(k - (x - i) * (x - i)) == Sqrt.end()) continue;
-                int dis = Sqrt[k - (x - i) * (x - i)];
-                if (dis == 0) {
-                    if (g[i].find(y) != g[i].end()) ans += g[i][y];
-                    continue;
-                }
-                if (g[i].find(y - dis) != g[i].end()) ans += g[i][y - dis];
-                if (g[i].find(y + dis) != g[i].end()) ans += g[i][y + dis];
-            }
-            lastans = ans;
-            cout << ans << '\n';
+    return ans;
+}
+
+constexpr int N = 1e7 + 100;
+int minp[N];
+vector<int> primes;
+bool st[N];
+
+void get_primes(int n) {
+    for (int i = 2; i <= n; i++) {
+        if (!st[i])
+            minp[i] = i, primes.emplace_back(i);
+        for (int j = 0; primes[j] * i <= n; j++) {
+            int t = primes[j] * i;
+            st[t] = true;
+            minp[t] = primes[j];
+            if (i % primes[j] == 0)
+                break;
         }
     }
 }
 
-void init() {
-    for (int i = 0; i <= 6000; i++) {
-        Sqrt[i * i] = i;
+std::random_device rd;
+std::default_random_engine eng(rd());
+std::uniform_int_distribution<ll> ranint(1, 1e18);
+
+// 玩原神导致的
+void genshin_start() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (auto &x : a) {
+        cin >> x;
+    }
+    for (auto const &x : a) {
+        cout << x << '\n';
     }
 }
 
-int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    init();
-    int t;
-    cin >> t;
-    for (int i = 1; i <= t; i++) solve(i);
+signed main() {
+    GKD;
+    auto T = 1;
+    cin >> T;
+    while (T--)
+        genshin_start();
     return 0;
 }
