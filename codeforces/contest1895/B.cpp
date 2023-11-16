@@ -6,7 +6,7 @@
 |  | |_ | |   __|  |  . `  |     \   \    |   __   | |  | |  . `  |    |  | |  |\/|  | |   ___/  /  /_\  \  |  |         |  |
 |  |__| | |  |____ |  |\   | .----)   |   |  |  |  | |  | |  |\   |    |  | |  |  |  | |  |     /  _____  \ |  `----.    |  |
  \______| |_______||__| \__| |_______/    |__|  |__| |__| |__| \__|    |__| |__|  |__| | _|    /__/     \__\ \______|    |__|
-
+ 
 □□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□■■■■■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□■■■□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□
@@ -98,7 +98,7 @@ template<typename T>
 using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-ll mod = 0;
+const int mod = 0;
 
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
@@ -133,18 +133,31 @@ void get_primes(int n) {
 
 std::random_device rd;
 std::default_random_engine eng(rd());
-std::uniform_int_distribution <ll> ranint(1, 1e18);
+std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 //玩原神导致的
-void genshin_start(int testCase) {}
+void genshin_start() {
+    int n;
+    cin >> n;
+    vector<int> a(2 * n + 1);
+    for (int i = 1; i <= 2 * n; i++) {
+        cin >> a[i];
+    }
+    sort(a.begin() + 1, a.end());
+    int ans = 0;
+    for (int i = 2; i <= n; i++) {
+        ans += a[i] - a[i - 1] + a[i + n] - a[i + n - 1];
+    }
+    cout << ans << "\n";
+    for (int i = 1; i <= n; i++) {
+        cout << a[i] << ' ' << a[i + n] << '\n';
+    }
+}
 
 signed main() {
     GKD;
-    int T = 1;
+    auto T = 1;
     cin >> T;
-    for (int i = 1; i <= T; i++) {
-        genshin_start(i);
-    }
+    while (T--) genshin_start();
     return 0;
 }
-

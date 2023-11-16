@@ -6,7 +6,7 @@
 |  | |_ | |   __|  |  . `  |     \   \    |   __   | |  | |  . `  |    |  | |  |\/|  | |   ___/  /  /_\  \  |  |         |  |
 |  |__| | |  |____ |  |\   | .----)   |   |  |  |  | |  | |  |\   |    |  | |  |  |  | |  |     /  _____  \ |  `----.    |  |
  \______| |_______||__| \__| |_______/    |__|  |__| |__| |__| \__|    |__| |__|  |__| | _|    /__/     \__\ \______|    |__|
-
+ 
 □□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□■■■■■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□■■■□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□
@@ -98,7 +98,7 @@ template<typename T>
 using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-ll mod = 0;
+const int mod = 0;
 
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
@@ -133,18 +133,50 @@ void get_primes(int n) {
 
 std::random_device rd;
 std::default_random_engine eng(rd());
-std::uniform_int_distribution <ll> ranint(1, 1e18);
+std::uniform_int_distribution<ll> ranint(1, 1e18);
 
 //玩原神导致的
-void genshin_start(int testCase) {}
+struct node {
+    int len;
+    int sum;
+
+    node(int l, int s) : len(l), sum(s) {}
+
+};
+
+struct Hasher {
+    size_t operator()(const node &p) const {
+        return hash<int>()(p.len) * hash<int>()(p.sum) + hash<int>()(p.sum) * hash<int>()(p.len);
+    }
+};
+
+unordered_map<node, int, Hasher> mp;
+
+void genshin_start() {
+    int n;
+    cin >> n;
+    mp.clear();
+    for (int i = 1; i <= n; i++) {
+        string s;
+        cin >> s;
+        int sum = 0;
+        for (auto const &c: s) {
+            sum += c - '0';
+        }
+        int tmp = 0;
+        for (int j = 0; j < s.size(); j++) {
+            tmp += s[i] - '0';
+            if (j + 1 >= s.size() / 2) {
+                node a = node(j + 1 - (s.size() - j - 1), tmp - (sum - tmp));
+            }
+        }
+    }
+}
 
 signed main() {
     GKD;
-    int T = 1;
+    auto T = 1;
     cin >> T;
-    for (int i = 1; i <= T; i++) {
-        genshin_start(i);
-    }
+    while (T--) genshin_start();
     return 0;
 }
-

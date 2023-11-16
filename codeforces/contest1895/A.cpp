@@ -6,7 +6,7 @@
 |  | |_ | |   __|  |  . `  |     \   \    |   __   | |  | |  . `  |    |  | |  |\/|  | |   ___/  /  /_\  \  |  |         |  |
 |  |__| | |  |____ |  |\   | .----)   |   |  |  |  | |  | |  |\   |    |  | |  |  |  | |  |     /  _____  \ |  `----.    |  |
  \______| |_______||__| \__| |_______/    |__|  |__| |__| |__| \__|    |__| |__|  |__| | _|    /__/     \__\ \______|    |__|
-
+ 
 □□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□□
 □□□□□□□□□□□□□■■□□□□□□□□□□□□□□□□□□□□□□□□□■■■■■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□■■■□□□□□□□□□□□□□□□□□□■■■■□□□□□□□□□□□□□□□□□□□□□
@@ -98,7 +98,7 @@ template<typename T>
 using uset = unordered_set<T>;
 const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
-ll mod = 0;
+const int mod = 0;
 
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
@@ -136,15 +136,24 @@ std::default_random_engine eng(rd());
 std::uniform_int_distribution <ll> ranint(1, 1e18);
 
 //玩原神导致的
-void genshin_start(int testCase) {}
+void genshin_start() {
+    int x, y, k;
+    cin >> x >> y >> k;
+    if (x >= y) {
+        cout << x << '\n';
+    } else {
+        if (x + k >= y) {
+            cout << y << '\n';
+        } else {
+            cout << y + (y - x - k) << '\n';
+        }
+    }
+}
 
 signed main() {
     GKD;
-    int T = 1;
+    auto T = 1;
     cin >> T;
-    for (int i = 1; i <= T; i++) {
-        genshin_start(i);
-    }
+    while (T--) genshin_start();
     return 0;
 }
-
