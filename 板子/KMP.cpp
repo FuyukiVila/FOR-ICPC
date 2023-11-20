@@ -9,7 +9,7 @@ public:
     KMP2(std::string pat) : pat(pat) {
         // dp[状态][字符] = 下个状态
         dp = std::vector<std::vector<int>>(pat.length(), std::vector<int>(256, 0));
-        // base casel
+        // base case
         dp[0][pat[0]] = 1;
         // 影子状态 X 初始为 0
         int X = 0;
