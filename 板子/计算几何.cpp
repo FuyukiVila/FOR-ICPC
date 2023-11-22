@@ -36,21 +36,9 @@ namespace Dimension2 {
             return {x + p.x, y + p.y};
         }
 
-        constexpr Vector &operator+=(const Vector &p) {
-            x += p.x;
-            y += p.y;
-            return *this;
-        }
-
         //减
         constexpr Vector operator-(const Vector &p) const {
             return {x - p.x, y - p.y};
-        }
-
-        constexpr Vector &operator-=(const Vector &p) {
-            x -= p.x;
-            y -= p.y;
-            return *this;
         }
 
         //叉积
@@ -68,20 +56,8 @@ namespace Dimension2 {
             return {x * b, y * b};
         }
 
-        constexpr Vector &operator*=(double b) {
-            x *= b;
-            y *= b;
-            return *this;
-        }
-
         constexpr Vector operator/(double b) const {
             return {x / b, y / b};
-        }
-
-        constexpr Vector &operator/=(double b) {
-            x /= b;
-            y /= b;
-            return *this;
         }
 
         //等于
@@ -104,7 +80,7 @@ namespace Dimension2 {
         }
 
         //点距
-        constexpr double dist(Point p) const {
+        constexpr double distance(Point p) const {
             return (*this - p).norm();
         }
 
@@ -171,17 +147,22 @@ namespace Dimension2 {
             return res;
         }
 
-        constexpr double dist(const Point &p) const {
-            return p.dist(pointToLine(p));
+        constexpr double distance(const Point &p) const {
+            return p.distance(pointToLine(p));
         }
 
-        constexpr double dist(const Line &l) const {
-            return l.dist(pointToLine(l.a));
+        constexpr double distance(const Line &l) const {
+            auto [result, intersectionPoint] = *this & l;
+            if (result != 1) {
+                return 0;
+            } else {
+                return distance(l.a);
+            }
         }
 
         //判断点在直线上
         constexpr bool pointOnLine(const Point &p) const {
-            return sgn(pointToLine(p).dist(p)) == 0;
+            return sgn(pointToLine(p).distance(p)) == 0;
         }
 
         //求点到线段的距离
@@ -193,7 +174,7 @@ namespace Dimension2 {
                 res.x = a.x + (b.x - a.x) * t;
                 res.y = a.y + (b.y - a.y) * t;
             } else {
-                if (p.dist(a) < p.dist(b))
+                if (p.distance(a) < p.distance(b))
                     res = a;
                 else
                     res = b;
@@ -206,7 +187,7 @@ namespace Dimension2 {
     using Seg = Line;
 
     //计算多边形面积
-    constexpr static double CalcArea(const vector<Point> &p) {
+    constexpr static double calcArea(const vector<Point> &p) {
         double res = 0;
         for (int i = 0; i < p.size(); i++) {
             res += (p[i] ^ p[(i + 1) % p.size()]) / 2;
@@ -235,7 +216,7 @@ namespace Dimension2 {
             if (det > 0)
                 return false;
             //向量OA和向量OB共线，以距离判断大小
-            return a.dist(p) > b.dist(p);
+            return a.distance(p) > b.distance(p);
         }
     };
 
@@ -407,7 +388,7 @@ namespace Dimension3 {
             return sgn(x - v.x) == 0 && sgn(y - v.y) && sgn(z - v.z);
         }
 
-        //绕点p旋转
+        //绕点p逆时针旋转弧度b
         constexpr Point &rotate(double radian, const Point &p = {0, 0, 0}) {
             // 将点平移到原点
             double translatedX = x - p.x;
@@ -436,7 +417,7 @@ namespace Dimension3 {
         }
 
         //点距
-        constexpr double dist(const Point &p) const {
+        constexpr double distance(const Point &p) const {
             return (*this - p).norm();
         }
 
@@ -469,17 +450,24 @@ namespace Dimension3 {
             return a + direction * (t / direction.norm());
         }
 
-        constexpr double dist(const Point &p) const {
-            return p.dist(pointToLine(p));
+        constexpr double distance(const Point &p) const {
+            return p.distance(pointToLine(p));
         }
 
-        constexpr double dist(const Line &l) const {
-            return l.dist(pointToLine(l.a));
+        constexpr double distance(const Line &l) const {
+            auto [result, intersectionPoint] = *this & l;
+            if (result == 1) {
+                return distance(l.a);
+            } else if (result == 3) {
+                return (a - l.a) * ((l.a - l.b) ^ (a - b)) / ((l.a - l.b) ^ (a - b)).norm();
+            } else {
+                return 0;
+            }
         }
 
         //判断点在直线上
         constexpr bool pointOnLine(const Point &p) const {
-            return sgn(dist(p)) == 0;
+            return sgn(distance(p)) == 0;
         }
 
         //两直线相交求交点
@@ -506,7 +494,7 @@ namespace Dimension3 {
             double t2 = ((a - l.a) ^ direction1).norm() / crossProduct.norm();
             // 计算交点
             Point intersectionPoint = a + direction1 * t1;
-            if (!pointOnLine(intersectionPoint)) {
+            if (!pointOnLine(intersectionPoint) || !l.pointOnLine(intersectionPoint)) {
                 return {3, Point()};
             }
             return {2, intersectionPoint};
@@ -526,7 +514,7 @@ namespace Dimension3 {
 
             if (result == 2) {
                 // 两线段相交，再判断交点是否在两线段上
-                return l.pointOnSeg(intersectionPoint) && this->pointOnSeg(intersectionPoint);
+                return l.pointOnSeg(intersectionPoint) && pointOnSeg(intersectionPoint);
             }
 
             return false;
@@ -537,7 +525,7 @@ namespace Dimension3 {
             auto [result, intersectionPoint] = *this & l;
 
             if (result == 2) {
-                // 两线段相交，再判断交点是否在两线段上
+                // 两线段相交，再判断交点是否在线段上
                 return l.pointOnSeg(intersectionPoint);
             }
 
@@ -578,10 +566,30 @@ namespace Dimension3 {
         constexpr Plane(const Point &a, const Point &b, const Point &c) : a(a), b(b), c(c) {}
 
         // 面到点的距离
-        constexpr double distanceToPoint(const Point &p) const {
+        constexpr double distance(const Point &p) const {
             Point normal = (b - a) ^ (c - a);
             double d = -normal.x * a.x - normal.y * a.y - normal.z * a.z;
-            return fabs(normal.x * p.x + normal.y * p.y + normal.z * p.z + d) / normal.norm();
+            return abs(normal.x * p.x + normal.y * p.y + normal.z * p.z + d) / normal.norm();
+        }
+
+        // 面到线的距离
+        constexpr double distance(const Line &l) const {
+            auto [res, intersectionPoint] = intersectWithLine(l);
+            if (res != 0) {
+                return 0;
+            } else {
+                return distance(l.a);
+            }
+        }
+
+        // 面到面的距离
+        constexpr double distance(const Plane &p) const {
+            auto [res, intersectionPoint] = intersectWithPlane(p);
+            if (res != 0) {
+                return 0;
+            } else {
+                return distance(p.a);
+            }
         }
 
         // 面和线的交点
