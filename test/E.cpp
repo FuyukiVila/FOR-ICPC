@@ -69,7 +69,6 @@
 
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
-#define cpy(a, b) memcpy(a, b, sizeof(a));
 
 #include <bits/stdc++.h>
 
@@ -135,13 +134,179 @@ std::random_device rd;
 std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+template<typename T>
+class SegTree {
+private:
+    struct node {
+        T value{0};
+        T add{0};
+        T change{0};
+        bool isChange{false};
+        int l{0}, r{0};
+
+        constexpr bool inRange(int l, int r) {
+            return this->l >= l && this->r <= r;
+        }
+
+        constexpr bool outOfRange(int l, int r) {
+            return this->l > r || this->r < l;
+        }
+
+        constexpr int length() {
+            return this->r - this->l + 1;
+        }
+
+        constexpr int size() {
+            return length();
+        }
+
+    };
+
+    vector<node> tree;
+    int n, n4;
+
+
+    void push_down(int x) {
+        //push down操作
+        //区间求和
+        if (tree[x].isChange) {
+            tree[x * 2].value = tree[x].change * tree[x * 2].size();
+            tree[x * 2 + 1].value = tree[x].change * tree[x * 2 + 1].size();
+            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
+            tree[x * 2].isChange = tree[x * 2 + 1].isChange = true;
+        }
+        if (tree[x].add) {
+            tree[x * 2].value += tree[x].add * tree[x * 2].size();
+            tree[x * 2 + 1].value += tree[x].add * tree[x * 2 + 1].size();
+            tree[x * 2].add += tree[x].add;
+            tree[x * 2 + 1].add += tree[x].add;
+        }
+        //区间求max
+//        if (tree[x].change) {
+//            tree[x * 2].value = tree[x].change;
+//            tree[x * 2 + 1].value = tree[x].change;
+//            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
+//            tree[x * 2].isChange = tree[x * 2 + 1].isChange = true;
+//        }
+//        if (tree[x].add) {
+//            tree[x * 2].value += tree[x].add;
+//            tree[x * 2 + 1].value += tree[x].add;
+//            tree[x * 2].add += tree[x].add;
+//            tree[x * 2 + 1].add += tree[x].add;
+//        }
+
+        tree[x].isChange = tree[x].change = tree[x].add = 0;
+
+    }
+
+    void push_up(int x) {
+        //push up操作
+        //区间求和
+        tree[x].value = tree[2 * x].value + tree[2 * x + 1].value;
+//        区间求max
+//        tree[x].value = max(tree[2 * x].value, tree[2 * x + 1].value);
+    }
+
+    void build(const vector<T> &arr, int x, int l, int r) {
+        tree[x].l = l, tree[x].r = r;
+        if (l == r) {
+            tree[x].value = arr[l];
+            return;
+        }
+        int m = (l + r) >> 1;
+        build(arr, x * 2, l, m);
+        build(arr, x * 2 + 1, m + 1, r);
+        push_up(x);
+    }
+
+public:
+    explicit SegTree(const vector<T> &arr) {
+        n = arr.size() - 1;
+        n4 = n * 4;
+        tree.resize(n4 + 5);
+        build(arr, 1, 1, n);
+    }
+
+    void add(int l, int r, T val, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return;
+        }
+        if (tree[x].inRange(l, r)) {
+            tree[x].add += val;
+            tree[x].value += val * tree[x].size();
+            return;
+        }
+        push_down(x);
+        add(l, r, val, x * 2);
+        add(l, r, val, x * 2 + 1);
+        push_up(x);
+    }
+
+    void change(int l, int r, T val, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return;
+        }
+        if (tree[x].inRange(l, r)) {
+            tree[x].isChange = true;
+            tree[x].add = 0;
+            tree[x].change = val;
+            tree[x].value = val * tree[x].size();
+            return;
+        }
+        push_down(x);
+        change(l, r, val, x * 2);
+        change(l, r, val, x * 2 + 1);
+        push_up(x);
+    }
+
+    T query(int l, int r, int x = 1) {
+        if (tree[x].outOfRange(l, r)) {
+            return 0;
+        }
+        if (tree[x].inRange(l, r)) {
+            return tree[x].value;
+        }
+        push_down(x);
+        return query(l, r, x * 2) + query(l, r, x * 2 + 1);
+//        return max(query(l, r, x * 2), query(l, r, x * 2 + 1));
+    }
+};
+
 //玩原神导致的
-void genshin_start(int testCase) {}
+void genshin_start(int testCase) {
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    unordered_map<int, int> cnt;
+    SegTree t(vector<int>(n + 1));
+    for (int i = n; i >= 1; i--) {
+        cnt[a[i]]++;
+        t.add(cnt[a[i]], cnt[a[i]], 1);
+    }
+    unordered_map<int, int> cnt1;
+    ll ans = 0;
+    for (int i = 1; i <= n; i++) {
+        cnt1[a[i]]++;
+        int tmp = cnt[a[i]]--;
+        t.add(tmp, tmp, -1);
+//        t.add(tmp - 1, tmp - 1, 1);
+        ans += t.query(1, cnt1[a[i]] - 1);
+    }
+    cout << ans << '\n';
+
+}
 
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         genshin_start(i);
     }

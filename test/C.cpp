@@ -134,7 +134,90 @@ std::random_device rd;
 std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
 
+struct node {
+    ll num;
+    int id;
+
+    bool operator<(const node &a) const {
+        return num < a.num;
+    }
+};
+
 void genshin_start() {
+    ll n, maxn, cf, cm, m;
+    cin >> n >> maxn >> cf >> cm >> m;
+    vector<node> a(n + 3);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].num;
+        a[i].id = i;
+    }
+    ll lowest = 0, maxncnt = 0;
+    ll ans = 0;
+    ll tmp = 0;
+    sort(a.begin() + 1, a.begin() + n + 1);
+    vector<ll> sum(n + 3);
+    for (int i = 1; i <= n; i++) {
+        sum[i] = sum[i - 1] + a[i].num;
+    }
+    for (int i = n + 1; i >= 1; i--) {
+        if (i <= n)tmp += maxn - a[i].num;
+        if (tmp > m) {
+            break;
+        }
+        if (i == 1) {
+            if (n * cf + cm * maxn > ans) {
+                lowest = maxn;
+                maxncnt = n;
+                ans = n * cf + cm * maxn;
+            }
+            break;
+        }
+        ll l = a[1].num, r = maxn - 1;
+        while (l <= r) {
+            ll mid = (l + r) >> 1; // 最低等级为mid
+            if (a[i - 1].num <= mid) {
+                if (mid * (i - 1) - sum[i - 1] + tmp <= m) {
+                    if (mid * cm + (n - i + 1) * cf > ans) {
+                        ans = mid * cm + (n - i + 1) * cf;
+                        lowest = mid;
+                        maxncnt = n - i + 1;
+                    }
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+            node p;
+            p.num = mid, p.id = 0;
+            int pos = upper_bound(a.begin() + 1, a.begin() + i, p) - a.begin();
+            pos--;
+            if (mid * pos - sum[pos] + tmp <= m) {
+                if (mid * cm + (n - i + 1) * cf > ans) {
+                    ans = mid * cm + (n - i + 1) * cf;
+                    lowest = mid;
+                    maxncnt = n - i + 1;
+                }
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+    }
+
+    cout << ans << '\n';
+    for (int i = 1; i <= n; i++) {
+        if (i >= n - maxncnt + 1) {
+            a[i].num = maxn;
+        } else if (a[i].num <= lowest) {
+            a[i].num = lowest;
+        }
+    }
+
+    sort(a.begin() + 1, a.begin() + n + 1, [&](const node &a, const node &b) { return a.id < b.id; });
+    for (int i = 1; i <= n; i++) {
+        cout << a[i].num << ' ';
+    }
+
 
 }
 
