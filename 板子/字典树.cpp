@@ -16,12 +16,11 @@ public:
 
     Trie() { root = new TrieNode(); }
 
-    auto insert(const std::string &word) {
-        TrieNode *location = root;
+    auto insert(const std::string &word, TrieNode *pos = nullptr) {
+        auto location = (pos == nullptr) ? root : pos;
         for (char const &i: word) {
             if (location->next[i] == nullptr) {
-                auto *temp = new TrieNode();
-                location->next[i] = temp;
+                location->next[i] = new TrieNode();
             }
             location = location->next[i];
         }
@@ -29,17 +28,32 @@ public:
         return location;
     }
 
-    auto search(std::string word) {
-        TrieNode *location = root;
+    auto insert(const char &character, TrieNode *pos = nullptr) {
+        auto location = (pos == nullptr) ? root : pos;
+        if (location->next[character] == nullptr) {
+            location->next[character] = new TrieNode();
+        }
+        location = location->next[character];
+        location->wordCount++;
+        return location;
+    }
+
+    auto search(const std::string &word, TrieNode *pos = nullptr) {
+        auto location = (pos == nullptr) ? root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
         return location;
     }
 
+    auto search(const char &character, TrieNode *pos = nullptr) {
+        auto location = (pos == nullptr) ? root : pos;
+        return location->next[character];
+    }
+
     void deleteTrie(TrieNode *root) {
-        for (auto &[i, j]: root->next) {
-            if (j != nullptr) {
-                deleteTrie(j);
+        for (auto &[_, node]: root->next) {
+            if (node != nullptr) {
+                deleteTrie(node);
             }
         }
         delete root;

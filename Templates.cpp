@@ -131,12 +131,18 @@ void get_primes(int n) {
     }
 }
 
-std::random_device rd;
-std::default_random_engine eng(rd());
+
+// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
+std::default_random_engine eng(std::random_device());
+
 std::uniform_int_distribution<ll> ranint(1, 1e18);
+std::uniform_real_distribution<double> rd2(1, 1e18);
+std::normal_distribution<double> rd3(9, 999);
 
 //玩原神导致的
-void genshin_start(int testCase) {}
+void genshin_start(int testCase) {
+
+}
 
 signed main() {
     GKD;
