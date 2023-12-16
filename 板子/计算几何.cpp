@@ -6,7 +6,7 @@ const double PI = acos(-1.0);
 constexpr double eps = 1e-7;
 
 constexpr int sgn(double x) {
-    if (fabs(x) < eps) {
+    if (abs(x) < eps) {
         return 0;
     }
     if (x < 0) {
