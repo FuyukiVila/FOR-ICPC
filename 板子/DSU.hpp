@@ -1,4 +1,8 @@
-#include "bits/stdc++.h"
+#ifndef __DSU_HPP
+#define __DSU_HPP
+
+#include "vector"
+#include "numeric"
 
 struct DSU {
     std::vector<int> f, siz;
@@ -23,3 +27,5 @@ struct DSU {
 
     int size(int x) { return siz[find(x)]; }
 };
+
+#endif

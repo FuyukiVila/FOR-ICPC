@@ -1,11 +1,14 @@
-#include <bits/stdc++.h>
+#ifndef __DIMENSION_HPP
+#define __DIMENSION_HPP
+
+#include "bits/stdc++.h"
 
 using namespace std;
 
 const double PI = acos(-1.0);
-constexpr double eps = 1e-7;
+const double eps = 1e-7;
 
-constexpr int sgn(double x) {
+int sgn(double x) {
     if (abs(x) < eps) {
         return 0;
     }
@@ -632,3 +635,5 @@ namespace Dimension3 {
 
     };
 }
+
+#endif

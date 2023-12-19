@@ -1,3 +1,6 @@
+#ifndef __MOD_NUMBER_HPP
+#define __MOD_NUMBER_HPP
+
 #define int long long
 
 template<const int _MOD>
@@ -107,3 +110,7 @@ struct ModNumber {
 
     void operator--() { *this = *this - 1; }
 };
+
+#undef int long long
+
+#endif

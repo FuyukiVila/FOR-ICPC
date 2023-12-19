@@ -1,6 +1,8 @@
-#include <bits/stdc++.h>
+#ifndef __TRIE_HPP
+#define __TRIE_HPP
 
-//字典树
+#include <map>
+#include <string>
 
 class Trie {
 public:
@@ -14,9 +16,11 @@ public:
         }
     };
 
+    TrieNode *root;
+
     Trie() { root = new TrieNode(); }
 
-    auto insert(const std::string &word, TrieNode *pos = nullptr) {
+    TrieNode *insert(const std::string &word, TrieNode *pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         for (char const &i: word) {
             if (location->next[i] == nullptr) {
@@ -28,7 +32,7 @@ public:
         return location;
     }
 
-    auto insert(const char &character, TrieNode *pos = nullptr) {
+    TrieNode *insert(const char &character, TrieNode *pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         if (location->next[character] == nullptr) {
             location->next[character] = new TrieNode();
@@ -38,27 +42,26 @@ public:
         return location;
     }
 
-    auto search(const std::string &word, TrieNode *pos = nullptr) {
+    TrieNode *search(const std::string &word, TrieNode *pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
         return location;
     }
 
-    auto search(const char &character, TrieNode *pos = nullptr) {
+    TrieNode *search(const char &character, TrieNode *pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         return location->next[character];
     }
 
     void deleteTrie(TrieNode *root) {
-        for (auto &[_, node]: root->next) {
-            if (node != nullptr) {
-                deleteTrie(node);
+        for (auto &node: root->next) {
+            if (node.second != nullptr) {
+                deleteTrie(node.second);
             }
         }
         delete root;
     }
-
-private:
-    TrieNode *root;
 };
+
+#endif

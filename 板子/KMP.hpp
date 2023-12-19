@@ -1,3 +1,6 @@
+#ifndef __KMP_HPP
+#define __KMP_HPP
+
 #include "bits/stdc++.h"
 
 class KMP2 {
@@ -79,3 +82,5 @@ public:
         buildNext();
     }
 };
+
+#endif

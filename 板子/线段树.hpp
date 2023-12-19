@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#ifndef __SEG_TREE_HPP
+#define __SEG_TREE_HPP
+
+#include <vector>
 
 using namespace std;
 
@@ -139,3 +142,5 @@ public:
 //        return max(query(l, r, x * 2), query(l, r, x * 2 + 1));
     }
 };
+
+#endif
