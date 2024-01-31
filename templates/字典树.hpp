@@ -10,10 +10,7 @@ public:
         int wordCount;                //判断是否是单词
         std::map<char, TrieNode *> next;
 
-        TrieNode() : wordCount(0)   //初始化
-        {
-            next = *new std::map<char, TrieNode *>;
-        }
+        TrieNode() : wordCount(0) {}
     };
 
     TrieNode *root;

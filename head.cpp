@@ -34,11 +34,6 @@ void err(T arg, Ts &... args) {
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
-template<typename T, typename K>
-using umap = unordered_map<T, K>;
-template<typename T>
-using uset = unordered_set<T>;
-const double pi = acos(-1);
 const int INF = 0x3f3f3f3f;
 ll mod = 0;
 
@@ -57,9 +52,9 @@ inline ll qpow(ll _a, ll _n, ll _mod = mod) {
 }
 
 constexpr int N = 1e7 + 100;
-int minp[N];
+vector<int> minp(N);
 vector<int> primes;
-bool st[N];
+bitset<N> st;
 
 void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
