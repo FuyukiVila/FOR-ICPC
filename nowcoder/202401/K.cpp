@@ -11,7 +11,6 @@
 
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
-#define cpy(a, b) memcpy(a, b, sizeof(a))
 
 #include <bits/stdc++.h>
 
@@ -37,7 +36,7 @@ using ull = unsigned long long;
 const int INF = 0x3f3f3f3f;
 ll mod = 0;
 
-inline ll qpow(ll _a, ll _n, ll _mod = mod) {
+ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
     while (_n) {
         if (_n & 1) ans *= _a;
@@ -68,23 +67,57 @@ void get_primes(int n) {
     }
 }
 
-
-// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
-std::default_random_engine eng(std::random_device());
-
+std::random_device rd;
+std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
-std::uniform_real_distribution<double> rd2(1, 1e18);
-std::normal_distribution<double> rd3(9, 999);
 
-//玩原神导致的
+//��ԭ���µ�
+struct node {
+    int to;
+    string s;
+    ll ans = 0;
+} a[100005];
+bitset<100005> vis;
+ll ans = 1;
+
 void genshin_start(int testCase) {
-
+    int n;
+    cin >> n;
+    ll mod = 998244353;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].to >> a[i].s;
+        a[i].s = "#" + a[i].s;
+        for (int j = 1; j < a[i].s.size(); j++) {
+            a[i].s[j] -= 'A';
+        }
+    }
+    vector<int>start;
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i]) {
+            if (a[i].to == i) {
+                vis[i] = 1;
+                ll tmp = 0;
+                for (int j = 1; j <= 5; j++) {
+                    if (a[i].s[j] == j) {
+                        tmp++;
+                    }
+                }
+                ans = ans * tmp % mod;
+            }
+            else{
+            }
+        }
+        if (ans == 0) {
+            cout << ans << '\n';
+            return;
+        }
+    }
 }
 
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         genshin_start(i);
     }

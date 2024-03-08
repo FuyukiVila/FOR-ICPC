@@ -68,23 +68,77 @@ void get_primes(int n) {
     }
 }
 
-
-// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
-std::default_random_engine eng(std::random_device());
-
+std::random_device rd;
+std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
-std::uniform_real_distribution<double> rd2(1, 1e18);
-std::normal_distribution<double> rd3(9, 999);
 
-//玩原神导致的
+//��ԭ���µ�
+#define int ll
+
 void genshin_start(int testCase) {
-
+    int n;
+    cin >> n;
+    ll ans = 0;
+    vector<ll> b(n + 1);
+    vector<int> c(n + 1);
+    map<int, map<int, ll> > mod_number; // ��λ�͵�9��ģ������Ӧ��ĩβ����
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+        int tmp = 0;
+        ll k = b[i];
+        while (k) {
+            tmp += k % 10;
+            k /= 10;
+        }
+        mod_number[tmp % 9][b[i] % 10]++;
+        c[i] = tmp % 9;
+    }
+    if (n == 1) {
+        cout << 0 << '\n';
+        return;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (b[i] >= 10 && b[i] % 4 == 0) {
+            if (c[i] == 0) {
+                for (auto const &it: mod_number[0]) {
+                    ans += it.second;
+                }
+                ans -= 1;
+            } else {
+                for (auto const &it: mod_number[9 - c[i]]) {
+                    ans += it.second;
+                }
+            }
+        } else if (b[i] < 10) {
+            vector<int> w;
+            int flag = 0;
+            for (int j = 0; j <= 9; j++) {
+                if ((j * 10 + b[i]) % 4 == 0) {
+                    w.emplace_back(j);
+                    if (j == b[i]) {
+                        flag = 1;
+                    }
+                }
+            }
+            if (c[i] == 0) {
+                for (auto const &x: w) {
+                    ans += mod_number[0][x];
+                }
+                ans -= flag;
+            } else {
+                for (auto const &x: w) {
+                    ans += mod_number[9 - c[i]][x];
+                }
+            }
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         genshin_start(i);
     }

@@ -42,7 +42,7 @@ public:
 
 class KMP {
     std::string pattern;
-    int *next;
+    std::vector<int> next;
 
     void buildNext() {
         for (int i = 1, j = 0; i < pattern.size(); i++) {
@@ -78,7 +78,7 @@ public:
     }
 
     KMP(std::string pattern) : pattern(pattern) {
-        next = new int[pattern.size()];
+        next.resize(pattern.size());
         buildNext();
     }
 };

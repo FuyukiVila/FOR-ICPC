@@ -111,6 +111,4 @@ struct ModNumber {
     void operator--() { *this = *this - 1; }
 };
 
-#undef int long long
-
 #endif

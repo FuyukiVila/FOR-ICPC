@@ -68,23 +68,66 @@ void get_primes(int n) {
     }
 }
 
-
-// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
-std::default_random_engine eng(std::random_device());
-
+std::random_device rd;
+std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
-std::uniform_real_distribution<double> rd2(1, 1e18);
-std::normal_distribution<double> rd3(9, 999);
 
-//玩原神导致的
+//��ԭ���µ�
+vector<vector<int> > male(1e5 + 100);
+vector<vector<int> > female(1e5 + 100);
+vector<vector<double> > man(1e5 + 100);
+vector<vector<double> > woman(1e5 + 100);
+
 void genshin_start(int testCase) {
-
+    int n, m, k;
+    cin >> n >> m >> k;
+    cout << fixed << setprecision(10);
+    cout << "float\n";
+    for (int i = 1; i <= k; i++) {
+        int x, y;
+        cin >> x >> y;
+        female[x].emplace_back(y);
+        male[y].emplace_back(x);
+    }
+    double ans = 0;
+    for (int i = 1; i <= n; i++) {
+        for (auto const &x: female[i]) {
+            woman[x].emplace_back(1.0 / female[i].size());
+        }
+    }
+    for (int i = 1; i <= m; i++) {
+        for (auto const &x: male[i]) {
+            man[x].emplace_back(1.0 / male[i].size());
+        }
+    }
+    double ans1 = 0, ans2 = 0;
+    for (int i = 1; i <= n; i++) {
+        if (man[i].empty()) {
+            continue;
+        }
+        double tmp = 1;
+        for (auto const &x: man[i]) {
+            tmp *= (1.0 - x);
+        }
+        ans1 += (1.0 - tmp);
+    }
+    for (int i = 1; i <= m; i++) {
+        if (woman[i].empty()) {
+            continue;
+        }
+        double tmp = 1;
+        for (auto const &x: woman[i]) {
+            tmp *= (1.0 - x);
+        }
+        ans2 += (1.0 - tmp);
+    }
+    cout << ans1 << ' ' << ans2 << '\n';
 }
 
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         genshin_start(i);
     }

@@ -68,17 +68,70 @@ void get_primes(int n) {
     }
 }
 
-
-// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
-std::default_random_engine eng(std::random_device());
-
+std::random_device rd;
+std::default_random_engine eng(rd());
 std::uniform_int_distribution<ll> ranint(1, 1e18);
-std::uniform_real_distribution<double> rd2(1, 1e18);
-std::normal_distribution<double> rd3(9, 999);
 
-//玩原神导致的
+//��ԭ���µ�
+struct node {
+    int x, y, z;
+};
+vector<node> a(55);
+int n;
+
+int cmp(int x, int y) {
+    if (x > y) {
+        return 1;
+    }
+    return 0;
+}
+
+bool check(vector<int> &s) {
+    for (int i = 1; i <= n; i++) {
+        if (cmp(s[a[i].x], s[a[i].y]) != a[i].z) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void genshin_start(int testCase) {
+    cin >> n;
+    a.clear();
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].x >> a[i].y >> a[i].z;
+    }
+    vector<int> s{0, 1, 2, 3};
+    for (int i = 1; i <= 6; i++) {
+        if (check(s)) {
+            cout << "Yes\n";
+            return;
+        }
+        next_permutation(s.begin() + 1, s.end());
+    }
+    s = {0, 1, 1, 2};
+    for (int i = 1; i <= 6; i++) {
+        if (check(s)) {
+            cout << "Yes\n";
+            return;
+        }
+        next_permutation(s.begin() + 1, s.end());
+    }
+    s = {0, 1, 2, 2};
+    for (int i = 1; i <= 6; i++) {
+        if (check(s)) {
+            cout << "Yes\n";
+            return;
+        }
+        next_permutation(s.begin() + 1, s.end());
+    }
+    s = {0, 1, 1, 1};
 
+    if (check(s)) {
+        cout << "Yes\n";
+        return;
+    }
+    cout << "No\n";
 }
 
 signed main() {

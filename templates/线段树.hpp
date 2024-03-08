@@ -34,8 +34,6 @@ private:
     };
 
     vector<node> tree;
-    int n, n4;
-
 
     void push_down(int x) {
         //push down操作
@@ -92,9 +90,8 @@ private:
 
 public:
     explicit SegTree(const vector<T> &arr) {
-        n = arr.size() - 1;
-        n4 = n * 4;
-        tree.resize(n4 + 5);
+        int n = arr.size() - 1;
+        tree.resize(n * 4 + 5);
         build(arr, 1, 1, n);
     }
 
@@ -104,7 +101,10 @@ public:
         }
         if (tree[x].inRange(l, r)) {
             tree[x].add += val;
+            //区间求和
             tree[x].value += val * tree[x].size();
+            //区间求Max
+            // tree[x].value += val;
             return;
         }
         push_down(x);
@@ -121,7 +121,10 @@ public:
             tree[x].isChange = true;
             tree[x].add = 0;
             tree[x].change = val;
+            //区间求和
             tree[x].value = val * tree[x].size();
+            //区间求Max
+            // tree[x].value = val;
             return;
         }
         push_down(x);

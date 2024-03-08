@@ -1,19 +1,16 @@
-#ifndef __RMQ_HPP
-#define __RMQ_HPP
+#ifndef __ST_HPP
+#define __ST_HPP
 
-#include "bits/stdc++.h"
-
-using namespace std;
+#include "vector"
 
 template<typename T>
-struct RMQ {
+struct ST {
 private:
-    vector<vector<T>> maxn;
-    vector<vector<T>> minn;
-    vector<vector<T>> gcd;
+    std::vector<std::vector<T> > maxn;
+    std::vector<std::vector<T> > minn;
+    std::vector<std::vector<T> > gcd;
 
     static int msb(int x) {
-        assert(x > 0);
         int ans = -1;
         while (x) {
             x >>= 1;
@@ -23,16 +20,14 @@ private:
     }
 
 public:
-    explicit RMQ(const vector<T> &a) {
-        maxn.resize(a.size() + 1, vector<T>(32));
-        minn.resize(a.size() + 1, vector<T>(32));
-        int n = a.size() - 1;
-        for (int i = 1; i <= n; i++) {
+    explicit ST(const std::vector<T> &a) {
+        maxn.resize(a.size(), std::vector<T>(32));
+        minn.resize(a.size(), std::vector<T>(32));
+        for (int i = 0; i < a.size(); i++) {
             maxn[i][0] = minn[i][0] = gcd[i][0] = a[i];
         }
-        for (int j = 1; 1 << j <= n; j++) {
-            for (int i = 1; i + (1 << j) - 1 <= n; i++) {
-                assert(j - 1 >= 0 && i + (1 << (j - 1)) - 1 <= n);
+        for (int j = 1; 1 << j <= a.size(); j++) {
+            for (int i = 0; i + (1 << j) - 1 < a.size(); i++) {
                 maxn[i][j] = max(maxn[i][j - 1], maxn[i + (1 << (j - 1))][j - 1]);
                 minn[i][j] = min(minn[i][j - 1], minn[i + (1 << (j - 1))][j - 1]);
                 gcd[i][j] = __gcd(gcd[i][j - 1], gcd[i + (1 << (j - 1))][j - 1]);
@@ -52,7 +47,7 @@ public:
 
     T getGCD(int l, int r) {
         int k = msb(r - l + 1);
-        return gcd[l][k];
+        return __gcd(gcd[l][k], gcd[(r - (1 << k) + 1)][k]);
     }
 
 };
