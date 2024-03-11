@@ -76,8 +76,8 @@ std::uniform_int_distribution<ll> ranint(1, 1e18);
 std::uniform_real_distribution<double> rd2(1, 1e18);
 std::normal_distribution<double> rd3(9, 999);
 
-//玩原神导致的
-void genshin_start(int testCase) {
+//为什么要演奏春日影！
+void haruhikage_start(int testCase) {
 
 }
 
@@ -86,7 +86,7 @@ signed main() {
     int T = 1;
     cin >> T;
     for (int i = 1; i <= T; i++) {
-        genshin_start(i);
+        haruhikage_start(i);
     }
     return 0;
 }
