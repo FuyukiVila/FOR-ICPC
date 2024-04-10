@@ -12,14 +12,20 @@
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 #define cpy(a, b) memcpy(a, b, sizeof(a))
+#define LOCAL
 
 #include <bits/stdc++.h>
+
+#ifdef LOCAL
 
 #define dbg(x...) \
     do { \
         std::cout << #x << " -> "; \
         err(x); \
-    } while (0)
+    } while (0);
+#else
+#define dbg(x...) 114514;
+#endif
 
 void err() {
     std::cout << std::endl;
@@ -67,14 +73,6 @@ void get_primes(int n) {
         }
     }
 }
-
-
-// <>内为Typename 整型均匀分布参数为左右闭区间,实型为左闭右开,正态分布中为均值和标准差。
-std::default_random_engine eng(std::random_device());
-
-std::uniform_int_distribution<ll> ranint(1, 1e18);
-std::uniform_real_distribution<double> rd2(1, 1e18);
-std::normal_distribution<double> rd3(9, 999);
 
 //为什么要演奏春日影！
 void haruhikage_start(int testCase) {
