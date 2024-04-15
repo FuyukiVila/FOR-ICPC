@@ -85,7 +85,7 @@ struct node {
         return c < p.c;
     }
 };
-
+    0
 void haruhikage_start(int testCase) {
     int n;
     cin >> n;
