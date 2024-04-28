@@ -10,7 +10,8 @@
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "-DLOCAL"
+                "-DLOCAL",
+                "-std=c++2b"
             ],
             "options": {
                 "cwd": "${fileDirname}"
