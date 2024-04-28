@@ -22,9 +22,9 @@
         std::cout << #x << " -> "; \
         err(x); \
     } while (0);
- #else
- #define dbg(x) 114514;
- #endif
+#else
+#define dbg(x) 114514;
+#endif
 
 void err() {
     std::cout << std::endl;
@@ -74,14 +74,34 @@ void get_primes(int n) {
 }
 
 //为什么要演奏春日影！
-void haruhikage_start(int testCase) {
 
+void haruhikage_start(int testCase) {
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    vector<int> dp(n + 1);
+    vector<pair<int, int> > ans;
+    for (int i = 1; i <= n; i++) {
+        dp[i] = dp[i - 1] + a[i];
+        for (int j = 0; j <= i; j++) {
+            if (dp[i - j] + j * j > dp[i]) {
+                dp[i] = dp[i - j] + j * j;
+                if (j != 0) {
+                    ans.emplace_back(i - j + 1, i);
+                }
+            }
+        }
+    }
+    cout << dp[n] << '\n';
 }
 
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         haruhikage_start(i);
     }

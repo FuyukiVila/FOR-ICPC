@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="26864a4c-d724-4448-890e-2a78a2c6da16" name="更改" comment="update">
+      <change afterPath="$PROJECT_DIR$/codeforces/contest1956/A.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codeforces/contest1956/B.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codeforces/contest1956/D.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="ICPC template" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;FuyukiVila&quot;
+  }
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: []
+}</component>
+  <component name="GitLabMergeRequestsSettings">{}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FuyukiVila/FOR-ICPC&quot;,
+    &quot;accountId&quot;: &quot;0454b831-72a3-487c-856d-4774ee456ea8&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2XR7QoRpGcQbFPLUobnLkVAkBi4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "C/C++ 文件.1.cpp.executor": "Run",
+    "C/C++ 文件.2.cpp.executor": "Run",
+    "C/C++ 文件.A.cpp.executor": "Run",
+    "C/C++ 文件.B.cpp.executor": "Run",
+    "C/C++ 文件.C.cpp.executor": "Run",
+    "C/C++ 文件.D.cpp.executor": "Run",
+    "C/C++ 文件.E.cpp.executor": "Run",
+    "C/C++ 文件.F.cpp.executor": "Run",
+    "C/C++ 文件.Fountain .cpp.executor": "Run",
+    "C/C++ 文件.G.cpp.executor": "Debug",
+    "C/C++ 文件.I.cpp.executor": "Run",
+    "C/C++ 文件.J.cpp.executor": "Run",
+    "C/C++ 文件.L.cpp.executor": "Run",
+    "C/C++ 文件.LCA.cpp.executor": "Debug",
+    "C/C++ 文件.M.cpp.executor": "Run",
+    "C/C++ 文件.P1228.cpp.executor": "Run",
+    "C/C++ 文件.P3612.cpp.executor": "Run",
+    "C/C++ 文件.RMQ.cpp.executor": "Run",
+    "C/C++ 文件.ST.cpp.executor": "Run",
+    "C/C++ 文件.Secret Cow Code S .cpp.executor": "Run",
+    "C/C++ 文件.地毯.cpp (1).executor": "Run",
+    "C/C++ 文件.地毯.cpp.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Fuyuki_Vila/Desktop/FOR-ICPC/test/A.cpp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="C/C++ 文件.D.cpp">
+    <configuration name="1.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="FOR-ICPC" TARGET_NAME="1.cpp" CONFIG_NAME="1.cpp">
+      <option name="sourceFile" value="test\1.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="2.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="FOR-ICPC" TARGET_NAME="2.cpp" CONFIG_NAME="2.cpp">
+      <option name="sourceFile" value="test\2.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="B.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="FOR-ICPC" TARGET_NAME="B.cpp" CONFIG_NAME="B.cpp">
+      <option name="sourceFile" value="codeforces\contest1956\B.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="D.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="FOR-ICPC" TARGET_NAME="D.cpp" CONFIG_NAME="D.cpp">
+      <option name="sourceFile" value="codeforces\contest1956\D.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LCA.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="FOR-ICPC" TARGET_NAME="LCA.cpp" CONFIG_NAME="LCA.cpp">
+      <option name="sourceFile" value="test\LCA.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" singleton="false" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="lua.app" factoryName="Lua Application">
+      <option name="program" value="lua.exe" />
+      <option name="file" value="" />
+      <option name="workingDir" value="$PROJECT_DIR$/Templates.cpp" />
+      <option name="debuggerType" value="1" />
+      <option name="params" value="" />
+      <option name="charset" value="UTF-8" />
+      <option name="showConsole" value="true" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="C/C++ 文件.D.cpp" />
+        <item itemvalue="C/C++ 文件.B.cpp" />
+        <item itemvalue="C/C++ 文件.1.cpp" />
+        <item itemvalue="C/C++ 文件.2.cpp" />
+        <item itemvalue="C/C++ 文件.LCA.cpp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="26864a4c-d724-4448-890e-2a78a2c6da16" name="更改" comment="" />
+      <created>1698580025807</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698580025807</updated>
+      <workItem from="1698580030540" duration="2000000" />
+      <workItem from="1698582067158" duration="47000" />
+      <workItem from="1698583060051" duration="133000" />
+      <workItem from="1698583231125" duration="30000" />
+      <workItem from="1698675961780" duration="568000" />
+      <workItem from="1699077878513" duration="113000" />
+      <workItem from="1699078000634" duration="4907000" />
+      <workItem from="1699085255494" duration="4543000" />
+      <workItem from="1699262170453" duration="2032000" />
+      <workItem from="1699333149725" duration="25000" />
+      <workItem from="1700011874685" duration="34000" />
+      <workItem from="1700011918294" duration="32000" />
+      <workItem from="1700011957955" duration="21000" />
+      <workItem from="1700011993568" duration="26000" />
+      <workItem from="1700012027014" duration="32000" />
+      <workItem from="1700012066057" duration="51000" />
+      <workItem from="1700012128032" duration="19000" />
+      <workItem from="1700012156207" duration="126000" />
+      <workItem from="1700020452201" duration="139000" />
+      <workItem from="1700020607317" duration="206000" />
+      <workItem from="1700020829899" duration="249000" />
+      <workItem from="1700021101432" duration="180000" />
+      <workItem from="1700021295818" duration="142000" />
+      <workItem from="1700021530533" duration="189000" />
+      <workItem from="1700021737403" duration="41000" />
+      <workItem from="1700048638687" duration="4567000" />
+      <workItem from="1700054466789" duration="1221000" />
+      <workItem from="1700059748163" duration="1363000" />
+      <workItem from="1700230023104" duration="77000" />
+      <workItem from="1700390348412" duration="197000" />
+      <workItem from="1700493084749" duration="2350000" />
+      <workItem from="1700538591212" duration="33000" />
+      <workItem from="1700563636827" duration="97000" />
+      <workItem from="1700563864136" duration="5510000" />
+      <workItem from="1700569414882" duration="1711000" />
+      <workItem from="1700805707252" duration="39000" />
+      <workItem from="1700806883448" duration="102000" />
+      <workItem from="1701603420471" duration="265000" />
+      <workItem from="1702715734016" duration="4720000" />
+      <workItem from="1702825279526" duration="83000" />
+      <workItem from="1702825374488" duration="179000" />
+      <workItem from="1702825570312" duration="1768000" />
+      <workItem from="1702894902235" duration="2228000" />
+      <workItem from="1702897442370" duration="1495000" />
+      <workItem from="1702899874856" duration="369000" />
+      <workItem from="1702992917052" duration="587000" />
+      <workItem from="1703081217404" duration="46000" />
+      <workItem from="1703081281544" duration="1800000" />
+      <workItem from="1703598377593" duration="1914000" />
+      <workItem from="1704372402853" duration="1075000" />
+      <workItem from="1704867341093" duration="822000" />
+      <workItem from="1705577495507" duration="3000" />
+      <workItem from="1706358853599" duration="1457000" />
+      <workItem from="1706446504314" duration="1000" />
+      <workItem from="1706446563650" duration="133000" />
+      <workItem from="1706446707239" duration="61000" />
+      <workItem from="1706446780485" duration="524000" />
+      <workItem from="1706447387683" duration="359000" />
+      <workItem from="1706447758424" duration="113000" />
+      <workItem from="1706447884701" duration="3589000" />
+      <workItem from="1706452546207" duration="45000" />
+      <workItem from="1706539752348" duration="1688000" />
+      <workItem from="1706596327823" duration="3799000" />
+      <workItem from="1706605856980" duration="191000" />
+      <workItem from="1706613783798" duration="4661000" />
+      <workItem from="1706671963473" duration="1240000" />
+      <workItem from="1706711021097" duration="926000" />
+      <workItem from="1706847985528" duration="102000" />
+      <workItem from="1706848103552" duration="917000" />
+      <workItem from="1706849050300" duration="27000" />
+      <workItem from="1706849198055" duration="131000" />
+      <workItem from="1706849347344" duration="31000" />
+      <workItem from="1706849390182" duration="253000" />
+      <workItem from="1706849657616" duration="52000" />
+      <workItem from="1706849723402" duration="195000" />
+      <workItem from="1706850022505" duration="15499000" />
+      <workItem from="1706866499564" duration="1161000" />
+      <workItem from="1706867885933" duration="6066000" />
+      <workItem from="1706886628920" duration="47000" />
+      <workItem from="1706886714844" duration="1010000" />
+      <workItem from="1706926955034" duration="2192000" />
+      <workItem from="1706931359919" duration="255000" />
+      <workItem from="1706931630687" duration="16000" />
+      <workItem from="1706931660943" duration="1602000" />
+      <workItem from="1706946806587" duration="1779000" />
+      <workItem from="1706957786866" duration="5584000" />
+      <workItem from="1707116477226" duration="1088000" />
+      <workItem from="1707281729890" duration="90000" />
+      <workItem from="1707281837841" duration="9218000" />
+      <workItem from="1707291933447" duration="4138000" />
+      <workItem from="1709887969991" duration="181000" />
+      <workItem from="1709888173750" duration="396000" />
+      <workItem from="1709888984827" duration="696000" />
+      <workItem from="1710135882966" duration="52000" />
+      <workItem from="1710136202416" duration="39000" />
+      <workItem from="1710136258201" duration="153000" />
+      <workItem from="1710136431071" duration="115000" />
+      <workItem from="1711176680471" duration="12000" />
+      <workItem from="1711176703164" duration="7538000" />
+      <workItem from="1711803985788" duration="80000" />
+      <workItem from="1712381569667" duration="3831000" />
+      <workItem from="1712385636083" duration="8041000" />
+      <workItem from="1712760332593" duration="283000" />
+      <workItem from="1712760638709" duration="999000" />
+      <workItem from="1712762499745" duration="7000" />
+      <workItem from="1713069141137" duration="2580000" />
+      <workItem from="1713514681377" duration="212000" />
+      <workItem from="1713515137237" duration="8067000" />
+    </task>
+    <task id="LOCAL-00001" summary="update">
+      <option name="closed" value="true" />
+      <created>1699262359912</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699262359912</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <option name="closed" value="true" />
+      <created>1700021694518</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1700021694518</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <option name="closed" value="true" />
+      <created>1700538612267</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700538612267</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update">
+      <option name="closed" value="true" />
+      <created>1701603573121</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701603573121</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update">
+      <option name="closed" value="true" />
+      <created>1702716330311</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702716330311</updated>
+    </task>
+    <task id="LOCAL-00006" summary="update">
+      <option name="closed" value="true" />
+      <created>1702993365022</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702993365022</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update">
+      <option name="closed" value="true" />
+      <created>1704868145381</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1704868145381</updated>
+    </task>
+    <task id="LOCAL-00008" summary="update">
+      <option name="closed" value="true" />
+      <created>1706359040157</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706359040157</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update">
+      <option name="closed" value="true" />
+      <created>1706673167919</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706673167919</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update">
+      <option name="closed" value="true" />
+      <created>1709889071426</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709889071426</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update">
+      <option name="closed" value="true" />
+      <created>1710136536901</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710136536901</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update">
+      <option name="closed" value="true" />
+      <created>1712760509761</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1712760509762</updated>
+    </task>
+    <task id="LOCAL-00013" summary="update">
+      <option name="closed" value="true" />
+      <created>1712760605189</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1712760605189</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/nowcoder/202401/E.cpp</url>
+          <line>82</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

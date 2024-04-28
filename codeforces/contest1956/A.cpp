@@ -22,9 +22,9 @@
         std::cout << #x << " -> "; \
         err(x); \
     } while (0);
- #else
- #define dbg(x) 114514;
- #endif
+#else
+#define dbg(x) 114514;
+#endif
 
 void err() {
     std::cout << std::endl;
@@ -75,7 +75,18 @@ void get_primes(int n) {
 
 //为什么要演奏春日影！
 void haruhikage_start(int testCase) {
-
+    int k, q;
+    cin >> k >> q;
+    vector<int> a(k);
+    for (auto &x: a) {
+        cin >> x;
+    }
+    while (q--) {
+        int x;
+        cin >> x;
+        cout << min(x, a[0] - 1) << ' ';
+    }
+    cout << '\n';
 }
 
 signed main() {

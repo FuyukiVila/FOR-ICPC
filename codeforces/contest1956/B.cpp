@@ -75,8 +75,51 @@ void get_primes(int n) {
 }
 
 //为什么要演奏春日影！
-void haruhikage_start(int testCase) {
+struct answer {
+    int type, line;
 
+    answer(int _type, int _line) : line(_line) {
+        if (_type == 0) {
+            type = 2;
+        } else {
+            type = 1;
+        }
+    }
+};
+
+void haruhikage_start(int testCase) {
+    int n;
+    cin >> n;
+    vector<answer> ans;
+    vector<vector<int> > a(n + 1, vector<int>(n + 1));
+    for (int i = 1, k = n; i <= n; i++, k--) {
+        for (int j = 1; j <= n; j++) {
+            a[k][j] = j;
+        }
+        ans.emplace_back(1, k);
+        for (int j = 1; j <= n; j++) {
+            a[j][k] = j;
+        }
+        ans.emplace_back(0, k);
+    }
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            sum += a[i][j];
+        }
+    }
+    cout << sum << ' ' << n * 2 << '\n';
+    for (auto const &[t, i]: ans) {
+        cout << t << ' ' << i << ' ';
+        for (int i = 1; i <= n; i++) {
+            cout << i << " \n"[i == n];
+        }
+    }
+//    for (int i = 1; i <= n; i++) {
+//        for (int j = 1; j <= n; j++) {
+//            cerr << a[i][j] << " \n"[j == n];
+//        }
+//    }
 }
 
 signed main() {

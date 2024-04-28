@@ -12,7 +12,6 @@
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 #define cpy(a, b) memcpy(a, b, sizeof(a))
-#define LOCAL
 
 #include <bits/stdc++.h>
 
