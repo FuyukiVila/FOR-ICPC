@@ -81,7 +81,7 @@ void haruhikage_start(int testCase) {
 signed main() {
     GKD;
     int T = 1;
-    cin >> T;
+    // cin >> T;
     for (int i = 1; i <= T; i++) {
         haruhikage_start(i);
     }
