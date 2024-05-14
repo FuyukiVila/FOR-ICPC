@@ -5,9 +5,8 @@
 
 using namespace std;
 
-template<typename T>
-class SegTree {
-private:
+template <typename T> class SegTree {
+  private:
     struct node {
         T value{0};
         T add{0};
@@ -23,21 +22,16 @@ private:
             return this->l > r || this->r < l;
         }
 
-        constexpr int length() {
-            return this->r - this->l + 1;
-        }
+        constexpr int length() { return this->r - this->l + 1; }
 
-        constexpr int size() {
-            return length();
-        }
-
+        constexpr int size() { return length(); }
     };
 
     vector<node> tree;
 
     void push_down(int x) {
-        //push down操作
-        //区间求和
+        // push down操作
+        // 区间求和
         if (tree[x].isChange) {
             tree[x * 2].value = tree[x].change * tree[x * 2].size();
             tree[x * 2 + 1].value = tree[x].change * tree[x * 2 + 1].size();
@@ -50,30 +44,30 @@ private:
             tree[x * 2].add += tree[x].add;
             tree[x * 2 + 1].add += tree[x].add;
         }
-        //区间求max
-//        if (tree[x].change) {
-//            tree[x * 2].value = tree[x].change;
-//            tree[x * 2 + 1].value = tree[x].change;
-//            tree[x * 2].change = tree[x * 2 + 1].change = tree[x].change;
-//            tree[x * 2].isChange = tree[x * 2 + 1].isChange = true;
-//        }
-//        if (tree[x].add) {
-//            tree[x * 2].value += tree[x].add;
-//            tree[x * 2 + 1].value += tree[x].add;
-//            tree[x * 2].add += tree[x].add;
-//            tree[x * 2 + 1].add += tree[x].add;
-//        }
+        // 区间求max
+        //        if (tree[x].change) {
+        //            tree[x * 2].value = tree[x].change;
+        //            tree[x * 2 + 1].value = tree[x].change;
+        //            tree[x * 2].change = tree[x * 2 + 1].change =
+        //            tree[x].change; tree[x * 2].isChange = tree[x * 2 +
+        //            1].isChange = true;
+        //        }
+        //        if (tree[x].add) {
+        //            tree[x * 2].value += tree[x].add;
+        //            tree[x * 2 + 1].value += tree[x].add;
+        //            tree[x * 2].add += tree[x].add;
+        //            tree[x * 2 + 1].add += tree[x].add;
+        //        }
 
         tree[x].isChange = tree[x].change = tree[x].add = 0;
-
     }
 
     void push_up(int x) {
-        //push up操作
-        //区间求和
+        // push up操作
+        // 区间求和
         tree[x].value = tree[2 * x].value + tree[2 * x + 1].value;
-//        区间求max
-//        tree[x].value = max(tree[2 * x].value, tree[2 * x + 1].value);
+        //        区间求max
+        //        tree[x].value = max(tree[2 * x].value, tree[2 * x + 1].value);
     }
 
     void build(const vector<T> &arr, int x, int l, int r) {
@@ -88,7 +82,7 @@ private:
         push_up(x);
     }
 
-public:
+  public:
     explicit SegTree(const vector<T> &arr) {
         int n = arr.size() - 1;
         tree.resize(n * 4 + 5);
@@ -101,10 +95,10 @@ public:
         }
         if (tree[x].inRange(l, r)) {
             tree[x].add += val;
-            //区间求和
+            // 区间求和
             tree[x].value += val * tree[x].size();
-            //区间求Max
-            // tree[x].value += val;
+            // 区间求Max
+            //  tree[x].value += val;
             return;
         }
         push_down(x);
@@ -121,10 +115,10 @@ public:
             tree[x].isChange = true;
             tree[x].add = 0;
             tree[x].change = val;
-            //区间求和
+            // 区间求和
             tree[x].value = val * tree[x].size();
-            //区间求Max
-            // tree[x].value = val;
+            // 区间求Max
+            //  tree[x].value = val;
             return;
         }
         push_down(x);
@@ -142,7 +136,7 @@ public:
         }
         push_down(x);
         return query(l, r, x * 2) + query(l, r, x * 2 + 1);
-//        return max(query(l, r, x * 2), query(l, r, x * 2 + 1));
+        //        return max(query(l, r, x * 2), query(l, r, x * 2 + 1));
     }
 };
 

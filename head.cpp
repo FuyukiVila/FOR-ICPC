@@ -17,21 +17,18 @@
 
 #ifdef LOCAL
 
-#define dbg(x...) \
-    do { \
-        std::cout << #x << " -> "; \
-        err(x); \
+#define dbg(x...)                                                              \
+    do {                                                                       \
+        std::cout << #x << " -> ";                                             \
+        err(x);                                                                \
     } while (0);
 #else
 #define dbg(x...) 114514;
 #endif
 
-void err() {
-    std::cout << std::endl;
-}
+void err() { std::cout << std::endl; }
 
-template<class T, class... Ts>
-void err(T arg, Ts &... args) {
+template <class T, class... Ts> void err(T arg, Ts &...args) {
     std::cout << arg << ' ';
     err(args...);
 }
@@ -45,7 +42,8 @@ ll mod = 0;
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     ll ans = 1;
     while (_n) {
-        if (_n & 1) ans *= _a;
+        if (_n & 1)
+            ans *= _a;
         _n >>= 1;
         _a *= _a;
         if (_mod > 0) {
@@ -63,20 +61,20 @@ bitset<N> st;
 
 void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
-        if (!st[i]) minp[i] = i, primes.emplace_back(i);
+        if (!st[i])
+            minp[i] = i, primes.emplace_back(i);
         for (int j = 0; primes[j] * i <= n; j++) {
             int t = primes[j] * i;
             st[t] = true;
             minp[t] = primes[j];
-            if (i % primes[j] == 0) break;
+            if (i % primes[j] == 0)
+                break;
         }
     }
 }
 
-//为什么要演奏春日影！
-void haruhikage_start(int testCase) {
-
-}
+// 为什么要演奏春日影！
+void haruhikage_start(int testCase) {}
 
 signed main() {
     GKD;
@@ -87,4 +85,3 @@ signed main() {
     }
     return 0;
 }
-
