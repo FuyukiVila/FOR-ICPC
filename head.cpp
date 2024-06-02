@@ -54,10 +54,10 @@ inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     return ans;
 }
 
-constexpr int N = 1e7 + 100;
-vector<int> minp(N);
+constexpr int _N = 1e7 + 100;
+vector<int> minp(_N);
 vector<int> primes;
-bitset<N> st;
+bitset<_N> st;
 
 void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
