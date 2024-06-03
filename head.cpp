@@ -73,15 +73,21 @@ void get_primes(int n) {
     }
 }
 
-// 为什么要演奏春日影！
-void haruhikage_start(int testCase) {}
+inline void init() {
+    /*Init Here*/
+}
+
+void idol_produce(int testCase) {
+    /*Code Here*/
+}
 
 signed main() {
     GKD;
+    init();
     int T = 1;
     // cin >> T;
     for (int i = 1; i <= T; i++) {
-        haruhikage_start(i);
+        idol_produce(i);
     }
     return 0;
 }
