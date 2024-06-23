@@ -97,5 +97,6 @@
         "rope": "cpp",
         "slist": "cpp"
     },
-    "FSharp.suggestGitignore": false
+    "FSharp.suggestGitignore": false,
+    "C_Cpp.default.compilerPath": "D:\\mingw64\\bin\\g++.exe"
 }
