@@ -26,7 +26,7 @@ a.join(b)b并入a 前提是两棵树的key的取值范围不相交
 a.split(v,b)key小于等于v的元素属于a，其余的属于b
 T.lower_bound(x)   >=x的min的迭代器
 T.upper_bound((x)  >x的min的迭代器
-T.find_by_order(k) 有k个数比它小的数
+T.find_by_order(k) 第k个数比它小的数
 */
 
 template <typename T, class P = std::less<T>>
