@@ -86,43 +86,42 @@ inline void init() {
 
 #define int ll
 
+const int maxn = 5e5 + 5;
+int a[maxn];
+int mp[maxn * 10];
+
+struct node {
+    int id, value;
+
+    bool operator<(const node &x) const {
+        return id < x.id;
+    }
+};
+
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
-    vector<int> a(n + 1);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    vector<unordered_map<int, int>> mp(52);
-    vector<unordered_map<int, int>> mp2(52);
-    for (int i = 1; i <= n; i++) {
-        for (int k = 1; k <= min(50ll, n); k++) {
-            mp[k][a[i] - k * i]++;
-            mp2[k][k * i - a[i]]++;
-        }
-    }
     int ans = 0;
-    for (int i = 1; i <= min(50ll, n); i++) {
-        for (auto const &[x, y]: mp[i]) {
-            auto k = mp2[i].find(x);
-            if (k != nullptr) {
-                ans += y * k->second;
-            }
+    for (int k = 1; k <= n; k++) {
+        int sum = 0;
+        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
+            int now = k * i - a[i];
+            sum += mp[now + 4 * n];
+            mp[a[i] - k * i + 4 * n]++;
+        }
+        ans += sum;
+        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
+            mp[a[i] - k * i + 4 * n]--;
         }
     }
-    for (int i = 1; i <= n; i++) {
-        if (a[i] == i) {
-            ans--;
-        }
-    }
-    cout << ans / 2 << '\n';
+    cout << ans << endl;
+
 }
 
-/*
- *
- *
- * */
 signed main() {
     GKD;
     init();
