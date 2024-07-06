@@ -12,6 +12,8 @@
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 #define cpy(a, b) memcpy(a, b, sizeof(a))
+//#define LOCAL
+//#define PRIME
 
 #include <bits/stdc++.h>
 
@@ -28,7 +30,8 @@
 
 void err() { std::cout << std::endl; }
 
-template <class T, class... Ts> void err(T arg, Ts &...args) {
+template<class T, class... Ts>
+void err(T arg, Ts &...args) {
     std::cout << arg << ' ';
     err(args...);
 }
@@ -54,10 +57,12 @@ inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     return ans;
 }
 
-constexpr int _N = 1e7 + 100;
-vector<int> minp(_N);
+#ifdef PRIME
+
+const int N = 1e7 + 100;
+vector<int> minp(N);
 vector<int> primes;
-bitset<_N> st;
+bitset<N> st;
 
 void get_primes(int n) {
     for (int i = 2; i <= n; i++) {
@@ -73,6 +78,8 @@ void get_primes(int n) {
     }
 }
 
+#endif
+
 inline void init() {
     /*Init Here*/
 }
@@ -85,7 +92,7 @@ signed main() {
     GKD;
     init();
     int T = 1;
-    // cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }

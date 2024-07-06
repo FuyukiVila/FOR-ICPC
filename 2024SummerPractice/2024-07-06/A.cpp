@@ -12,6 +12,8 @@
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 #define cpy(a, b) memcpy(a, b, sizeof(a))
+//#define LOCAL
+//#define PRIME
 
 #include <bits/stdc++.h>
 
@@ -55,6 +57,8 @@ inline ll qpow(ll _a, ll _n, ll _mod = mod) {
     return ans;
 }
 
+#ifdef PRIME
+
 const int N = 1e7 + 100;
 vector<int> minp(N);
 vector<int> primes;
@@ -74,47 +78,58 @@ void get_primes(int n) {
     }
 }
 
-#define int ll
+#endif
 
 inline void init() {
     /*Init Here*/
-    mod = 1000003;
 }
 
+#define int ll
 
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
-    int sum = (((n % mod) + 1) * (n % mod)) / 2;
-    bitset<64> b(n);
-    int ans = 0;
-    int p = 1;
-    for (int i = 63; i >= 0; i--) {
-        if (b[i]) {
-            ans = (ans + (qpow(3, i) * p % mod)) % mod;
-            p *= 2;
-            p %= mod;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    vector<unordered_map<int, int>> mp(52);
+    vector<unordered_map<int, int>> mp2(52);
+    for (int i = 1; i <= n; i++) {
+        for (int k = 1; k <= min(50ll, n); k++) {
+            mp[k][a[i] - k * i]++;
+            mp2[k][k * i - a[i]]++;
         }
     }
-    cout << (sum - ans + mod) % mod;
+    int ans = 0;
+    for (int i = 1; i <= min(50ll, n); i++) {
+        for (auto const &[x, y]: mp[i]) {
+            auto k = mp2[i].find(x);
+            if (k != nullptr) {
+                ans += y * k->second;
+            }
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        if (a[i] == i) {
+            ans--;
+        }
+    }
+    cout << ans / 2 << '\n';
 }
 
+/*
+ *
+ *
+ * */
 signed main() {
     GKD;
     init();
     int T = 1;
-    // cin >> T;
+    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-
-
-/* 10 3 7 9
- * 30 2 3 5 7
- * g3(x) = g(g2(x)) = g(g(g(x)))
- * = g(g(f(x) * k)) = g(f(f(x)*k) *k)
- * = f((f(f(x)*k) *k) *k
- */

@@ -78,15 +78,7 @@ struct point {
     double x, y;
 
     bool operator<(const point &p) const {
-        return x < p.x || (x == p.x && y > p.y);
-    }
-
-    bool operator==(const point &p) const {
-        return x == p.x && y == p.y;
-    }
-
-    bool operator<=(const point &p) const {
-        return (x == p.x && y == p.y) || (x < p.x || (x == p.x && y > p.y));
+        return x < p.x || (x == p.x && y >= p.y);
     }
 };
 
@@ -100,10 +92,7 @@ struct line {
 
     //求交点
     point get(const line &p) const {
-        point ret;
-        ret.x=((double)p.b-(double)b)/((double)k-(double)p.k);
-        ret.y=p.k*ret.x+p.b;
-        return ret;
+        return {((b - p.b) / (p.k - k)), k * ((b - p.b) / (p.k - k)) + b};
     }
 };
 
@@ -129,9 +118,8 @@ void idol_produce(int testCase) {
     for (int i = 2; i <= n; i++) {
         if (a[i].k == a[i - 1].k) continue;
         while (lines.size() > 1 &&
-               lines[lines.size() - 1].get(lines[lines.size() - 2]) <= a[i].get(lines[lines.size() - 2])) {
+               a[i].get(lines[lines.size() - 1]) < lines[lines.size() - 1].get(lines[lines.size() - 2]))
             lines.pop_back();
-        }
 
         lines.emplace_back(a[i]);
     }
