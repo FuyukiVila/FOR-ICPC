@@ -80,55 +80,108 @@ void get_primes(int n) {
 
 #endif
 
-inline void init() {
+inline
+
+void init() {
     /*Init Here*/
 }
 
-#define int ll
+struct SegTree {
+    vector<ll> a;
 
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
+    static int lowbit(int x) {
+        return x & -x;
+    }
 
-struct node {
-    int id, value;
+    void add(int x, int k) {
+        while (x < a.size()) {
+            a[x] += k;
+            x += lowbit(x);
+        }
+    }
 
-    bool operator<(const node &x) const {
-        return id < x.id;
+    ll get(int x) {
+        ll res = 0;
+        while (x) {
+            res += a[x];
+            x -= lowbit(x);
+        }
+        return res;
     }
 };
+
+SegTree cnt;
+
+SegTree value;
+vector<ll> nums;
+
+//离散化
+int get_num(int x) {
+    return lower_bound(nums.begin(), nums.end(), x) - nums.begin() + 1;
+}
+
+ll check(ll n) {
+    ll p = 0, q = 0;
+    if (n >= nums.back()) {
+        p = 0;
+    } else {
+        p = cnt.get(nums.size()) - cnt.get(upper_bound(nums.begin(), nums.end(), n) - nums.begin());
+    }
+    if (n < nums[0]) {
+        q = 0;
+    } else {
+        q = value.get(upper_bound(nums.begin(), nums.end(), n) - nums.begin());
+    }
+    return p * n + q;
+}
+
 
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
+    vector<pair<int, int> > q;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        int x, y;
+        cin >> x >> y;
+        q.emplace_back(x, y);
+        if (x == 1) nums.push_back(y);
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
+    sort(nums.begin(), nums.end());
+    nums.erase(unique(nums.begin(), nums.end()), nums.end());
+    cnt.a.resize(nums.size() + 1);
+    value.a.resize(nums.size() + 1);
+    int maxn = 0;
+    int f = 0;
+    for (auto const &[x, y]: q) {
+        if (x == 1) {
+            f++;
+            maxn = max(maxn, y);
+            cnt.add(get_num(y), 1);
+            value.add(get_num(y), y);
+        } else {
+            ll l = 0, r = 1e15 + 5;
+            while (l <= r) {
+                ll mid = (l + r) >> 1;
+                ll w = check(mid);
+                if (w / y < mid) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            cout << r << '\n';
         }
     }
-    cout << ans << endl;
 }
 
 signed main() {
     GKD;
     init();
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-

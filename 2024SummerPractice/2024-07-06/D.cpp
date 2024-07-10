@@ -80,55 +80,113 @@ void get_primes(int n) {
 
 #endif
 
+const int N = 2e5 + 1;
+
+
 inline void init() {
     /*Init Here*/
 }
 
-#define int ll
+int tr[300000];
+int n, q;
 
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
+int lowbit(int x) { return x & -x; }
 
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
+void add(int x, int v) {
+    for (; x <= n; x += lowbit(x)) {
+        tr[x] += v;
     }
-};
+}
+
+int get_prefix(int x) {
+    int res = 0;
+    while (x > 0) {
+        res += tr[x];
+        x -= lowbit(x);
+    }
+    return res;
+}
+
+int find(int x) {
+    int l = 0, r = n;
+    while (l < r) {
+        int mid = (l + r) >> 1;
+        if (get_prefix(mid) >= x) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return r;
+}
 
 void idol_produce(int testCase) {
     /*Code Here*/
-    int n;
-    cin >> n;
+    cin >> n >> q;
+    vector<int> a(n + 1);
+    int tmp = 0;
+    set<int> s;
+    bitset<N> bs;
+    bs.set(0);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
+        tmp += a[i];
+        add(i, a[i]);
+        bs.set(tmp);
+        if (a[i] == 0) s.insert(i);
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
+    while (q--) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int x;
+            cin >> x;
+            if (x == 0) {
+                if (!s.empty()) {
+                    cout << *s.begin() << ' ' << *s.begin() << '\n';
+                } else {
+                    cout << -1 << '\n';
+                }
+                continue;
+            }
+
+            auto tmp = ((bs >> x) & bs);
+            if (tmp.any()) {
+                int s1 = tmp._Find_first();
+                int l = find(s1) + 1;
+                int r = find(s1 + x);
+                cout << l << ' ' << r << '\n';
+            } else {
+                cout << -1 << '\n';
+            }
+        } else if (op == 2) {
+            int i, v;
+            cin >> i >> v;
+            if (a[i] == v) continue;
+            if (a[i] == 0) {
+                s.erase(i);
+                int p = get_prefix(i);
+                int d = N - p - 1;
+                bs = (bs << d >> d) | (bs >> p << (p + v - a[i]));
+            } else {
+                int p = get_prefix(i) + 1;
+                int d = N - p;
+                bs = (bs << d >> d) | (bs >> p << (p + v - a[i]));
+            }
+            add(i, v - a[i]);
+            a[i] = v;
+            if (v == 0) s.insert(i);
         }
     }
-    cout << ans << endl;
 }
 
 signed main() {
     GKD;
     init();
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-

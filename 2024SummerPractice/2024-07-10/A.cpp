@@ -19,7 +19,7 @@
                                                %.%vz------------+;;;;;;$     % ..............................................................u% -$8;;;;;;;;;;;$vvvv$--;;;;+---8                        @        *z~~~~~~~~~~~~~~va        @
                                               ----!vvv-----------;;;;;;$  6%....................................................................%%  *%6%$1;;$vvvvv$--;;;;;----%                        @~         uu~~~~~~~~~~~u         .@
                                               %--;- vva---------;;;;;;;$%8..................................................................+.....-%%-%vvvvvvvvvv%- ;;;;;;-----%                        @            uu~~~~~uu           @
-                                             %---;;* nvv%-----;;;;;;;;$v......................................................................%.....-%------      -;;;;;;;*----8                         @              u~u             @
+                                             %---;;* nvv%-----;;;;;;;;$v......................................................................%.....-%------      -;;;;;;;*----8                         @               -              @
                                              %----;;;- !vvv8;;;;;;;;1$^..  ....................................................................-....  *o*;**^--- -;;;;;;;;*------%                        @3                          n@
                                              1----;;;;-  $vvvvv6$~;%...  ........................................................................+.     $;;;;;;;;;;;;;;;;;;--------%                        @.                       @
                                             %-----+;;;;;-   v$$$6o%..  ...   ................................................................. ...i      nn;;;;;;;;;;;;;;;;---------+%                        @                   @@
@@ -54,8 +54,8 @@
                                                     %.&@~;;;;;u%*%.........%   ...;...;;..;+......                 ........;...;+..^;....%.;v.  ^o..6***$...... .%******n*****^...%
                                                   *....@***********%........%  ...;...;..+;.......           .i%$$$%%..........;...;....%.8^    ^...%****%^^....%**************...%*
                                                   .....v*************$.......% ...................  $;;;;;;;;;;;;;;;;6.................;*$.    6$...$******$...%*****&*********...86
-                                                 %.....*8*************;.%+....% ..................  6;;;^+++++++++++..3................%-    3**$...%*******$-%***~************-..n!
-                                                 ......^**;************...-8%% % ...............    8..+++++++++++++++6.............. %   !;****%...%**********;n**************+..%
+                                                 %.....*8*************;.%+....% ..................  6;;;^路路路++++++++路路3................%-    3**$...%*******$-%***~************-..n!
+                                                 ......^**;************...-8%% % ...............    8路路+++++++++++++++6.............. %   !;****%...%**********;n**************+..%
                                                  *.....+***@***********....$i      ...........      ;*+++++++++++++++%     ......   .  ^$*******....%*******~u*****************.-%
                                                  %.....+*****6*********....&*%$                           -++++++++-                n%**********-...u*****i********************@
                                                   %....+*******#*******....@****%%^                                             6%  %***********i....o*@*********************@;
@@ -69,7 +69,7 @@
                                         a  ........ .. ;****@***#+-^%@@#*****@$3%                    .%**--*$*******v*$$%                   $3********8%%%%$$$***v********%  ...     %
                                        %  ........... %*****@**************%%.  .. o%       8%%~--^o@+--;-***~n*****i*~o*~@**u$$.         %1...$%****************o********61 ...      %
                                        . ........^o$$*******#***********n$  ..  ..     -%%%%~----***&--***;z****u$$6**o***#*****!$z%%%%~    ..    .n$%*********************z%...      ~3
-                                      8 ......13688%%%%%%%%%%886666666%%6666666666668%63iiiii8!!!!333%666%8%%%%%%%%%%%%%%%%%%%%!6!!!iii%%iiiiiiiiiiii11ua%%%aaaau$i!!!!!!!!!!$....     %
+                                      8 ....~813688%%%%%%%%%%886666666%%6666666666668%63iiiii8!!!!333%666%8%%%%%%%%%%%%%%%%%%%%!6!!!iii%%iiiiiiiiiiii11ua%%%aaaau$i!!!!!!!!!!$....     %
                                       % ......%                                                                                                                              %v%....   i;
                                       ! ......%                                                                                                                              %$$%8...   !
                                       u .....z%                                                                                                                              %.~....... %
@@ -78,10 +78,10 @@
                                       o  !    %                                      a                                                                                       %     %...~
                                        u u    %                                    aaaa                                                                                      %      %..%
                                        %%     %                                   aaaaaaaaaaaaaaaaav                  aaaaaaaaaaaaaaaaaaaaaaaaaa                             %       %.%
-                                             3%                                 aaaz          aaaa                                        aaaaaz                             %        %
+                                             3%                                 aaaz          +aaa                                        aaaaaz                             %        %
                                             %-%                               aaaa           aaa                                       aaaaa                                 %u
                                           %o%%%                             aaaaaaaaaaaaaaaaaaaaaaaaaa                              aaaaa                                    %uv
-                                         %%-----%                           a                      +aa                           aaaaa-                                      %%%v
+                                         %%-----%                           a.                     +aa                           aaaaa-                                      %%%v
                                         z%%--i%--%                            zaavnoooooooooooooooonaa                           -aaa                                      %^---%.
                                        .+%%-----*%                            zaazzzzzzzzzzzzzzzzzzzaa                            aaa                                     ^-----%%+
                                         +%%v-----%                                                 +aa                            aaa                                     %-+---%%+
@@ -182,8 +182,153 @@ inline void init() {
     /*Init Here*/
 }
 
+
+char a[1050][1050];
+bool vis[1050][1050];
+int id[1050][1050];
+int dx[] = {0, 1, 0, -1}, dy[] = {1, 0, -1, 0};
+int h, w;
+
+int get_num(pair<int, int> p) {
+    return (p.first - 1) * w + p.second;
+}
+
+
+struct DSU {
+    std::vector<int> f, siz;
+
+    explicit DSU(int n) : f(n), siz(n, 1) { std::iota(f.begin(), f.end(), 0); }
+
+    int find(int x) {
+        while (x != f[x]) x = f[x] = f[f[x]];
+        return x;
+    }
+
+    bool same(int x, int y) { return find(x) == find(y); }
+
+    bool merge(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return false;
+        siz[x] += siz[y];
+        f[y] = x;
+        return true;
+    }
+
+    int size(int x) { return siz[find(x)]; }
+};
+
+struct node {
+    vector<int> idx;
+
+    bool operator<(const node &a) const {
+        return idx < a.idx;
+    }
+};
+
+vector<node> ans;
+
+vector<pair<int, int>> r;
+ll t;
+
+void dfs(int x, int y, int tx, int ty) {
+    if (!ans.empty() && chrono::system_clock::now().time_since_epoch().count() - t >= 2000000000) return;
+    if (a[x][y] != '.') {
+        return;
+    }
+    if (x == tx && y == ty) {
+        node a;
+        for (auto const &x: r) {
+            a.idx.emplace_back(id[x.first][x.second]);
+        }
+        sort(a.idx.begin(), a.idx.end());
+        ans.emplace_back(a);
+        return;
+    }
+    for (int i = 0; i < 4; i++) {
+        int xx = x + dx[i], yy = y + dy[i];
+        if (vis[xx][yy]) continue;
+        vis[xx][yy] = true;
+        r.emplace_back(xx, yy);
+        dfs(xx, yy, tx, ty);
+        vis[xx][yy] = false;
+        r.pop_back();
+    }
+}
+
 void idol_produce(int testCase) {
     /*Code Here*/
+    int n;
+    cin >> h >> w;
+    DSU dsu(h * w + 1);
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            a[i][j] = '#';
+        }
+    }
+    int x1, y1, x2, y2;
+    cin >> x1 >> y1 >> x2 >> y2;
+    if (abs(x1 - x2) + abs(y1 - y2) <= 1) {
+        a[x1][y1] = '.', a[x2][y2] = '.';
+        for (int i = 1; i <= h; i++) {
+            for (int j = 1; j <= w; j++) {
+                cout << a[i][j];
+            }
+            cout << '\n';
+        }
+        return;
+    }
+    vector<pair<int, int>> p;
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            int x, y;
+            cin >> x >> y;
+            p.emplace_back(x, y);
+            id[x][y] = p.size();
+        }
+    }
+    reverse(p.begin(), p.end());
+    vis[x1][y1] = 1;
+    vis[x2][y2] = 1;
+    a[x1][y1] = '.';
+    a[x2][y2] = '.';
+    for (auto const &i: p) {
+        if (dsu.same(get_num({x1, y1}), get_num({x2, y2}))) {
+            break;
+        }
+        vis[i.first][i.second] = true;
+        a[i.first][i.second] = '.';
+        for (int j = 0; j < 4; j++) {
+            if (vis[i.first + dx[j]][i.second + dy[j]]) {
+                dsu.merge(get_num({i.first, i.second}), get_num({i.first + dx[j], i.second + dy[j]}));
+            }
+        }
+    }
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            vis[i][j] = false;
+        }
+    }
+    r.emplace_back(x1, y1);
+    vis[x1][y1] = true;
+    t = chrono::system_clock::now().time_since_epoch().count();
+    dfs(x1, y1, x2, y2);
+    sort(ans.begin(), ans.end());
+    reverse(p.begin(), p.end());
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            a[i][j] = '#';
+        }
+    }
+    for (auto const &i: ans.back().idx) {
+        a[p[i - 1].first][p[i - 1].second] = '.';
+    }
+    for (int i = 1; i <= h; i++) {
+        for (int j = 1; j <= w; j++) {
+            cout << a[i][j];
+        }
+        cout << '\n';
+    }
 }
 
 signed main() {

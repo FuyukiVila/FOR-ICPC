@@ -79,56 +79,83 @@ void get_primes(int n) {
 }
 
 #endif
+#define int ll
+const int inf = 1e12;
+int a[55];
+int b[55];
+int dp[55][55];
+int n, m1, m2;
+int ans = inf;
+
+int tmp = 0;
+
+void check() {
+    tmp++;
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= m2; j++) {
+            dp[i][j] = 0;
+        }
+    }
+    dp[0][0] = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= m2; j++) {
+            dp[i][j] = dp[i - 1][j];
+            if (j >= b[i]) {
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - b[i]] + a[i]);
+            }
+        }
+    }
+    ans = min(ans, dp[n][m2]);
+}
+
 
 inline void init() {
     /*Init Here*/
 }
 
-#define int ll
-
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
+void dfs(int now, int res = m1) {
+    if (ans == 0) {
+        cout << 0 << '\n';
+        exit(0);
     }
-};
+    if (now == n) {
+        b[n] = res;
+        if (res < b[n - 1]) {
+            return;
+        }
+        check();
+        return;
+    }
+    for (int i = b[now - 1]; i <= res / (n - now + 1); i++) {
+        b[now] = i;
+        if (i < b[now - 1]) continue;
+        dfs(now + 1, res - i);
+    }
+}
 
 void idol_produce(int testCase) {
     /*Code Here*/
-    int n;
-    cin >> n;
+    cin >> n >> m1 >> m2;
+    swap(m1, m2);
+    if (m2 >= m1 * (n + 1)) {
+        cout << 0 << '\n';
+        return;
+    }
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
-        }
-    }
-    cout << ans << endl;
+    sort(a + 1, a + n + 1);
+    dfs(1);
+    cout << ans;
 }
 
 signed main() {
     GKD;
     init();
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-

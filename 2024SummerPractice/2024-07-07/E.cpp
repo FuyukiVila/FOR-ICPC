@@ -83,42 +83,33 @@ void get_primes(int n) {
 inline void init() {
     /*Init Here*/
 }
-
 #define int ll
-
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
-    }
-};
-
 void idol_produce(int testCase) {
     /*Code Here*/
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n + 1);
+    vector<int> b(n + 1);
+    unordered_map<int, int> cnt;
+    int maxn = 0;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
+        k -= a[i];
+        cnt[a[i]]++;
+        maxn = max(maxn, a[i]);
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
-        }
+    b[n] = maxn;
+    int idx = n;
+    while (k >= maxn) {
+        b[--idx] = maxn;
+        k -= maxn;
     }
-    cout << ans << endl;
+    for (int i = 1; i <= cnt[k] + 1; i++) {
+        b[--idx] = k;
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << b[i] << " \n"[i == n];
+    }
 }
 
 signed main() {
@@ -131,4 +122,3 @@ signed main() {
     }
     return 0;
 }
-

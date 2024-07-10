@@ -5,8 +5,9 @@
 
 using namespace std;
 
-template <typename T> class SegTree {
-  private:
+template<typename T>
+class SegTree {
+private:
     struct node {
         T value{0};
         T add{0};
@@ -82,7 +83,7 @@ template <typename T> class SegTree {
         push_up(x);
     }
 
-  public:
+public:
     explicit SegTree(const vector<T> &arr) {
         int n = arr.size() - 1;
         tree.resize(n * 4 + 5);

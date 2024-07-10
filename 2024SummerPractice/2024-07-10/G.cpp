@@ -178,12 +178,38 @@ void get_primes(int n) {
 
 #endif
 
-inline void init() {
+void init() {
     /*Init Here*/
+    mod = 998244353;
 }
+
+int dp[2][200005];
 
 void idol_produce(int testCase) {
     /*Code Here*/
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    int ans = n * (n - 1) / 2 + n % mod;
+    int add = n * 100;
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j <= 200 * n; j++) {
+            dp[i & 1][j] = dp[(i - 1) & 1][j];
+        }
+        for (int j = 0; j <= 200 * n; j++) {
+            if (j >= a[i] && j - a[i] <= 200 * n) {
+                dp[i & 1][j] += dp[(i - 1) & 1][j - a[i]];
+                dp[i & 1][j] %= mod;
+            }
+        }
+        dp[i & 1][a[i] + add] += i - 1;
+        dp[i & 1][a[i] + add] %= mod;
+        ans = (ans + dp[i & 1][add]) % mod;
+    }
+    cout << ans << endl;
 }
 
 signed main() {

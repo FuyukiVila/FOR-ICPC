@@ -84,41 +84,72 @@ inline void init() {
     /*Init Here*/
 }
 
-#define int ll
+int dx[] = {0, 0, 1, -1}, dy[] = {1, -1, 0, 0};
 
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
+void bfs(int x, int y, int &tmp, const vector<vector<char>> &a) {
+    vector<vector<bool> > vis(a.size() + 5, vector<bool>(a[0].size() + 5));
+    queue<pair<int, int>> q;
+    q.emplace(x, y);
+    while (!q.empty()) {
+        auto p = q.front();
+        q.pop();
+        if (vis[p.first][p.second] || !(a[p.first][p.second] == '0' || a[p.first][p.second] == '1')) {
+            continue;
+        }
+        vis[p.first][p.second] = true;
+        tmp++;
+        q.emplace(p.first + 1, p.second);
+        q.emplace(p.first - 1, p.second);
+        q.emplace(p.first, p.second + 1);
+        q.emplace(p.first, p.second - 1);
     }
-};
+}
 
 void idol_produce(int testCase) {
     /*Code Here*/
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    int sum = 0;
+    vector<vector<char> > a(n + 5, vector<char>(m + 5, 'X'));
+    int x, y;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+            if (a[i][j] != 'X') {
+                sum++;
+                x = i, y = j;
+            }
         }
     }
-    cout << ans << endl;
+    if (sum == 0) {
+        cout << "No\n";
+        return;
+    }
+    int tmp = 0;
+    bfs(x, y, tmp, a);
+    if (tmp != sum) {
+        cout << "No\n";
+        return;
+    }
+    int w = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i][j] != 'X') {
+                tmp = 0;
+                if (a[i][j] == '0')w++;
+                for (int k = 0; k < 4; k++) {
+                    if (a[i + dx[k]][j + dy[k]] == '0') {
+                        tmp++;
+                    }
+                }
+            }
+        }
+    }
+    if (w & 1) {
+        cout << "Yes\n";
+    } else {
+        cout << "No\n";
+    }
 }
 
 signed main() {
@@ -131,4 +162,3 @@ signed main() {
     }
     return 0;
 }
-

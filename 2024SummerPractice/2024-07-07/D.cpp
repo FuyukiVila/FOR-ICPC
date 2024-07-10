@@ -82,53 +82,106 @@ void get_primes(int n) {
 
 inline void init() {
     /*Init Here*/
+    mod = 1e9 + 7;
 }
 
 #define int ll
+int f[1000005];
+vector<int> e[1000005];
+bool vis[1000005];
+int ans = 0, ans2 = 1;
 
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
+void solve(int x) {
+    while (!vis[x]) {
+        vis[x] = 1;
+        x = f[x];
     }
-};
+    vector<int> circle;
+    unordered_map<int, bool> inCircle;
+    while (!inCircle[x]) {
+        inCircle[x] = 1;
+        circle.emplace_back(x);
+        x = f[x];
+    }
+    vector<int> mul;
+    vector<int> mul2;
+    for (auto const &c: circle) {
+        if (e[c].size() == 1) continue;
+        mul.emplace_back(e[c].size());
+        queue<int> q;
+        q.push(c);
+        int y = 1;
+        int sum = 0, son = 0;
+        while (!q.empty()) {
+            auto p = q.front();
+            vis[p] = 1;
+            q.pop();
+            sum++;
+            if (e[p].empty()) {
+                son++;
+            } else if (p != c) {
+                y *= e[p].size();
+                y %= mod;
+            }
+            for (auto const &ed: e[p]) {
+                if (!inCircle[ed]) {
+                    q.push(ed);
+                }
+            }
+        }
+        mul2.emplace_back(y);
+        ans += sum - son - 1;
+        ans %= mod;
+    }
+    if (mul.empty()) {
+        ans += circle.size() - 1;
+        ans2 = (ans2 * circle.size()) % mod;
+        return;
+    }
+    ans = (ans + circle.size()) % mod;
+    int tmp = 1;
+    for (auto const &i: mul) {
+        tmp *= i;
+        tmp %= mod;
+    }
+    tmp -= 1;
+    for (auto const &i: mul2) {
+        tmp *= i;
+        tmp %= mod;
+    }
+    ans2 *= tmp;
+    ans2 %= mod;
+}
 
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        int x;
+        cin >> x;
+        f[i] = x;
+        e[x].emplace_back(i);
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i]) {
+            solve(i);
         }
     }
-    cout << ans << endl;
+    int tmp = 1;
+    for (int i = 1; i <= n - ans; i++) {
+        tmp = tmp * i % mod;
+    }
+    cout << ans % mod << ' ' << ans2 * tmp % mod << '\n';
 }
 
 signed main() {
     GKD;
     init();
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-

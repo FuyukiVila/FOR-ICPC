@@ -84,51 +84,38 @@ inline void init() {
     /*Init Here*/
 }
 
-#define int ll
-
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
-    }
-};
-
 void idol_produce(int testCase) {
     /*Code Here*/
+    cout << fixed << setprecision(7);
     int n;
     cin >> n;
-    for (int i = 1; i <= n; i++) {
+    vector<int> a(n + 1);
+    vector<int> b(n + 1);
+    for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
-        }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
-        }
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
     }
-    cout << ans << endl;
+    sort(a.begin(),a.end());
+    sort(b.begin(), b.end());
+    double num = 0;
+    for(int i = 0;i<=n;i++){
+        num += lower_bound(b.begin(), b.end(), a[i]) - b.begin();
+    }
+    for(int i = 0; i<=n;i++){
+        num -= lower_bound(a.begin(), a.end(), b[i]) - a.begin();
+    }
+    cout << num / n << endl;
 }
 
 signed main() {
     GKD;
     init();
     int T = 1;
-    cin >> T;
+//    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }
     return 0;
 }
-

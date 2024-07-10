@@ -84,41 +84,69 @@ inline void init() {
     /*Init Here*/
 }
 
-#define int ll
-
-const int maxn = 5e5 + 5;
-int a[maxn];
-int mp[maxn * 10];
-
-struct node {
-    int id, value;
-
-    bool operator<(const node &x) const {
-        return id < x.id;
-    }
-};
-
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    if (n == 2) {
+        cout << "-1\n";
+        return;
     }
-    int ans = 0;
-    for (int k = 1; k <= n; k++) {
-        int sum = 0;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            int now = k * i - a[i];
-            sum += mp[now + 4 * n];
-            mp[a[i] - k * i + 4 * n]++;
+    if (n % 2 == 1) {
+        deque<int> q;
+        for (int i = 1; i <= n; i++) {
+            q.push_back(i);
         }
-        ans += sum;
-        for (int i = 1; i * k <= 2 * n && i <= n; i++) {
-            mp[a[i] - k * i + 4 * n]--;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < n; j++) {
+                cout << q[j] << " \n"[j == n - 1];
+            }
+            q.push_back(q.front());
+            q.pop_front();
+        }
+        return;
+    }
+    vector <vector<int>> a(n + 1, vector<int>(n + 1, n));
+    deque<int> q;
+    for (int i = 1; i <= n - 1; i++) {
+        q.push_back(i);
+    }
+    for (int i = 1; i <= n - 1; i++) {
+        for (int j = 0; j < n - 1; j++) {
+            a[i][j + 1] = q[j];
+        }
+        q.push_back(q.front());
+        q.pop_front();
+    }
+    for (int i = 2; i <= n; i++) {
+        int tmp = a[i][i - 1];
+        a[i][i - 1] = n;
+        a[i][n] = tmp;
+        a[n][i - 1] = tmp;
+    }
+    a[n][n] = n - 1;
+    for (int i = 1; i < n; i++) {
+        if (a[i][i] == n - 1) {
+            a[i][i] = n;
+            for (int j = 1; j <= n; j++) {
+                if (a[j][i] == n && j != i) {
+                    a[j][i] = n - 1;
+                    for (int k = 1; k <= n; k++) {
+                        if (a[j][k] == n - 1 && k != i) {
+                            a[j][k] = n;
+                            a[k + 1][k] = n - 1;
+                            for (int i = 1; i <= n; i++) {
+                                for (int j = 1; j <= n; j++) {
+                                    cout << a[i][j] << " \n"[j == n];
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
-    cout << ans << endl;
 }
 
 signed main() {
@@ -131,4 +159,3 @@ signed main() {
     }
     return 0;
 }
-

@@ -184,6 +184,45 @@ inline void init() {
 
 void idol_produce(int testCase) {
     /*Code Here*/
+    int n, m, p, b;
+    cin >> n >> m >> p >> b;
+    vector<int> a(m + 1);
+    vector<int> vis(n + 1); // 必胜态
+    for (int i = 1; i <= m; i++) {
+        cin >> a[i];
+        vis[a[i]] = 1;
+    }
+    vector<int> s;
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i])s.emplace_back(i);
+    }
+    vector<int> nxt(n + 5);
+    if (!s.empty()) {
+        for (int i = 1; i < s[0]; i++) {
+            nxt[i] = s[0];
+        }
+        for (int i = 1; i < s.size(); i++) {
+            for (int j = s[i - 1]; j < s[i]; j++) {
+                nxt[j] = s[i];
+            }
+        }
+    }
+    ll res = 0;
+    for (int i = 1; i <= n; i++) {
+        res += (i ^ p);
+    }
+    for (int i = 1; i <= n; i++) {
+        ll ans = res;
+        for (int j = i + 1; j <= n; j += i + 1) {
+            j--;
+            if (nxt[j] == 0)break;
+            int w = nxt[j];
+            ans -= (w ^ p);
+            ans += (w ^ b);
+            j = w;
+        }
+        cout << ans << ' ';
+    }
 }
 
 signed main() {
