@@ -65,7 +65,7 @@ struct ModInt {
 
     constexpr friend std::istream &operator>>(std::istream &is, ModInt &t) { return is >> t.x; }
 
-    constexpr ModInt operator^(long long n) const {
+    constexpr ModInt pow(int n) const {
         ModInt res(1), mul(x);
         while (n) {
             if (n & 1) res *= mul;
@@ -73,6 +73,10 @@ struct ModInt {
             n >>= 1;
         }
         return res;
+    }
+
+    constexpr ModInt operator^(int n) const {
+        return pow(n);
     }
 
     constexpr ModInt inv() const {
@@ -92,6 +96,29 @@ struct ModInt {
         return inv();
     }
 
+    constexpr ModInt &operator++() {
+        ++x;
+        if (x >= T) x -= T;
+        return *this;
+    }
+
+    constexpr ModInt &operator--() {
+        --x;
+        if (x < 0) x += T;
+        return *this;
+    }
+
+    constexpr ModInt operator++(int) {
+        ModInt t = *this;
+        ++*this;
+        return t;
+    }
+
+    constexpr ModInt operator--(int) {
+        ModInt t = *this;
+        --*this;
+        return t;
+    }
 };
 
 

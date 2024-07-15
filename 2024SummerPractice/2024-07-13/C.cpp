@@ -182,47 +182,60 @@ inline void init() {
     /*Init Here*/
 }
 
-struct DSU {
-    std::vector<int> f, siz;
+struct node {
+    bitset<18> id;
+    int dis;
 
-    explicit DSU(int n) : f(n + 1), siz(n + 1, 1) { std::iota(f.begin(), f.end(), 0); }
-
-    int find(int x) {
-        while (x != f[x]) x = f[x] = f[f[x]];
-        return x;
+    bool operator<(const node &p) const {
+//        if (dis == p.dis) return id.to_ulong() > p.id.to_ulong();
+        return dis > p.dis;
     }
 
-    bool same(int x, int y) { return find(x) == find(y); }
+    node(bitset<18> id, int dis) : id(id), dis(dis) {}
 
-    bool merge(int x, int y) {
-        x = find(x);
-        y = find(y);
-        if (x == y) return false;
-        siz[x] += siz[y];
-        f[y] = x;
-        return true;
-    }
-
-    int size(int x) { return siz[find(x)]; }
 };
 
-int BitCount(unsigned int n) {
-    unsigned int c = 0;
-    for (c = 0; n; ++c) {
-        n &= (n - 1);
-    }
-    return c;
-}
+int a[100005];
 
 void idol_produce(int testCase) {
     /*Code Here*/
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    sort(a.begin() + 1, a.end());
+    unordered_set<int> s;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
+        s.insert(a[i]);
     }
+    if (n == 1) {
+        cout << 0 << '\n';
+        return;
+    }
+    int ans = 0;
+    vector<int> distance(1 << 18, 20);
+    priority_queue<node> q;
+    q.emplace(bitset<18>(a[1]), 0);
+    while (!q.empty()) {
+        if (s.empty()) break;
+        auto [id, dis] = q.top();
+        int u = id.to_ulong();
+        q.pop();
+        if (distance[u] <= dis)continue;
+        if (distance[u] > dis)distance[u] = dis;
+        if (s.count(u)) {
+            ans += dis;
+            distance[u] = 0;
+            dis = 0;
+            s.erase(u);
+        }
+        for (int i = 0; i < 18; i++) {
+            id.flip(i);
+            if (distance[id.to_ulong()] > dis + 1) {
+                q.emplace(id, dis + 1);
+            }
+            id.flip(i);
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

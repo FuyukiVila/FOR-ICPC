@@ -5,6 +5,11 @@
 
 using namespace std;
 
+
+#if __cplusplus < 201703L
+#define constexpr inline
+#endif
+
 const double PI = acos(-1.0);
 const double eps = 1e-7;
 
@@ -86,7 +91,6 @@ namespace Dimension2 {
         constexpr double distance(Point p) const {
             return (*this - p).norm();
         }
-
 
     };
 
@@ -508,7 +512,7 @@ namespace Dimension3 {
 
             // 判断点到线段两端点的投影是否在线段上，且点到线段两端点的距离之和等于线段的长度
             return pointOnLine(p) && p.x >= min(a.x, b.x) && p.x <= max(a.x, b.x) && p.y >= min(a.y, b.y) &&
-            p.y <= max(a.y, b.y) && p.z >= min(a.z, b.z) && p.z <= max(a.z, b.z);
+                   p.y <= max(a.y, b.y) && p.z >= min(a.z, b.z) && p.z <= max(a.z, b.z);
         }
 
         // 判断线段是否相交
