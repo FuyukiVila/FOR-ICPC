@@ -7,7 +7,6 @@ struct RollingDsu {
 
     explicit RollingDsu(int n) : f(n + 1), siz(n + 1, 1), tag(n + 1, 0) { std::iota(f.begin(), f.end(), 0); }
 
-
     int find(int x) {
         while (x != f[x]) x = f[x];
         return x;
