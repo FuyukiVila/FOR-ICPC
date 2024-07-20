@@ -23,6 +23,7 @@ public:
     explicit ST(const std::vector<T> &a) {
         maxn.resize(a.size(), std::vector<T>(32));
         minn.resize(a.size(), std::vector<T>(32));
+        gcd.resize(a.size(), std::vector<T>(32));
         for (int i = 0; i < a.size(); i++) {
             maxn[i][0] = minn[i][0] = gcd[i][0] = a[i];
         }

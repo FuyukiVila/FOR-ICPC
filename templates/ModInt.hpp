@@ -15,6 +15,10 @@ struct ModInt {
 
     constexpr int val() { return x; }
 
+    constexpr ModInt operator=(const ModInt &a) { return x = a.x; }
+
+    constexpr ModInt operator=(long long y) { return x = y % T; }
+
     constexpr ModInt operator+(const ModInt &a) const {
         int x0 = x + a.x;
         return ModInt(x0 < T ? x0 : x0 - T);
@@ -122,7 +126,6 @@ struct ModInt {
 };
 
 
-const int mod = 1e9 + 7;
-using Mint = ModInt<mod>;
+using Mint = ModInt<998244353>;
 
 #endif //__MODINT_HPP
