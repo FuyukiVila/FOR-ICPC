@@ -37,7 +37,7 @@ struct RollingDsu {
         return siz[find(x)];
     }
 
-    void roll_back(int lastSize = 0) {
+    void rollBack(int lastSize = 0) {
         assert(lastSize <= st.size());
         while (st.size() != lastSize) {
             int y = st.back();
@@ -83,6 +83,7 @@ struct TimeSegTree {
 
     TimeSegTree() = default;
 
+    // time:时间长度, size:图上节点个数
     explicit TimeSegTree(int time, int size) {
         dsu = RollingDsu(size);
         tree.resize(time * 4 + 5);
@@ -98,7 +99,7 @@ struct TimeSegTree {
         build(time, u << 1 | 1, mid + 1, r);
     }
 
-
+    // 在[l, r]时间段上,连接x, y
     void modify(int l, int r, int x, int y, int u = 1) {
         if (tree[u].inRange(l, r)) {
             tree[u].add(x, y);
@@ -111,9 +112,6 @@ struct TimeSegTree {
     }
 
     void solve(int u = 1) {
-        if (tree[u].l == 0) {
-            return;
-        }
         int lastSize = dsu.size();
         for (auto &[x, y]: tree[u].op) {
             dsu.merge(x, y);
@@ -121,11 +119,12 @@ struct TimeSegTree {
         if (!tree[u].exist) {
             // to do sth at this time
             execute(u);
+            dsu.rollBack(lastSize);
             return;
         }
         solve(u << 1);
         solve(u << 1 | 1);
-        dsu.roll_back(lastSize);
+        dsu.rollBack(lastSize);
     }
 
     void execute(int u) {

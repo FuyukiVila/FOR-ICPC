@@ -218,7 +218,7 @@ struct RollingDsu {
         return st.size();
     }
 
-    void roll_back(int lastSize = 0) {
+    void rollBack(int lastSize = 0) {
         assert(lastSize <= st.size());
         while (st.size() != lastSize) {
             int y = st.back();
@@ -301,12 +301,12 @@ struct TimeSegTree {
         if (!tree[u].exist) {
             // to do sth at this time
             execute(u);
-            dsu.roll_back(lastSize);
+            dsu.rollBack(lastSize);
             return;
         }
         solve(u << 1);
         solve(u << 1 | 1);
-        dsu.roll_back(lastSize);
+        dsu.rollBack(lastSize);
     }
 
     void execute(int u) {
