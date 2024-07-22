@@ -256,9 +256,9 @@ struct TimeSegTree {
 
         constexpr int size() { return length(); }
 
-        constexpr void add(int u, int v) { op.emplace_back(u, v); }
+        void add(int u, int v) { op.emplace_back(u, v); }
 
-        constexpr void clear() { op.clear(); }
+        void clear() { op.clear(); }
     };
 
     std::vector<node> tree;

@@ -12,7 +12,7 @@ struct RollingDsu {
         return x;
     }
 
-    bool same(int x, int y) { return find(x) == find(y); }
+    constexpr bool same(int x, int y) { return find(x) == find(y); }
 
     bool merge(int x, int y) {
         x = find(x);
@@ -28,7 +28,7 @@ struct RollingDsu {
         return true;
     }
 
-    int size() {
+    constexpr int size() {
         return st.size();
     }
 
@@ -73,9 +73,9 @@ struct TimeSegTree {
 
         constexpr int size() { return length(); }
 
-        constexpr void add(int u, int v) { op.emplace_back(u, v); }
+        void add(int u, int v) { op.emplace_back(u, v); }
 
-        constexpr void clear() { op.clear(); }
+        void clear() { op.clear(); }
     };
 
     std::vector<node> tree;

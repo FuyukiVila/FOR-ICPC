@@ -84,7 +84,7 @@ private:
     }
 
 public:
-    explicit SegTree(const vector<T> &arr) {
+    explicit SegTree(const vector<T> &&arr) {
         int n = arr.size() - 1;
         tree.resize(n * 4 + 5);
         build(arr, 1, 1, n);
