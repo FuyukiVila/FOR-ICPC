@@ -1,27 +1,31 @@
 #ifndef __TRIE_HPP
 #define __TRIE_HPP
 
-#include <map>
-#include <string>
+#include "bits/stdc++.h"
 
 class Trie {
-public:
+private:
     struct TrieNode {
-        int wordCount;                //判断是否是单词
-        std::map<char, TrieNode *> next;
+        int wordCount;
+        std::map<char, std::shared_ptr<TrieNode> > next;
 
         TrieNode() : wordCount(0) {}
+
     };
 
-    TrieNode *root;
+    std::shared_ptr<TrieNode> root;
 
-    Trie() { root = new TrieNode(); }
+public:
 
-    TrieNode *insert(const std::string &word, TrieNode *pos = nullptr) {
+    Trie() { root = std::make_shared<TrieNode>(); }
+
+    std::shared_ptr<TrieNode> getRoot() { return root; }
+
+    std::shared_ptr<TrieNode> insert(const std::string &word, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         for (char const &i: word) {
             if (location->next[i] == nullptr) {
-                location->next[i] = new TrieNode();
+                location->next[i] = std::make_shared<TrieNode>();
             }
             location = location->next[i];
         }
@@ -29,36 +33,28 @@ public:
         return location;
     }
 
-    TrieNode *insert(const char &character, TrieNode *pos = nullptr) {
+    std::shared_ptr<TrieNode> insert(const char &character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         if (location->next[character] == nullptr) {
-            location->next[character] = new TrieNode();
+            location->next[character] = std::make_shared<TrieNode>();
         }
         location = location->next[character];
         location->wordCount++;
         return location;
     }
 
-    TrieNode *search(const std::string &word, TrieNode *pos = nullptr) {
+    std::shared_ptr<TrieNode> search(const std::string &word, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
         return location;
     }
 
-    TrieNode *search(const char &character, TrieNode *pos = nullptr) {
+    std::shared_ptr<TrieNode> search(const char &character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? root : pos;
         return location->next[character];
     }
 
-    void deleteTrie(TrieNode *root) {
-        for (auto &node: root->next) {
-            if (node.second != nullptr) {
-                deleteTrie(node.second);
-            }
-        }
-        delete root;
-    }
 };
 
 #endif

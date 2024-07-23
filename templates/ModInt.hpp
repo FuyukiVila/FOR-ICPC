@@ -7,7 +7,7 @@
 #define constexpr inline
 #endif
 
-template<const int T>
+template<int T>
 struct ModInt {
     int x;
 
