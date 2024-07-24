@@ -134,6 +134,10 @@ void err(T arg, Ts &...args) {
 
 #endif
 
+void init();
+
+void idol_produce(int testCase);
+
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
@@ -178,13 +182,6 @@ void get_primes(int n) {
 
 #endif
 
-inline void init() {
-    /*Init Here*/
-}
-
-void idol_produce(int testCase) {
-    /*Code Here*/
-}
 
 signed main() {
     GKD;
@@ -195,4 +192,12 @@ signed main() {
         idol_produce(i);
     }
     return 0;
+}
+
+inline void init() {
+    /*Init Here*/
+}
+
+void idol_produce(int testCase) {
+    /*Code Here*/
 }

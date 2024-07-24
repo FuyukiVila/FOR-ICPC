@@ -17,7 +17,7 @@ public:
         }
     }
 
-    size_t getHash(size_t l, size_t r) {
+    constexpr size_t getHash(size_t l, size_t r) {
         return hash[r] - hash[l - 1] * hashPow[r - l + 1];
     }
 };

@@ -3,7 +3,7 @@
 
 #include "vector"
 
-template<typename T, typename Cmp = std::greater<T> >
+template<class T, class Cmp = std::greater<T> >
 struct SparseTable {
 private:
     std::vector<std::vector<T> > st;
