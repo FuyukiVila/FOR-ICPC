@@ -3,6 +3,7 @@
 
 #include "vector"
 
+// SpareTable<ElemType, CompareType> ElemType: 元素类型 CompareType: 比较函数, 默认为greater<>
 template<class T, class Cmp = std::greater<T> >
 struct SparseTable {
 private:

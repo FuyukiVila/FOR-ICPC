@@ -34,12 +34,15 @@ private:
     }
 
 public:
+
+    // g: 无向边构成的树, root: 根节点, 默认为1
     explicit LCA(int n, const std::vector<std::vector<int>> &g, int root = 1) {
         f.resize(n + 1, std::vector<int>(32));
         depth.resize(n + 1);
         dfs(root, 0, g);
     }
 
+    // 返回u和v的最近公共祖先
     int query(int u, int v) {
         if (depth[u] < depth[v]) {
             std::swap(u, v);
@@ -59,6 +62,7 @@ public:
         return f[u][0];
     }
 
+    // 返回u和v之间的距离
     int distance(int u, int v) {
         return depth[u] + depth[v] - 2 * depth[query(u, v)];
     }

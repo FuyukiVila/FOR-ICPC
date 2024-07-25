@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+
 struct Manacher {
 
     // 求奇数回文串
@@ -24,8 +25,7 @@ struct Manacher {
         std::vector<int> d2(s.size());
         for (int i = 0, l = 0, r = -1; i < s.size(); i++) {
             int k = (i > r) ? 0 : std::min(d2[l + r - i + 1], r - i + 1);
-            while (0 <= i - k - 1 && i + k < s.size() &&
-                    s[i - k - 1] == s[i + k]) {
+            while (0 <= i - k - 1 && i + k < s.size() && s[i - k - 1] == s[i + k]) {
                 k++;
             }
             d2[i] = k--;

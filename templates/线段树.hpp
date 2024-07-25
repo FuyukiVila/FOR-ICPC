@@ -84,12 +84,16 @@ private:
     }
 
 public:
+
+    SegTree() = default;
+
     explicit SegTree(const vector<T> &arr) {
         int n = arr.size() - 1;
         tree.resize(n * 4 + 5);
         build(arr, 1, 1, n);
     }
 
+    // 区间加
     void add(int l, int r, T val, int x = 1) {
         if (tree[x].outOfRange(l, r)) {
             return;
@@ -108,6 +112,7 @@ public:
         push_up(x);
     }
 
+    // 区间修改
     void change(int l, int r, T val, int x = 1) {
         if (tree[x].outOfRange(l, r)) {
             return;
@@ -128,6 +133,7 @@ public:
         push_up(x);
     }
 
+    // 区间查询
     T query(int l, int r, int x = 1) {
         if (tree[x].outOfRange(l, r)) {
             return 0;

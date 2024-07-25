@@ -3,6 +3,7 @@
 
 #include "bits/stdc++.h"
 
+// Trie<ElementType> 是一个字典树模板类, ElementType 是字典树中存储的元素类型, 默认为 char
 template<class T = char>
 class Trie {
 private:
@@ -28,8 +29,10 @@ public:
 
     std::shared_ptr<TrieNode> end() { return nullptr; }
 
+    // 清空Trie
     void clear() { _root = std::make_shared<TrieNode>(); }
 
+    // 插入一个单词到Trie树的某个前缀上, 返回最后一个字符插入的位置. word:插入的单词, pos:前缀最后一个字符的位置, 空表示从根节点开始插入.
     template<class container>
     std::shared_ptr<TrieNode> insert(const container &word, std::shared_ptr<TrieNode> pos = nullptr) {
         static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
@@ -44,6 +47,7 @@ public:
         return location;
     }
 
+    // 插入一个字符到Trie树的某个前缀上, 返回最后一个字符插入的位置. character:插入的字符, pos:前缀最后一个字符的位置, 空表示从根节点开始插入.
     std::shared_ptr<TrieNode> insert(element_type character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? _root : pos;
         if (location->next[character] == nullptr) {
@@ -54,6 +58,7 @@ public:
         return location;
     }
 
+    // 查找Trie树中以某个前缀开头的单词的位置, 返回最后一个字符的位置, 未找到返回空指针. word:查找的前缀, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
     template<class container>
     std::shared_ptr<TrieNode> find(const container &word, std::shared_ptr<TrieNode> pos = nullptr) {
         static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
@@ -63,11 +68,13 @@ public:
         return location;
     }
 
+    // 查找Trie树中以某个前缀开头的字符的位置, 返回最后一个字符的位置, 未找到返回空指针. character:查找的字符, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
     std::shared_ptr<TrieNode> find(element_type character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? _root : pos;
         return location->next[character];
     }
 
+    // 返回Trie树中以某个前缀开头的单词的数量, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
     template<class container>
     size_t count(const container &word, std::shared_ptr<TrieNode> pos = nullptr) {
         static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
@@ -77,6 +84,7 @@ public:
         return location == nullptr ? 0 : location->wordCount;
     }
 
+    // 返回Trie树中以某个前缀开头的字符的数量, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
     size_t count(element_type character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? _root : pos;
         return location->next[character] == nullptr ? 0 : location->next[character]->wordCount;
