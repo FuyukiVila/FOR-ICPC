@@ -114,10 +114,13 @@ public:
         auto location = (pos == nullptr) ? _root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
-        if (location == nullptr) {
-            return 0;
-        }
         return dfs(location);
+    }
+
+    // 返回Trie树中以某个前缀开头的所有包含字符前缀的单词总数, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
+    size_t countPrefix(element_type character, std::shared_ptr<TrieNode> pos = nullptr) {
+        auto location = (pos == nullptr) ? _root : pos;
+        return dfs(location->next[character]);
     }
 
 };
