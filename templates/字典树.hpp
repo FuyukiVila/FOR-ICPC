@@ -19,6 +19,13 @@ private:
 
     std::shared_ptr<TrieNode> _root;
 
+    size_t dfs(std::shared_ptr<TrieNode> p) {
+        if (p == nullptr) return 0;
+        size_t res = p->wordCount;
+        for (auto const &i: p->next) res += dfs(i.second);
+        return res;
+    }
+
 public:
 
     Trie() { _root = std::make_shared<TrieNode>(); }
@@ -82,6 +89,35 @@ public:
     size_t count(element_type character, std::shared_ptr<TrieNode> pos = nullptr) {
         auto location = (pos == nullptr) ? _root : pos;
         return location->next[character] == nullptr ? 0 : location->next[character]->wordCount;
+    }
+
+    // 删除Trie树中以某个前缀开头的单词, 返回最后一个字符的位置, 未找到返回空指针. word:查找的前缀, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
+    std::shared_ptr<TrieNode> erase(const std::basic_string<element_type> &word, std::shared_ptr<TrieNode> pos = nullptr, size_t count = 1) {
+        auto location = (pos == nullptr) ? _root : pos;
+        for (int i = 0; i < word.length() && location; i++)
+            location = location->next[word[i]];
+        if (location == nullptr) return nullptr;
+        location->wordCount -= min(count, location->wordCount);
+        return location;
+    }
+
+    // 删除Trie树中以某个前缀开头的字符, 返回最后一个字符的位置, 未找到返回空指针. character:查找的字符, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
+    std::shared_ptr<TrieNode> erase(element_type character, std::shared_ptr<TrieNode> pos = nullptr, size_t count = 1) {
+        auto location = (pos == nullptr) ? _root : pos;
+        if (location->next[character] == nullptr) return nullptr;
+        location->next[character]->wordCount -= min(count, location->next[character]->wordCount);
+        return location;
+    }
+
+    // 返回Trie树中以某个前缀开头的所有包含单词前缀的单词总数, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
+    size_t countPrefix(const std::basic_string<element_type> &word, std::shared_ptr<TrieNode> pos = nullptr) {
+        auto location = (pos == nullptr) ? _root : pos;
+        for (int i = 0; i < word.length() && location; i++)
+            location = location->next[word[i]];
+        if (location == nullptr) {
+            return 0;
+        }
+        return dfs(location);
     }
 
 };
