@@ -33,9 +33,7 @@ public:
     void clear() { _root = std::make_shared<TrieNode>(); }
 
     // 插入一个单词到Trie树的某个前缀上, 返回最后一个字符插入的位置. word:插入的单词, pos:前缀最后一个字符的位置, 空表示从根节点开始插入.
-//    template<class container>
     std::shared_ptr<TrieNode> insert(const std::basic_string<element_type> &word, std::shared_ptr<TrieNode> pos = nullptr) {
-//        static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
         auto location = (pos == nullptr) ? _root : pos;
         for (char const &i: word) {
             if (location->next[i] == nullptr) {
@@ -59,9 +57,7 @@ public:
     }
 
     // 查找Trie树中以某个前缀开头的单词的位置, 返回最后一个字符的位置, 未找到返回空指针. word:查找的前缀, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
-//    template<class container>
     std::shared_ptr<TrieNode> find(const std::basic_string<element_type> &word, std::shared_ptr<TrieNode> pos = nullptr) {
-//        static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
         auto location = (pos == nullptr) ? _root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
@@ -75,9 +71,7 @@ public:
     }
 
     // 返回Trie树中以某个前缀开头的单词的数量, pos:前缀最后一个字符的位置, 空表示从根节点开始查找.
-//    template<class container>
     size_t count(const std::basic_string<element_type> &word, std::shared_ptr<TrieNode> pos = nullptr) {
-//        static_assert(std::is_same<typename container::value_type, element_type>::value, "Container element type must be the same as ElementType");
         auto location = (pos == nullptr) ? _root : pos;
         for (int i = 0; i < word.length() && location; i++)
             location = location->next[word[i]];
