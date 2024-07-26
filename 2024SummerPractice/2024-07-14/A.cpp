@@ -178,15 +178,75 @@ void get_primes(int n) {
 
 #endif
 
-
 inline void init() {
     /*Init Here*/
 }
 
-void idol_produce(int testCase) {
-    /*Code Here*/
+#define int ll
+
+struct edge {
+    int from, to, weight;
+
+    edge(int _from, int _to, int _weight) {
+        from = _from;
+        to = _to;
+        weight = _weight;
+    }
+};
+
+struct node {
+    int id, time;
+
+    bool operator<(const node &b) const {
+        return time > b.time;
+    }
+};
+
+vector<edge> e[300005];
+int l[300005], r[300005];
+
+bool inRange(int time, int i) {
+    return time > l[i] && time < r[i];
 }
 
+void idol_produce(int testCase) {
+    /*Code Here*/
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> l[i] >> r[i];
+    }
+    for (int i = 1; i <= m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        e[u].emplace_back(u, v, w);
+    }
+    vector<vector<int>> t(2, vector<int>(n + 1, 1e18));
+    priority_queue<node> q;
+    q.push({1, 0});
+    while (!q.empty()) {
+        node now = q.top();
+        q.pop();
+        if (inRange(now.time, now.id)) continue;
+        if (now.time <= l[now.id] && now.time >= t[0][now.id]) continue;
+        if (now.time >= r[now.id] && now.time >= t[1][now.id]) continue;
+        if (now.time <= l[now.id]) t[0][now.id] = now.time;
+        if (now.time >= r[now.id]) t[1][now.id] = now.time;
+        if (now.id == n) continue;
+        for (auto const &x: e[now.id]) {
+            int nextime = now.time + x.weight; // 直接出发
+            if (!inRange(nextime, x.to)) {
+                q.push({x.to, nextime});
+            }
+            if (nextime >= r[x.to] || (now.time <= l[now.id] && r[x.to] - x.weight > l[now.id])) {
+                continue;
+            }
+            q.push({x.to, r[x.to]});
+        }
+    }
+    if (t[0][n] == 1e18 && t[1][n] == 1e18) cout << -1;
+    else cout << min(t[1][n], t[0][n]);
+}
 
 signed main() {
     GKD;

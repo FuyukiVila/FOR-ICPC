@@ -178,15 +178,25 @@ void get_primes(int n) {
 
 #endif
 
-
 inline void init() {
     /*Init Here*/
 }
 
 void idol_produce(int testCase) {
     /*Code Here*/
+    int n;
+    cin >> n;
+    vector<vector<int> > a(n + 1);
+    vector<int> hashsort(n + 1);
+    for (int i = 1; i <= n; i++) {
+        int k;
+        cin >> k;
+        a[i].resize(k + 1);
+        for (int j = 1; j <= k; j++) {
+            cin >> a[i][j];
+        }
+    }
 }
-
 
 signed main() {
     GKD;

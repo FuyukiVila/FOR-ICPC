@@ -178,21 +178,24 @@ void get_primes(int n) {
 
 #endif
 
-
 inline void init() {
     /*Init Here*/
 }
 
 void idol_produce(int testCase) {
     /*Code Here*/
-}
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
 
+    }
+}
 
 signed main() {
     GKD;
     init();
     int T = 1;
-//    cin >> T;
+    cin >> T;
     for (int i = 1; i <= T; i++) {
         idol_produce(i);
     }

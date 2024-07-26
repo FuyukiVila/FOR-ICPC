@@ -178,15 +178,58 @@ void get_primes(int n) {
 
 #endif
 
-
 inline void init() {
     /*Init Here*/
 }
 
+struct node {
+    int id, value;
+
+    bool operator<(const node &b) const {
+        return value < b.value;
+    }
+};
+
 void idol_produce(int testCase) {
     /*Code Here*/
+    int n, m, q, k;
+    cin >> n >> m >> q >> k;
+    set<int> endpoints;
+    vector<vector<int> > e(n + 1);
+    vector<int> ans(n + 1, 0);
+    vector<int> out(n + 1);
+    priority_queue<node> que1;
+    for (int i = 1; i <= q; i++) {
+        int x;
+        cin >> x;
+        out[x] = k + 1;
+        ans[x] = 1;
+        que1.push({x, out[x]});
+    }
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        e[v].push_back(u);
+    }
+    vector<int> vis(n + 1, 0);
+    while (!que1.empty()) {
+        auto now = que1.top();
+        que1.pop();
+        if (vis[now.id]) continue;
+        vis[now.id] = 1;
+        for (auto const &u: e[now.id]) {
+            if (now.value > k) out[u]++;
+            que1.push({u, out[u]});
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        if (out[i] > k) {
+            cout << 'S';
+        } else {
+            cout << 'B';
+        }
+    }
 }
-
 
 signed main() {
     GKD;
