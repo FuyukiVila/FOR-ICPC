@@ -36,13 +36,13 @@ protected:
     std::vector<node> tree;
 
     //you should modify these functions
-    virtual value_type assign_value(const std::vector<element_type> &arr, size_t x);
+    virtual value_type assign_value(const std::vector<element_type> &arr, size_t x) = 0;
 
-    virtual value_type merge_value(value_type x, value_type y);
+    virtual value_type merge_value(value_type x, value_type y) = 0;
 
-    virtual void add_value(size_t x, element_type add);
+    virtual void add_value(size_t x, element_type add) = 0;
 
-    virtual void change_value(size_t x, element_type change);
+    virtual void change_value(size_t x, element_type change) = 0;
 
     void add_tag(size_t x, element_type add) {
         add_value(x, add);
