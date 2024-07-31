@@ -10,10 +10,11 @@ using namespace std;
 #define constexpr inline
 #endif
 
-const double PI = acos(-1.0);
-const double eps = 1e-7;
+const double PI = acos(-1);
 
-int sgn(double x) {
+constexpr double eps = 1e-7;
+
+constexpr int sgn(double x) {
     if (abs(x) < eps) {
         return 0;
     }
@@ -27,6 +28,12 @@ int sgn(double x) {
 double radian(double degree) {
     return degree * PI / 180.0;
 }
+
+//#define INTEGER_POINT
+
+#ifdef INTEGER_POINT
+#define double long long
+#endif
 
 namespace Dimension2 {
 
@@ -194,38 +201,34 @@ namespace Dimension2 {
     using Seg = Line;
 
     //计算多边形面积
-    constexpr static double calcArea(const vector<Point> &p) {
+    constexpr double calcArea(const vector<Point> &p) {
+        if (p.size() < 3) return 0;
         double res = 0;
         for (int i = 0; i < p.size(); i++) {
-            res += (p[i] ^ p[(i + 1) % p.size()]) / 2;
+            res += (p[i] ^ p[(i + 1) % p.size()]) / 2.0;
         }
         return res;
     }
 
     //对点p极角排序，按逆时针排序
     class AngleSort {
+        Point p{0, 0};
     public:
-        Point p;
+        constexpr AngleSort() = default;
 
-        AngleSort() : p() {}
+        constexpr AngleSort(const Point &p) : p(p) {}
 
-        explicit AngleSort(const Point &p) : p(p) {}
+        constexpr AngleSort(double x, double y) : p(x, y) {}
 
         bool operator()(const Point &a, const Point &b) const {
-            if (a.x >= 0 && b.x < 0)
-                return true;
-            if (a.x == 0 && b.x == 0)
-                return a.y > b.y;
-            //向量OA和向量OB的叉积
-            double det = (a - p) ^ (b - p);
-            if (det < 0)
-                return true;
-            if (det > 0)
-                return false;
-            //向量OA和向量OB共线，以距离判断大小
-            return a.distance(p) > b.distance(p);
+            if (sgn((a - p) ^ (b - p)) == 0) {
+                return a.distance(p) < b.distance(p);
+            } else {
+                return sgn((a - p) ^ (b - p)) > 0;
+            }
         }
     };
+    // 1:点在凸多边形内
 
     //判断点在凸多边形内
     //要求
@@ -235,8 +238,7 @@ namespace Dimension2 {
     //返回值：
     // -1:点在凸多边形外
     // 0:点在凸多边形边界上
-    // 1:点在凸多边形内
-    constexpr static int pointInConvexPoly(const Point &a, const vector<Point> &p) {
+    constexpr int pointInConvexPoly(const Point &a, const vector<Point> &p) {
         int n = p.size();
         for (int i = 0; i < n; i++) {
             if (sgn((p[i] - a) ^ (p[(i + 1) % n] - a)) < 0)
@@ -248,7 +250,7 @@ namespace Dimension2 {
     }
 
     //判断点是否在凸包内
-    constexpr static bool pointInConvex(const Point &a, const vector<Point> &p) {
+    constexpr bool pointInConvex(const Point &a, const vector<Point> &p) {
         int l = 1, r = p.size() - 2;
         while (l <= r) {
             int mid = (l + r) >> 1;
@@ -272,11 +274,10 @@ namespace Dimension2 {
     // -1:点在凸多边形外
     // 0:点在凸多边形边界上
     // 1:点在凸多边形内
-    static int PointInPoly(const Point &p, const vector<Point> &poly) {
+    int PointInPoly(const Point &p, const vector<Point> &poly) {
         int n = poly.size();
-        int cnt;
+        int cnt = 0;
         Line ray, side;
-        cnt = 0;
         ray.a = p;
         ray.b.y = p.y;
         ray.b.x = -100000000000.0; //-INF,注意取值防止越界
@@ -313,7 +314,7 @@ namespace Dimension2 {
     //判断凸多边形
     //允许共线边
     //点可以是顺时针给出也可以是逆时针给出
-    constexpr static bool isConvex(const vector<Point> &poly) {
+    constexpr bool isConvex(const vector<Point> &poly) {
         int n = poly.size();
         bitset<3> s;
         for (int i = 0; i < n; i++) {
@@ -328,7 +329,7 @@ namespace Dimension2 {
     //凸包a：n个点,凸包b：m个点
     // 凸包上的点不能出现在另一个凸包内
     // 凸包上的线段两两不能相交
-    static bool isConvexHullSeparate(const vector<Point> &a, const vector<Point> &b) {
+    bool isConvexHullSeparate(const vector<Point> &a, const vector<Point> &b) {
         int n = a.size(), m = b.size();
         for (int i = 0; i < n; i++)
             if (PointInPoly(a[i], b) != -1)

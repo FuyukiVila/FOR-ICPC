@@ -1,7 +1,8 @@
-#ifndef __ST_HPP
-#define __ST_HPP
+#ifndef __SPARSE_TABLE_HPP
+#define __SPARSE_TABLE_HPP
 
 #include "vector"
+#include "cassert"
 
 // SpareTable<ElemType, CompareType> ElemType: 元素类型 CompareType: 比较函数, 默认为greater<>
 template<class T = long long, class Cmp = std::greater<T> >
@@ -22,6 +23,9 @@ public:
     }
 
     T get(int l, int r) {
+        assert(r >= l);
+        assert(l >= 0);
+        assert(r < st.size());
         int k = std::__lg(r - l + 1);
         return Cmp(st[l][k], st[r - (1 << k) + 1][k]) ? st[l][k] : st[r - (1 << k) + 1][k];
     }

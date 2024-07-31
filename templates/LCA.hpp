@@ -9,16 +9,6 @@ private:
     std::vector<std::vector<int> > f;
     std::vector<int> depth;
 
-    static int msb(int x) {
-        assert(x > 0);
-        int res = -1;
-        while (x) {
-            x >>= 1;
-            res++;
-        }
-        return res;
-    }
-
     void dfs(int root, int father, const std::vector<std::vector<int> > &g) {
         f[root][0] = father;
         depth[root] = depth[father] + 1;
@@ -48,12 +38,12 @@ public:
             std::swap(u, v);
         }
         while (depth[u] > depth[v]) {
-            u = f[u][msb(depth[u] - depth[v])];
+            u = f[u][std::__lg(depth[u] - depth[v])];
         }
         if (u == v) {
             return u;
         }
-        for (int i = msb(depth[u]); i >= 0; i--) {
+        for (int i = std::__lg(depth[u]); i >= 0; i--) {
             if (f[u][i] != f[v][i]) {
                 u = f[u][i];
                 v = f[v][i];

@@ -28,7 +28,7 @@ private:
 
 public:
 
-    Trie() { _root = std::make_shared<TrieNode>(); }
+    explicit Trie() { _root = std::make_shared<TrieNode>(); }
 
     std::shared_ptr<TrieNode> root() { return _root; }
 

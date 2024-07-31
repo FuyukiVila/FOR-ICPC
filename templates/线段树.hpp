@@ -2,6 +2,7 @@
 #define __ISEGMENT_TREE_HPP
 
 #include <vector>
+#include <cassert>
 
 template<class T, class V>
 class ISegmentTree {
@@ -127,16 +128,19 @@ public:
 
     // 区间加
     void add(int l, int r, element_type val) {
+        assert(l <= r);
         add(l, r, val, 1);
     }
 
     // 区间修改
     void change(int l, int r, element_type val) {
+        assert(l <= r);
         change(l, r, val, 1);
     }
 
     // 区间查询
     value_type query(int l, int r) {
+        assert(l <= r);
         return query(l, r, 1);
     }
 };

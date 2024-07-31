@@ -9,7 +9,7 @@ class StringHash {
     std::vector<size_t> hashPow;
 
 public:
-    StringHash() = default;
+    explicit StringHash() = default;
 
     explicit StringHash(const std::string &str) :
             str(str),
@@ -24,11 +24,16 @@ public:
     }
 
     constexpr size_t getHash(size_t l, size_t r) {
+        assert(r >= l);
+        assert(l > 0);
+        assert(r < str.size());
         return hash[r] - hash[l - 1] * hashPow[r - l + 1];
     }
 
     int compare(size_t l1, size_t r1, size_t l2, size_t r2) {
         assert(r1 >= l1 && r2 >= l2);
+        assert(l1 > 0 && l2 > 0);
+        assert(r1 < str.size() && r2 < str.size());
         size_t l = 0, r = std::min(r1 - l1, r2 - l2) + 1;
         size_t ans;
         while (l <= r) {

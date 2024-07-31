@@ -100,6 +100,8 @@ struct TimeSegTree {
 
     // 在[l, r]时间段上,连接x, y
     void modify(int l, int r, int x, int y, int u = 1) {
+        if (x == y) return;
+        assert(l <= r);
         if (tree[u].inRange(l, r)) {
             tree[u].add(x, y);
             return;
