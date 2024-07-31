@@ -58,7 +58,6 @@ public:
 };
 
 class SuffixArray {
-    std::string str;
     std::vector<size_t> sa;
     std::vector<size_t> rank;
     std::vector<size_t> height;
@@ -67,7 +66,6 @@ public:
     explicit SuffixArray() = default;
 
     explicit SuffixArray(const std::string &str) :
-            str(str),
             sa(std::vector<size_t>(str.size())),
             rank(std::vector<size_t>(str.size())),
             height(std::vector<size_t>(str.size())) {
@@ -78,7 +76,6 @@ public:
         std::sort(sa.begin() + 1, sa.end(), [&](size_t a, size_t b) -> bool {
             return sh.compare(a, str.size() - 1, b, str.size() - 1) == -1;
         });
-
         for (size_t i = 1; i < str.size(); i++) {
             rank[sa[i]] = i;
         }
