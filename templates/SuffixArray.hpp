@@ -1,7 +1,4 @@
-#include "string"
-#include "vector"
-#include "cassert"
-#include "algorithm"
+#include "bits/stdc++.h"
 
 template<size_t HashBase = 233>
 class StringHash {

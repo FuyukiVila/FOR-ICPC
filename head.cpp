@@ -111,12 +111,12 @@
 #define GKD std::cin.tie(nullptr)->std::ios::sync_with_stdio(false)
 #define clr(a, b) memset(a, b, sizeof(a))
 #define cpy(a, b) memcpy(a, b, sizeof(a))
-//#define LOCAL
+//#define _DEBUG
 //#define PRIME
 
 #include <bits/stdc++.h>
 
-#ifdef LOCAL
+#ifdef _DEBUG
 
 #define dbg(x...) do { std::cout << #x << " -> "; err(x); } while (0)
 

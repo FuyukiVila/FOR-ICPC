@@ -1,8 +1,7 @@
 #ifndef __DSU_HPP
 #define __DSU_HPP
 
-#include "vector"
-#include "numeric"
+#include "bits/stdc++.h"
 
 struct DSU {
     std::vector<int> f, siz;

@@ -1,8 +1,7 @@
 #ifndef __LCA_HPP
 #define __LCA_HPP
 
-#include "vector"
-#include "assert.h"
+#include "bits/stdc++.h"
 
 class LCA {
 private:

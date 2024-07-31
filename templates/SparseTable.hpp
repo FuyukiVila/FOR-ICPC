@@ -1,8 +1,7 @@
 #ifndef __SPARSE_TABLE_HPP
 #define __SPARSE_TABLE_HPP
 
-#include "vector"
-#include "cassert"
+#include "bits/stdc++.h"
 
 // SpareTable<ElemType, CompareType> ElemType: 元素类型 CompareType: 比较函数, 默认为greater<>
 template<class T = long long, class Cmp = std::greater<T> >

@@ -1,8 +1,7 @@
 #ifndef __ISEGMENT_TREE_HPP
 #define __ISEGMENT_TREE_HPP
 
-#include <vector>
-#include <cassert>
+#include "bits/stdc++.h"
 
 template<class T, class V>
 class ISegmentTree {
