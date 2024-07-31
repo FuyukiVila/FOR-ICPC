@@ -42,10 +42,10 @@ public:
 
 class KMP {
     std::string pattern;
-    std::vector<int> next;
+    std::vector<size_t> next;
 
     void buildNext() {
-        for (int i = 1, j = 0; i < pattern.size(); i++) {
+        for (size_t i = 1, j = 0; i < pattern.size(); i++) {
             while (j && pattern[i] != pattern[j]) j = next[j - 1];
             if (pattern[i] == pattern[j]) j++;
             next[i] = j;

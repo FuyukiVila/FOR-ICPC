@@ -1,6 +1,7 @@
 #include "string"
 #include "vector"
 #include "cassert"
+#include "algorithm"
 
 template<size_t HashBase = 233>
 class StringHash {
@@ -51,5 +52,58 @@ public:
         } else {
             return (str[l1 + ans] > str[l2 + ans]) ? 1 : -1;
         }
+    }
+};
+
+class SuffixArray {
+    std::string str;
+    std::vector<size_t> sa;
+    std::vector<size_t> rank;
+    std::vector<size_t> height;
+
+public:
+    SuffixArray() = default;
+
+    explicit SuffixArray(const std::string &str) :
+            str(str),
+            sa(std::vector<size_t>(str.size())),
+            rank(std::vector<size_t>(str.size())),
+            height(std::vector<size_t>(str.size())) {
+        StringHash<233> sh = StringHash<233>(str);
+        for (size_t i = 1; i < str.size(); i++) {
+            sa[i] = i;
+        }
+        std::sort(sa.begin() + 1, sa.end(), [&](size_t a, size_t b) -> bool {
+            return sh.compare(a, str.size() - 1, b, str.size() - 1) == -1;
+        });
+
+        for (size_t i = 1; i < str.size(); i++) {
+            rank[sa[i]] = i;
+        }
+        for (size_t i = 1, k = 0; i < str.size(); i++) {
+            if (rank[i] == 1) {
+                k = 0;
+            } else {
+                if (k) {
+                    k--;
+                }
+                while (str[i + k] == str[sa[rank[i] - 1] + k]) {
+                    k++;
+                }
+            }
+            height[rank[i]] = k;
+        }
+    }
+
+    size_t operator[](size_t i) {
+        return sa[i];
+    }
+
+    size_t getHeight(size_t i) {
+        return height[i];
+    }
+
+    size_t getRank(size_t i) {
+        return rank[i];
     }
 };

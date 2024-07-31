@@ -7,13 +7,13 @@
 #define constexpr inline
 #endif
 
-template<int T>
+template<long long T>
 struct ModInt {
-    int x;
+    long long x;
 
     constexpr ModInt(long long x = 0) : x(x % T) {}
 
-    constexpr int val() { return x; }
+    constexpr long long val() { return x; }
 
     constexpr ModInt operator=(const ModInt &a) { return x = a.x; }
 

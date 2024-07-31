@@ -88,15 +88,6 @@ protected:
         push_up(x);
     }
 
-public:
-
-    ISegmentTree() = default;
-
-    explicit ISegmentTree(const std::vector<T> &arr) {
-        tree.resize(arr.size() * 4 + 5);
-        build(arr, 1, 1, arr.size() - 1);
-    }
-
     // 区间加
     void add(size_t l, size_t r, T val, size_t x = 1) {
         if (tree[x].inRange(l, r)) {
@@ -131,6 +122,23 @@ public:
         if (tree[rs(x)].outOfRange(l, r))return query(l, r, ls(x));
         return merge_value(query(l, r, ls(x)), query(l, r, rs(x)));
     }
+
+public:
+
+    // 区间加
+    void add(int l, int r, element_type val) {
+        add(l, r, val, 1);
+    }
+
+    // 区间修改
+    void change(int l, int r, element_type val) {
+        change(l, r, val, 1);
+    }
+
+    // 区间查询
+    value_type query(int l, int r) {
+        return query(l, r, 1);
+    }
 };
 
 #endif
@@ -154,7 +162,10 @@ private:
     }
 
 public:
-    SegmentSumTree(const std::vector<element_type> &arr) : ISegmentTree(arr) {}
+    explicit SegmentSumTree(const std::vector<element_type> &arr) {
+        tree.resize(arr.size() * 4 + 1);
+        build(arr, 1, 1, arr.size() - 1);
+    }
 };
 
 class SegmentMaxTree : public ISegmentTree<long long, long long> {
@@ -176,7 +187,10 @@ private:
     }
 
 public:
-    SegmentMaxTree(const std::vector<element_type> &arr) : ISegmentTree(arr) {}
+    explicit SegmentMaxTree(const std::vector<element_type> &arr) {
+        tree.resize(arr.size() * 4 + 1);
+        build(arr, 1, 1, arr.size() - 1);
+    }
 };
 
 class SegmentMinTree : public ISegmentTree<long long, long long> {
@@ -198,5 +212,8 @@ private:
     }
 
 public:
-    SegmentMinTree(const std::vector<element_type> &arr) : ISegmentTree(arr) {}
+    explicit SegmentMinTree(const std::vector<element_type> &arr) {
+        tree.resize(arr.size() * 4 + 1);
+        build(arr, 1, 1, arr.size() - 1);
+    }
 };
