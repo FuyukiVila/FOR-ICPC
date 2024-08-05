@@ -14,9 +14,9 @@
             "cppStandard": "c++20",
             "intelliSenseMode": "windows-gcc-x64",
             "compilerArgs": [
-                "-DLOCAL -std=c++2a"
+                "-std=c++2a"
             ],
-            "compilerPath": "D:/w64devkit/bin/g++.exe"
+            "compilerPath": "D:/mingw64/bin/g++.exe"
         }
     ],
     "version": 4

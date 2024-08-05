@@ -99,30 +99,6 @@ struct ModInt {
     constexpr ModInt operator~() const {
         return inv();
     }
-
-    constexpr ModInt &operator++() {
-        ++x;
-        if (x >= T) x -= T;
-        return *this;
-    }
-
-    constexpr ModInt &operator--() {
-        --x;
-        if (x < 0) x += T;
-        return *this;
-    }
-
-    constexpr ModInt operator++(int) {
-        ModInt t = *this;
-        ++*this;
-        return t;
-    }
-
-    constexpr ModInt operator--(int) {
-        ModInt t = *this;
-        --*this;
-        return t;
-    }
 };
 
 
