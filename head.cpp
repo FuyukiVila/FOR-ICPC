@@ -130,14 +130,14 @@ void err(T arg, Ts &...args) {
 
 #else
 
-#define dbg(x...) 114514;
+#define dbg(x) 114514;
 
 #endif
 
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
-const int INF = 0x3f3f3f3f;
+constexpr int INF = 0x3f3f3f3f;
 ll mod = 0;
 
 inline ll qpow(ll _a, ll _n, ll _mod = mod) {
@@ -157,21 +157,23 @@ inline ll qpow(ll _a, ll _n, ll _mod = mod) {
 
 #ifdef PRIME
 
-const int N = 1e7 + 100;
-vector<int> minp(N);
-vector<int> primes;
-bitset<N> st;
+namespace prime {
+    const int N = 1e7 + 100;
+    vector<int> minp(N);
+    vector<int> primes;
+    bitset<N> st;
 
-void get_primes(int n) {
-    for (int i = 2; i <= n; i++) {
-        if (!st[i])
-            minp[i] = i, primes.emplace_back(i);
-        for (int j = 0; primes[j] * i <= n; j++) {
-            int t = primes[j] * i;
-            st[t] = true;
-            minp[t] = primes[j];
-            if (i % primes[j] == 0)
-                break;
+    void get_primes(int n) {
+        for (int i = 2; i <= n; i++) {
+            if (!st[i])
+                minp[i] = i, primes.emplace_back(i);
+            for (int j = 0; primes[j] * i <= n; j++) {
+                int t = primes[j] * i;
+                st[t] = true;
+                minp[t] = primes[j];
+                if (i % primes[j] == 0)
+                    break;
+            }
         }
     }
 }

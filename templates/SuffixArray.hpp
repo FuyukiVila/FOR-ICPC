@@ -2,11 +2,12 @@
 
 template<size_t HashBase = 233>
 class StringHash {
-    std::string str;
     std::vector<size_t> hash;
     std::vector<size_t> hashPow;
 
 public:
+    std::string str;
+
     explicit StringHash() = default;
 
     explicit StringHash(const std::string &str) :
@@ -58,11 +59,10 @@ public:
 };
 
 class SuffixArray {
+public:
     std::vector<size_t> sa;
     std::vector<size_t> rank;
     std::vector<size_t> height;
-
-public:
     explicit SuffixArray() = default;
 
     explicit SuffixArray(const std::string &str) :
@@ -92,17 +92,5 @@ public:
             }
             height[rank[i]] = k;
         }
-    }
-
-    size_t operator[](size_t i) {
-        return sa[i];
-    }
-
-    size_t getHeight(size_t i) {
-        return height[i];
-    }
-
-    size_t getRank(size_t i) {
-        return rank[i];
     }
 };

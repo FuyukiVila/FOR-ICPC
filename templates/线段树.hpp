@@ -89,58 +89,58 @@ protected:
     }
 
     // 区间加
-    void add(size_t l, size_t r, T val, size_t x = 1) {
+    void _add(size_t l, size_t r, T val, size_t x = 1) {
         if (tree[x].inRange(l, r)) {
             add_tag(x, val);
             return;
         }
         push_down(x);
-        if (!tree[ls(x)].outOfRange(l, r))add(l, r, val, ls(x));
-        if (!tree[rs(x)].outOfRange(l, r))add(l, r, val, rs(x));
+        if (!tree[ls(x)].outOfRange(l, r))_add(l, r, val, ls(x));
+        if (!tree[rs(x)].outOfRange(l, r))_add(l, r, val, rs(x));
         push_up(x);
     }
 
     // 区间修改
-    void change(size_t l, size_t r, T val, size_t x = 1) {
+    void _change(size_t l, size_t r, T val, size_t x = 1) {
         if (tree[x].inRange(l, r)) {
             change_tag(x, val);
             return;
         }
         push_down(x);
-        if (!tree[ls(x)].outOfRange(l, r))change(l, r, val, ls(x));
-        if (!tree[rs(x)].outOfRange(l, r))change(l, r, val, rs(x));
+        if (!tree[ls(x)].outOfRange(l, r))_change(l, r, val, ls(x));
+        if (!tree[rs(x)].outOfRange(l, r))_change(l, r, val, rs(x));
         push_up(x);
     }
 
     // 区间查询
-    value_type query(size_t l, size_t r, size_t x = 1) {
+    value_type _query(size_t l, size_t r, size_t x = 1) {
         if (tree[x].inRange(l, r)) {
             return tree[x].value;
         }
         push_down(x);
-        if (tree[ls(x)].outOfRange(l, r))return query(l, r, rs(x));
-        if (tree[rs(x)].outOfRange(l, r))return query(l, r, ls(x));
-        return merge_value(query(l, r, ls(x)), query(l, r, rs(x)));
+        if (tree[ls(x)].outOfRange(l, r))return _query(l, r, rs(x));
+        if (tree[rs(x)].outOfRange(l, r))return _query(l, r, ls(x));
+        return merge_value(_query(l, r, ls(x)), _query(l, r, rs(x)));
     }
 
 public:
 
     // 区间加
-    void add(int l, int r, element_type val) {
+    void add(size_t l, size_t r, element_type val) {
         assert(l <= r);
-        add(l, r, val, 1);
+        _add(l, r, val, 1);
     }
 
     // 区间修改
-    void change(int l, int r, element_type val) {
+    void change(size_t l, size_t r, element_type val) {
         assert(l <= r);
-        change(l, r, val, 1);
+        _change(l, r, val, 1);
     }
 
     // 区间查询
-    value_type query(int l, int r) {
+    value_type query(size_t l, size_t r) {
         assert(l <= r);
-        return query(l, r, 1);
+        return _query(l, r, 1);
     }
 };
 

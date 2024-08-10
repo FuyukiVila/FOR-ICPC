@@ -2,11 +2,12 @@
 
 template<size_t HashBase = 233>
 class StringHash {
-    std::string str;
     std::vector<size_t> hash;
     std::vector<size_t> hashPow;
 
 public:
+    std::string str;
+
     explicit StringHash() = default;
 
     explicit StringHash(const std::string &str) :
@@ -21,14 +22,14 @@ public:
         }
     }
 
-    constexpr size_t getHash(size_t l, size_t r) {
+    constexpr size_t getHash(size_t l, size_t r) const {
         assert(r >= l);
         assert(l > 0);
         assert(r < str.size());
         return hash[r] - hash[l - 1] * hashPow[r - l + 1];
     }
 
-    int compare(size_t l1, size_t r1, size_t l2, size_t r2) {
+    int compare(size_t l1, size_t r1, size_t l2, size_t r2) const {
         assert(r1 >= l1 && r2 >= l2);
         assert(l1 > 0 && l2 > 0);
         assert(r1 < str.size() && r2 < str.size());
