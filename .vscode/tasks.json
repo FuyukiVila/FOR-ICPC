@@ -3,14 +3,14 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe 生成活动文件",
-            "command": "D:\\mingw64\\bin\\g++.exe",
+            "command": "D:/mingw64/bin/g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "-DLOCAL",
+                "-D_DEBUG",
                 "-std=c++2a"
             ],
             "options": {
