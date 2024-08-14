@@ -1,3 +1,6 @@
+# ST表
+
+```cpp
 #ifndef __SPARSE_TABLE_HPP
 #define __SPARSE_TABLE_HPP
 
@@ -37,3 +40,6 @@ struct SparseTable {
 };
 
 #endif
+
+```
+

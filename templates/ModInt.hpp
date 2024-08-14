@@ -7,7 +7,7 @@
 #define constexpr inline
 #endif
 
-template<long long T>
+template <long long T = 998244353>
 struct ModInt {
     long long x;
 
@@ -29,9 +29,13 @@ struct ModInt {
         return ModInt(x0 < 0 ? x0 + T : x0);
     }
 
-    constexpr ModInt operator*(const ModInt &a) const { return ModInt(1LL * x * a.x % T); }
+    constexpr ModInt operator*(const ModInt &a) const {
+        return ModInt(1LL * x * a.x % T);
+    }
 
-    constexpr ModInt operator/(const ModInt &a) const { return *this * a.inv(); }
+    constexpr ModInt operator/(const ModInt &a) const {
+        return *this * a.inv();
+    }
 
     constexpr bool operator==(const ModInt &a) const { return x == a.x; };
 
@@ -61,13 +65,22 @@ struct ModInt {
         return ModInt(x0 < 0 ? x0 + T : x0);
     }
 
-    constexpr friend ModInt operator*(int y, const ModInt &a) { return ModInt(1LL * y * a.x % T); }
+    constexpr friend ModInt operator*(int y, const ModInt &a) {
+        return ModInt(1LL * y * a.x % T);
+    }
 
-    constexpr friend ModInt operator/(int y, const ModInt &a) { return ModInt(y) / a; }
+    constexpr friend ModInt operator/(int y, const ModInt &a) {
+        return ModInt(y) / a;
+    }
 
-    constexpr friend std::ostream &operator<<(std::ostream &os, const ModInt &a) { return os << a.x; }
+    constexpr friend std::ostream &operator<<(std::ostream &os,
+                                              const ModInt &a) {
+        return os << a.x;
+    }
 
-    constexpr friend std::istream &operator>>(std::istream &is, ModInt &t) { return is >> t.x; }
+    constexpr friend std::istream &operator>>(std::istream &is, ModInt &t) {
+        return is >> t.x;
+    }
 
     constexpr ModInt pow(int n) const {
         ModInt res(1), mul(x);
@@ -79,9 +92,7 @@ struct ModInt {
         return res;
     }
 
-    constexpr ModInt operator^(int n) const {
-        return pow(n);
-    }
+    constexpr ModInt operator^(int n) const { return pow(n); }
 
     constexpr ModInt inv() const {
         int a = x, b = T, u = 1, v = 0;
@@ -96,12 +107,9 @@ struct ModInt {
         return u;
     }
 
-    constexpr ModInt operator~() const {
-        return inv();
-    }
+    constexpr ModInt operator~() const { return inv(); }
 };
-
 
 using Mint = ModInt<998244353>;
 
-#endif //__MODINT_HPP
+#endif  //__MODINT_HPP
