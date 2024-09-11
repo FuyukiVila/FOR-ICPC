@@ -1,13 +1,6 @@
 # AC自动机
 
-- **maxsize ：模式串的总长**
-
 ```cpp
-#ifndef __AUTOMATON_HPP
-#define __AUTOMATON_HPP
-
-#include "bits/stdc++.h"
-
 template<size_t base = 26>
 class Automaton {
 private:
@@ -58,8 +51,5 @@ public:
         return ans;
     }
 };
-
-
-#endif
 ```
 

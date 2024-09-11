@@ -212,9 +212,8 @@ class AngleSort {
     bool operator()(const Point &a, const Point &b) const {
         if (sgn((a - p) ^ (b - p)) == 0) {
             return a.distance(p) < b.distance(p);
-        } else {
-            return sgn((a - p) ^ (b - p)) > 0;
         }
+        return sgn((a - p) ^ (b - p)) > 0;
     }
 };
 
@@ -262,7 +261,7 @@ vector<Point> andrew(vector<Point> p) {
 //  如果是顺时针把里面的 <0 改为 >0
 //  点的编号:0~n-1
 // 返回值：
-//  -1:点在凸多边形外
+//  -1:点在凸多边 形外
 //  0:点在凸多边形边界上
 int pointInConvexPoly(const Point &a, const vector<Point> &p) {
     int n = p.size();
