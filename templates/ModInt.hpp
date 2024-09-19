@@ -7,17 +7,24 @@
 #define constexpr inline
 #endif
 
-template <long long T = 998244353>
+template<long long T = 998244353>
 struct ModInt {
     long long x;
 
-    constexpr ModInt(long long x = 0) : x(x % T) {}
+    constexpr ModInt(const long long x = 0) : x(x % T) {
+    }
 
-    constexpr long long val() { return x; }
+    [[nodiscard]] constexpr long long val() const { return x; }
 
-    constexpr ModInt operator=(const ModInt &a) { return x = a.x; }
+    constexpr ModInt &operator=(const ModInt &a) {
+        x = a.x;
+        return *this;
+    }
 
-    constexpr ModInt operator=(long long y) { return x = y % T; }
+    constexpr ModInt &operator=(const long long y) {
+        x = y % T;
+        return *this;
+    }
 
     constexpr ModInt operator+(const ModInt &a) const {
         int x0 = x + a.x;
@@ -73,8 +80,7 @@ struct ModInt {
         return ModInt(y) / a;
     }
 
-    constexpr friend std::ostream &operator<<(std::ostream &os,
-                                              const ModInt &a) {
+    constexpr friend std::ostream &operator<<(std::ostream &os, const ModInt &a) {
         return os << a.x;
     }
 
@@ -92,7 +98,7 @@ struct ModInt {
         return res;
     }
 
-    constexpr ModInt operator^(int n) const { return pow(n); }
+    constexpr ModInt operator^(const int n) const { return pow(n); }
 
     constexpr ModInt inv() const {
         int a = x, b = T, u = 1, v = 0;
@@ -109,7 +115,5 @@ struct ModInt {
 
     constexpr ModInt operator~() const { return inv(); }
 };
-
-using Mint = ModInt<998244353>;
 
 #endif  //__MODINT_HPP
