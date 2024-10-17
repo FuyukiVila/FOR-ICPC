@@ -187,8 +187,75 @@ inline void init() {
 	/*Init Here*/
 }
 
+
 void idol_produce(int testCase) {
 	/*Code Here*/
+	int n, m;
+	cin >> n >> m;
+	vector<int>a(n + 1);
+	vector<int>dp(m + 1);
+	vector<int>zero;
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+		if (a[i] == 0) {
+			zero.push_back(i);
+		}
+	}
+	map<int, int>cnt1;
+	map<int, int>cnt2;
+	for (int i = 0; i < zero.size(); i ++) {
+		auto ndp = dp;
+		int m = i + 1;
+		cnt1.clear(), cnt2.clear();
+		if (i == zero.size() - 1) {
+			for (int j = zero[i] + 1; j <= n; j ++) {
+				if (a[j] > 0) {
+					cnt1[a[j]]++;
+				} else {
+					cnt2[abs(a[j])]++;
+				}
+			}
+		} else {
+			for (int j = zero[i] + 1; j < zero[i + 1]; j ++) {
+				if (a[j] > 0) {
+					cnt1[a[j]]++;
+				} else {
+					cnt2[abs(a[j])]++;
+				}
+			}
+		}
+		vector<pair<int, int> > pre1(1, {-1, 0}), pre2(1, {-1, 0});
+		for (auto [x, y] : cnt1) {
+			pre1.push_back({x, y});
+			pre1[pre1.size() - 1].second += pre1[pre1.size() - 2].second;
+		}
+		for (auto [x, y] : cnt2) {
+			pre2.push_back({x, y});
+			pre2[pre2.size() - 1].second += pre2[pre2.size() - 2].second;
+		}
+		// 点智力
+		for (int i = 1; i <= m; i ++) {
+			int intel = i;
+			int power = m - i;
+			ndp[i] = max(ndp[i], dp[i - 1]
+			                + (--lower_bound(pre1.begin() + 1, pre1.end(), pair<int, int> {intel + 1, 0})) -> second
+			                + (--lower_bound(pre2.begin() + 1, pre2.end(), pair<int, int> {power + 1, 0})) -> second);
+		}
+		// 点力量
+		for (int i = 0; i <= m - 1; i++) {
+			int intel = i;
+			int power = m - i;
+			ndp[i] = max(ndp[i], dp[i]
+			                + (--lower_bound(pre1.begin() + 1, pre1.end(), pair<int, int> {intel + 1, 0})) -> second
+			                + (--lower_bound(pre2.begin() + 1, pre2.end(), pair<int, int> {power + 1, 0})) ->second);
+		}
+		dp = ndp;
+	}
+	int ans = 0;
+	for(int i = 0; i <= m; i++){
+		ans = max(ans, dp[i]);
+	}
+	cout << ans << '\n';
 }
 
 
