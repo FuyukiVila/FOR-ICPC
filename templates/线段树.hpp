@@ -1,8 +1,8 @@
 #include "bits/stdc++.h"
 
-template <class T, class V>
+template<class T = long long, class V = long long>
 class ISegmentTree {
-   protected:
+protected:
     typedef T element_type;
     typedef V value_type;
 
@@ -121,7 +121,7 @@ class ISegmentTree {
         return merge_value(_query(l, r, ls(x)), _query(l, r, rs(x)));
     }
 
-   public:
+public:
     // 区间加
     void add(size_t l, size_t r, element_type val) {
         assert(l <= r);
@@ -141,8 +141,8 @@ class ISegmentTree {
     }
 };
 
-class SegmentSumTree : public ISegmentTree<long long, long long> {
-   private:
+class SegmentSumTree : public ISegmentTree<> {
+private:
     value_type assign_value(const std::vector<element_type> &arr,
                             size_t x) override {
         return arr[x];
@@ -152,23 +152,23 @@ class SegmentSumTree : public ISegmentTree<long long, long long> {
         return x + y;
     }
 
-    void add_value(size_t x, value_type val) override {
+    void add_value(size_t x, element_type val) override {
         tree[x].value += val * tree[x].size();
     }
 
-    void change_value(size_t x, value_type val) override {
+    void change_value(size_t x, element_type val) override {
         tree[x].value = val * tree[x].size();
     }
 
-   public:
+public:
     explicit SegmentSumTree(const std::vector<element_type> &arr) {
         tree.resize(arr.size() * 4 + 1);
         build(arr, 1, 1, arr.size() - 1);
     }
 };
 
-class SegmentMaxTree : public ISegmentTree<long long, long long> {
-   private:
+class SegmentMaxTree : public ISegmentTree<> {
+private:
     value_type assign_value(const std::vector<element_type> &arr,
                             size_t x) override {
         return arr[x];
@@ -178,21 +178,21 @@ class SegmentMaxTree : public ISegmentTree<long long, long long> {
         return std::max(x, y);
     }
 
-    void add_value(size_t x, value_type val) override { tree[x].value += val; }
+    void add_value(size_t x, element_type val) override { tree[x].value += val; }
 
-    void change_value(size_t x, value_type val) override {
+    void change_value(size_t x, element_type val) override {
         tree[x].value = val;
     }
 
-   public:
+public:
     explicit SegmentMaxTree(const std::vector<element_type> &arr) {
         tree.resize(arr.size() * 4 + 1);
         build(arr, 1, 1, arr.size() - 1);
     }
 };
 
-class SegmentMinTree : public ISegmentTree<long long, long long> {
-   private:
+class SegmentMinTree : public ISegmentTree<> {
+private:
     value_type assign_value(const std::vector<element_type> &arr,
                             size_t x) override {
         return arr[x];
@@ -202,13 +202,13 @@ class SegmentMinTree : public ISegmentTree<long long, long long> {
         return std::min(x, y);
     }
 
-    void add_value(size_t x, value_type val) override { tree[x].value += val; }
+    void add_value(size_t x, element_type val) override { tree[x].value += val; }
 
-    void change_value(size_t x, value_type val) override {
+    void change_value(size_t x, element_type val) override {
         tree[x].value = val;
     }
 
-   public:
+public:
     explicit SegmentMinTree(const std::vector<element_type> &arr) {
         tree.resize(arr.size() * 4 + 1);
         build(arr, 1, 1, arr.size() - 1);

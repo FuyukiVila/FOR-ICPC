@@ -11,7 +11,7 @@ struct SparseTable {
 
    public:
     explicit SparseTable() = default;
-    explicit SparseTable(const std::vector<T> &a, const std::function <V(T, T)> &fun = [](const T &a, const T &b) -> V {return a > b ? a : b;}) {
+    explicit SparseTable(const std::vector<T> &a, std::function <V(T, T)> fun = [](const T &a, const T &b) -> V {return a > b ? a : b;}) {
         st.resize(a.size(), std::vector<T>(32));
         this->fun = fun;
         for (int i = 0; i < a.size(); i++) {
