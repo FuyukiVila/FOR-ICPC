@@ -3,15 +3,16 @@
 
 #include "bits/stdc++.h"
 
-template <class T = long long, class V = long long>
+template<class T = long long>
 struct SparseTable {
    private:
-    std::function <V(T, T)> fun;
+    std::function<T(T, T)> fun;
     std::vector<std::vector<T> > st;
 
    public:
     explicit SparseTable() = default;
-    explicit SparseTable(const std::vector<T> &a, std::function <V(T, T)> fun = [](const T &a, const T &b) -> V {return a > b ? a : b;}) {
+
+    explicit SparseTable(const std::vector<T> &a, std::function<T(T, T)> fun = [](const T &a, const T &b) -> T { return a > b ? a : b; }) {
         st.resize(a.size(), std::vector<T>(32));
         this->fun = fun;
         for (int i = 0; i < a.size(); i++) {
